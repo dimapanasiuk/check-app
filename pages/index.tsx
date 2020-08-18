@@ -1,6 +1,8 @@
 import React from 'react';
 import Head from "next/head";
 
+import { Button } from 'antd';
+
 const Home: React.FC = () => {
   return (
     <>
@@ -9,6 +11,7 @@ const Home: React.FC = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <h1>check app</h1>
+      <Button type="primary">Button</Button>
     </>
   );
 };
