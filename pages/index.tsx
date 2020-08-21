@@ -1,15 +1,11 @@
-import Head from "next/head";
+import React from "react";
 
-import { MainLayout } from "../components/MainLayout";
+import MainLayout from "../components/MainLayout";
 
 const Home: React.FC = () => {
   return (
     <>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <MainLayout>
+      <MainLayout title="test">
         <h1>check app</h1>
       </MainLayout>
     </>

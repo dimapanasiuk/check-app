@@ -1,3 +1,4 @@
+import React from "react";
 import Link from "next/link";
 import Head from "next/head";
 
@@ -8,9 +9,21 @@ import { Layout, Menu, Typography } from "antd";
 const { Header, Content, Footer } = Layout;
 const { Title } = Typography;
 
-export function MainLayout({ children, title = "next app" }) {
+interface IMainLayout {
+  title: string;
+  children: JSX.Element;
+}
+
+const MainLayout: React.FC = ({
+  children,
+  title,
+}: IMainLayout) => {
   return (
     <>
+      <Head>
+        <title>{title}</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <Layout style={{ height: "100%" }}>
         <Header className={styles.header}>
           <Link href="/">
@@ -36,4 +49,6 @@ export function MainLayout({ children, title = "next app" }) {
       </Layout>
     </>
   );
-}
+};
+
+export default MainLayout;
