@@ -2,7 +2,7 @@ import React from "react";
 
 import MainLayout from "../components/MainLayout";
 
-import { Form, Input, Button, Checkbox } from "antd";
+import { Form, Input, Button, Checkbox, Divider } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 
 const getUserData = (name: string): void => {
@@ -15,13 +15,20 @@ const getUserData = (name: string): void => {
   return null;
 };
 
+const users = ["Pupil", "Mentor", "Admin"];
+
 const Login: React.FC = () => {
+  const [checkedItem, setCheckedItem] = React.useState<number | null>(null);
   const onFinish = (values) => {
     getUserData(values.username);
   };
 
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
+  };
+
+  const onClickCheckedHandler = (index: number) => {
+    setCheckedItem(index);
   };
 
   return (
@@ -53,16 +60,23 @@ const Login: React.FC = () => {
           />
         </Form.Item>
 
-        <div style={{ display: "flex", justifyContent: "space-around" }}>
-          <Form.Item name="Pupil" valuePropName="checked">
-            <Checkbox>Pupil</Checkbox>
-          </Form.Item>
-          <Form.Item name="Teacher" valuePropName="checked">
-            <Checkbox>Teacher</Checkbox>
-          </Form.Item>
-          <Form.Item name="Admin" valuePropName="checked">
-            <Checkbox>Admin</Checkbox>
-          </Form.Item>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-around",
+            marginBottom: "30px",
+          }}
+        >
+          {users.map((user, index) => (
+            <Checkbox
+              onClick={() => onClickCheckedHandler(index)}
+              name={user}
+              key={index}
+              checked={checkedItem === index}
+            >
+              {user}
+            </Checkbox>
+          ))}
         </div>
         <Form.Item>
           <Button block type="primary" htmlType="submit">
