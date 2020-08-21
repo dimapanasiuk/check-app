@@ -14,10 +14,7 @@ interface IMainLayout {
   children: JSX.Element;
 }
 
-const MainLayout: React.FC = ({
-  children,
-  title,
-}: IMainLayout) => {
+const MainLayout: React.FC<IMainLayout> = ({ children, title }) => {
   return (
     <>
       <Head>
