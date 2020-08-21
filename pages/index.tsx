@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
+
+import MainLayout from '../components/MainLayout';
 import axios from "axios";
 
-import MainLayout from "../components/MainLayout";
 
 const Home: React.FC = () => {
   const [posts, setPosts] = useState([]);
