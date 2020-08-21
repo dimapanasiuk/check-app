@@ -1,10 +1,9 @@
 import React from "react";
-import type { AppProps } from "next/app";
 
 import "antd/dist/antd.css";
 
-function MyApp({ Component, pageProps }: AppProps) {
+const MyApp: React.FC = ({ Component, pageProps }: any) => {
   return <Component {...pageProps} />;
-}
+};
 
 export default MyApp;

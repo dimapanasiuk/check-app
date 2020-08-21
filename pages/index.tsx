@@ -1,13 +1,16 @@
-import React from "react";
+import Head from "next/head";
 
-import MainLayout from "../components/MainLayout";
+import { Button } from "antd";
 
 const Home: React.FC = () => {
   return (
     <>
-      <MainLayout title="test">
-        <h1>check app</h1>
-      </MainLayout>
+      <Head>
+        <title>Create Next App</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <h1>check app</h1>
+      <Button type="primary">Button</Button>
     </>
   );
 };
