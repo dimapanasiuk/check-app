@@ -4,7 +4,8 @@ import Head from "next/head";
 
 import styles from "../styles/BasicLayout.module.scss";
 
-import { Layout, Menu, Typography } from "antd";
+import { LoginOutlined } from "@ant-design/icons";
+import { Layout, Menu, Typography, Button } from "antd";
 
 const { Header, Content, Footer } = Layout;
 const { Title } = Typography;
@@ -14,10 +15,7 @@ interface IMainLayout {
   children: JSX.Element;
 }
 
-const MainLayout: React.FC = ({
-  children,
-  title,
-}: IMainLayout) => {
+const MainLayout: React.FC = ({ children, title }: IMainLayout) => {
   return (
     <>
       <Head>
@@ -34,11 +32,29 @@ const MainLayout: React.FC = ({
             </a>
           </Link>
 
-          <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["1"]}>
+          <Menu
+            theme="dark"
+            mode="horizontal"
+            defaultSelectedKeys={["1"]}
+            className={styles.links}
+          >
             <Menu.Item key="1">nav 1</Menu.Item>
             <Menu.Item key="2">nav 2</Menu.Item>
             <Menu.Item key="3">nav 3</Menu.Item>
           </Menu>
+
+          <div className={styles.oauth}>
+            <Link href="/login">
+              <a>
+                <Button type="primary" icon={<LoginOutlined />} size="large">
+                  Login
+                </Button>
+              </a>
+            </Link>
+            <Button icon={<LoginOutlined />} size="large">
+              Registration
+            </Button>
+          </div>
         </Header>
         <Content style={{ padding: "0 50px" }}>
           <div className="site-layout-content">{children}</div>
