@@ -1,35 +1,42 @@
 import React from "react";
+import axios from "axios";
 
 import MainLayout from "../components/MainLayout";
 
 import { Form, Input, Button, Checkbox, Modal } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 
-const getUserData = (name: string): void => {
-  fetch(`https://api.github.com/users/${name}`).then((response) =>
-    response
-      .json()
-      .then((data) => console.log("uesr data", data))
-      .catch(console.error)
-  );
-  return null;
-};
-
 const users = ["Pupil", "Mentor", "Admin"];
 
+// should separate logic from ui
+// check github api and comparing inputValue with github logins
+// post method for the new users if they have github account
 const Login: React.FC = () => {
+  // states
   const [checkedItem, setCheckedItem] = React.useState<string>("Pupil");
   const [inputValue, setInputValue] = React.useState<string | undefined>("");
+  const [isSubmitClicked, setIsSubmitClicked] = React.useState<boolean>(true);
+  const [gitHubLogin, setGitHubLogin] = React.useState<string | null>(null);
 
-  const onFinish = (values) => {
-    getUserData(values.username);
-  };
+  // useEffect
+  React.useEffect(() => {
+    document.body.addEventListener("click", closeModal);
+  }, []);
 
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
-  };
+  React.useEffect(() => {
+    axios
+      .get(`https://api.github.com/users/${inputValue}`)
+      .then((data) => {
+        data && setGitHubLogin(data.data.login);
+        compareWithUsers();
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  }, [isSubmitClicked]);
 
-  const onClickCheckedHandler = (dataCheckbox: string) => {
+  // Handlers
+  const onHandleClickCheckbox = (dataCheckbox: string) => {
     setCheckedItem(dataCheckbox);
   };
 
@@ -38,29 +45,38 @@ const Login: React.FC = () => {
     setInputValue(target.value);
   };
 
-  const compareWithUsers = () => {
-    if (inputValue !== "Gordey") {
-      Modal.error({
-        title: "Can`t get access",
-        content: "Please enter an existing github login",
-      });
-    }
+  const onHandleSubmitClicked = () => {
+    setIsSubmitClicked((isSubmitClicked) => !isSubmitClicked);
+  };
+
+  // Modal Window
+  const openModal = () => {
+    Modal.error({
+      title: "Can`t get access",
+      content: "Please enter an existing github login",
+    });
   };
 
   const closeModal = () => {
     Modal.destroyAll();
   };
 
-  React.useEffect(() => {
-    document.body.addEventListener("click", closeModal);
-  }, []);
+  // Other Functions
+  const compareWithUsers = () => {
+    if (!gitHubLogin) {
+      openModal();
+    }
+  };
+
+  const onFinishFailed = (errorInfo) => {
+    console.log("Failed:", errorInfo);
+  };
 
   return (
     <MainLayout title="login">
       <Form
         style={{ marginTop: "100px" }}
         name="basic"
-        onFinish={onFinish}
         onFinishFailed={onFinishFailed}
       >
         <Form.Item
@@ -91,7 +107,9 @@ const Login: React.FC = () => {
           >
             {users.map((user, index) => (
               <Checkbox
-                onClick={() => onClickCheckedHandler(user)}
+                onClick={() => {
+                  onHandleClickCheckbox(user);
+                }}
                 name={user}
                 key={index}
                 checked={checkedItem === user}
@@ -103,7 +121,10 @@ const Login: React.FC = () => {
         </Form.Item>
         <Form.Item>
           <Button
-            onClick={compareWithUsers}
+            onClick={() => {
+              onHandleSubmitClicked();
+              compareWithUsers();
+            }}
             block
             type="primary"
             htmlType="submit"
