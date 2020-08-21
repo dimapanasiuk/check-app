@@ -2,7 +2,7 @@ import React from "react";
 
 import MainLayout from "../components/MainLayout";
 
-import { Form, Input, Button, Checkbox, Divider } from "antd";
+import { Form, Input, Button, Checkbox, Modal } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 
 const getUserData = (name: string): void => {
@@ -18,7 +18,9 @@ const getUserData = (name: string): void => {
 const users = ["Pupil", "Mentor", "Admin"];
 
 const Login: React.FC = () => {
-  const [checkedItem, setCheckedItem] = React.useState<number | null>(null);
+  const [checkedItem, setCheckedItem] = React.useState<string>("Pupil");
+  const [inputValue, setInputValue] = React.useState<string | undefined>("");
+
   const onFinish = (values) => {
     getUserData(values.username);
   };
@@ -27,20 +29,37 @@ const Login: React.FC = () => {
     console.log("Failed:", errorInfo);
   };
 
-  const onClickCheckedHandler = (index: number) => {
-    setCheckedItem(index);
+  const onClickCheckedHandler = (dataCheckbox: string) => {
+    setCheckedItem(dataCheckbox);
   };
+
+  const onHandleInputValue = (e: React.FormEvent<EventTarget>) => {
+    let target = e.target as HTMLInputElement;
+    setInputValue(target.value);
+  };
+
+  const compareWithUsers = () => {
+    if (inputValue !== "Gordey") {
+      Modal.error({
+        title: "Can`t get access",
+        content: "Please enter an existing github login",
+      });
+    }
+  };
+
+  const closeModal = () => {
+    Modal.destroyAll();
+  };
+
+  React.useEffect(() => {
+    document.body.addEventListener("click", closeModal);
+  }, []);
 
   return (
     <MainLayout title="login">
       <Form
         style={{ marginTop: "100px" }}
         name="basic"
-        initialValues={{
-          Pupil: true,
-          Teacher: false,
-          Admin: false,
-        }}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
       >
@@ -50,36 +69,45 @@ const Login: React.FC = () => {
           rules={[
             {
               required: true,
-              message: "Please input your username!",
+              message: "Please input your github login!",
             },
           ]}
         >
           <Input
+            value={inputValue}
+            onChange={onHandleInputValue}
             prefix={<UserOutlined className="site-form-item-icon" />}
-            placeholder="Username"
+            placeholder="Github login"
           />
         </Form.Item>
-
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-around",
-            marginBottom: "30px",
-          }}
-        >
-          {users.map((user, index) => (
-            <Checkbox
-              onClick={() => onClickCheckedHandler(index)}
-              name={user}
-              key={index}
-              checked={checkedItem === index}
-            >
-              {user}
-            </Checkbox>
-          ))}
-        </div>
         <Form.Item>
-          <Button block type="primary" htmlType="submit">
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-around",
+              marginBottom: "30px",
+              marginTop: "10px",
+            }}
+          >
+            {users.map((user, index) => (
+              <Checkbox
+                onClick={() => onClickCheckedHandler(user)}
+                name={user}
+                key={index}
+                checked={checkedItem === user}
+              >
+                {user}
+              </Checkbox>
+            ))}
+          </div>
+        </Form.Item>
+        <Form.Item>
+          <Button
+            onClick={compareWithUsers}
+            block
+            type="primary"
+            htmlType="submit"
+          >
             Submit
           </Button>
         </Form.Item>
