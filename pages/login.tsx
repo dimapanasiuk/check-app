@@ -48,11 +48,13 @@ const Login: React.FC = () => {
           data && setGitHubLogin(data.data.login);
           compareWithUsers(data.data.login);
         })
-        .catch((error) => {
-          compareWithUsers(null);
-          console.log(error.message);
+        .catch((err) => {
+          err.response.status === 404 ? compareWithUsers(null) : openErrorModal()
         });
   }, [submitClickIndicator]);
+
+  console.log(gitHubLogin);
+  console.log(checkedItem);
 
   // Handlers
   const onHandleClickCheckbox = (dataCheckbox: string): void => {
@@ -69,12 +71,19 @@ const Login: React.FC = () => {
   };
 
   // Modal Window
-  const openModal = (): void => {
+  const openNotFoundModal = (): void => {
     Modal.error({
       title: "Can`t get access",
       content: "Please enter an existing github login",
     });
   };
+
+  const openErrorModal = (): void => {
+    Modal.error({
+      title: "Error",
+      content: "Please try again"
+    })
+  }
 
   const closeModal = (): void => {
     Modal.destroyAll();
@@ -83,7 +92,7 @@ const Login: React.FC = () => {
   // Other Functions
   const compareWithUsers = (login: string): void => {
     if (!login) {
-      openModal();
+      openNotFoundModal();
     }
   };
 
