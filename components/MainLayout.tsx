@@ -11,7 +11,7 @@ const { Header, Content, Footer } = Layout;
 const { Title } = Typography;
 
 interface IMainLayout {
-  title: string;
+  title?: string;
   children: JSX.Element;
 }
 
@@ -38,9 +38,17 @@ const MainLayout: React.FC = ({ children, title }: IMainLayout) => {
             defaultSelectedKeys={["1"]}
             className={styles.links}
           >
-            <Menu.Item key="1">nav 1</Menu.Item>
-            <Menu.Item key="2">nav 2</Menu.Item>
-            <Menu.Item key="3">nav 3</Menu.Item>
+            {/* <Menu.Item key="1">nav 1</Menu.Item> */}
+            <Menu.Item key="2">
+              <Link href="/create">
+                <a>Create task</a>
+              </Link>
+            </Menu.Item>
+            <Menu.Item key="3">
+              <Link href="/tasks">
+                <a>Tasks</a>
+              </Link>
+            </Menu.Item>
           </Menu>
 
           <div className={styles.oauth}>

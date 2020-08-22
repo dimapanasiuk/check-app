@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 
-import MainLayout from '../components/MainLayout';
+import MainLayout from "../components/MainLayout";
 import axios from "axios";
-
 
 const Home: React.FC = () => {
   const [posts, setPosts] = useState([]);
@@ -14,7 +13,7 @@ const Home: React.FC = () => {
       .then((data) => setPosts(data.data));
   }, []);
 
-  const testAxios: void = ()  => {
+  const testAxios: void = () => {
     axios
       .post("http://localhost:4000/posts", {
         id: "your id",
