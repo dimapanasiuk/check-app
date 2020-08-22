@@ -9,7 +9,6 @@ import { UserOutlined } from "@ant-design/icons";
 const users = ["Pupil", "Mentor", "Admin", "Super User"];
 
 // should separate logic from ui
-// check github api and comparing inputValue with github logins
 // post method for the new users if they have github account
 
 function useMounted() {
@@ -49,12 +48,11 @@ const Login: React.FC = () => {
           compareWithUsers(data.data.login);
         })
         .catch((err) => {
-          err.response.status === 404 ? compareWithUsers(null) : openErrorModal()
+          err.response.status === 404
+            ? compareWithUsers(null)
+            : openErrorModal();
         });
   }, [submitClickIndicator]);
-
-  console.log(gitHubLogin);
-  console.log(checkedItem);
 
   // Handlers
   const onHandleClickCheckbox = (dataCheckbox: string): void => {
@@ -81,9 +79,9 @@ const Login: React.FC = () => {
   const openErrorModal = (): void => {
     Modal.error({
       title: "Error",
-      content: "Please try again"
-    })
-  }
+      content: "Please try again",
+    });
+  };
 
   const closeModal = (): void => {
     Modal.destroyAll();
