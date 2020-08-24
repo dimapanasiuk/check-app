@@ -30,7 +30,6 @@ const Login: React.FC = () => {
   // custom hook to cancel the first call of useEffect
   const isMounted = useMounted();
 
-  // useEffect
   React.useEffect(() => {
     document.body.addEventListener("click", closeModal);
 
@@ -54,13 +53,12 @@ const Login: React.FC = () => {
         });
   }, [submitClickIndicator]);
 
-  // Handlers
   const onHandleClickCheckbox = (dataCheckbox: string): void => {
     setCheckedItem(dataCheckbox);
   };
 
   const onHandleInputValue = (e: React.FormEvent<EventTarget>): void => {
-    let target = e.target as HTMLInputElement;
+    const target = e.target as HTMLInputElement;
     setInputValue(target.value);
   };
 

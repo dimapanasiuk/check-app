@@ -12,10 +12,13 @@ const { Title } = Typography;
 
 interface IMainLayout {
   title: string;
-  children: JSX.Element;
+  children: React.ReactNode;
 }
 
-const MainLayout: React.FC<IMainLayout> = ({ children, title }) => {
+const MainLayout: React.FC<IMainLayout> = ({
+  children,
+  title,
+}: IMainLayout) => {
   return (
     <>
       <Head>
@@ -51,9 +54,6 @@ const MainLayout: React.FC<IMainLayout> = ({ children, title }) => {
                 </Button>
               </a>
             </Link>
-            <Button icon={<LoginOutlined />} size="large">
-              Registration
-            </Button>
           </div>
         </Header>
         <Content style={{ padding: "0 50px" }}>
