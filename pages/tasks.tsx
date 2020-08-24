@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Link from "next/link";
 
 import MainLayout from "../components/MainLayout";
 
@@ -20,7 +21,11 @@ const Tasks: React.FC = () => {
       <Title level={2}>Your task</Title>
       <ul>
         {tasks.map((i) => (
-          <li key={i.id}>{i.name}</li>
+          <li key={i.id}>
+            <Link href={`task/[id]`} as={`/task/${i.id}`}>
+              <a>{i.name}</a>
+            </Link>
+          </li>
         ))}
       </ul>
     </MainLayout>
