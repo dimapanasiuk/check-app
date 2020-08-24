@@ -18,42 +18,35 @@ type User = {
 const Login: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
   usersDB,
 }) => {
-  // states
   const [checkedItem, setCheckedItem] = React.useState<string>(users[0]);
   const [inputValue, setInputValue] = React.useState<string>("");
-  const [isSumbited, setIsSubmited] = React.useState<boolean>(false);
-  const [isGitLoginExisted, setIsGitLoginExisted] = React.useState<boolean>(
-    false
-  );
 
   // api functions
-  const getGitLogin = React.useCallback(() => {
-    const isLoginExisted = true;
-    const isNotLoginExisted = false;
+  const getGitLogin = () => {
+    const isExisted = true;
+    const isNotExisted = false;
     if (inputValue)
       axios
         .get(`https://api.github.com/users/${inputValue}`)
         .then(() => {
-          compareWithUsers(isLoginExisted);
+          postToDB(isExisted);
         })
         .catch((err) => {
           openModal(err.response.status);
-          compareWithUsers(isNotLoginExisted);
+          postToDB(isNotExisted);
         });
-  }, [isSumbited]);
+  };
 
-  const postToDB = async () => {
+  const postToDB = (isGitLoginExisted: boolean) => {
     const isLoginInDB = checkOutDB();
     if (!isLoginInDB && isGitLoginExisted) {
-      console.log("Done!!");
-      await axios.post("http://localhost:4000/users", {
+      axios.post("http://localhost:4000/users", {
         login: inputValue,
         role: checkedItem,
       });
     }
   };
 
-  // useEffect
   React.useEffect(() => {
     document.body.addEventListener("click", closeModal);
 
@@ -62,11 +55,6 @@ const Login: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
     };
   }, []);
 
-  React.useEffect(() => {
-    getGitLogin();
-  }, [getGitLogin]);
-
-  // Handlers
   const onHandleClickCheckbox = (dataCheckbox: string): void => {
     setCheckedItem(dataCheckbox);
   };
@@ -93,28 +81,17 @@ const Login: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
     Modal.destroyAll();
   };
 
-  // Other Functions
-  const compareWithUsers = (isLoginExisted: boolean): void => {
-    if (!isLoginExisted) {
-      setIsGitLoginExisted(false);
-    } else {
-      setIsGitLoginExisted(true);
-    }
-  };
-
   const checkOutDB = () => {
     const logins = usersDB.map((userDB) => userDB.login);
     return logins.includes(inputValue);
   };
 
   const onFinish = (): void => {
-    setIsSubmited((prevState) => !prevState);
     getGitLogin();
-    postToDB();
   };
 
   return (
-    <MainLayout title="login">
+    <MainLayout title="Login">
       <Form style={{ marginTop: "100px" }} name="basic" onFinish={onFinish}>
         <Form.Item
           label="Login"
