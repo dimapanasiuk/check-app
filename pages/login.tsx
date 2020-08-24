@@ -1,35 +1,59 @@
 import React from "react";
 import axios from "axios";
+import { InferGetStaticPropsType } from "next";
 
 import MainLayout from "../components/MainLayout";
 
 import { Form, Input, Button, Checkbox, Modal } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 
-const users = ["Pupil", "Mentor", "Admin", "Super User"];
+const users = ["Student", "Mentor", "Admin", "Super User"];
 
-// should separate logic from ui
-// post method for the new users if they have github account
+type User = {
+  id: number;
+  login: string;
+  role: string;
+};
 
-function useMounted() {
-  const [isMounted, setIsMounted] = React.useState<boolean>(false);
-
-  React.useEffect(() => {
-    setIsMounted(true);
-  }, []);
-  return isMounted;
-}
-
-const Login: React.FC = () => {
+const Login: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
+  usersDB,
+}) => {
   // states
-  const [checkedItem, setCheckedItem] = React.useState<string>("Pupil");
-  const [inputValue, setInputValue] = React.useState<string | undefined>("");
-  const [submitClickIndicator, setSubmitClick] = React.useState<boolean>(true);
-  const [gitHubLogin, setGitHubLogin] = React.useState<string | null>(null);
+  const [checkedItem, setCheckedItem] = React.useState<string>(users[0]);
+  const [inputValue, setInputValue] = React.useState<string>("");
+  const [isSumbited, setIsSubmited] = React.useState<boolean>(false);
+  const [isGitLoginExisted, setIsGitLoginExisted] = React.useState<boolean>(
+    false
+  );
 
-  // custom hook to cancel the first call of useEffect
-  const isMounted = useMounted();
+  // api functions
+  const getGitLogin = React.useCallback(() => {
+    const isLoginExisted = true;
+    const isNotLoginExisted = false;
+    if (inputValue)
+      axios
+        .get(`https://api.github.com/users/${inputValue}`)
+        .then(() => {
+          compareWithUsers(isLoginExisted);
+        })
+        .catch((err) => {
+          openModal(err.response.status);
+          compareWithUsers(isNotLoginExisted);
+        });
+  }, [isSumbited]);
 
+  const postToDB = async () => {
+    const isLoginInDB = checkOutDB();
+    if (!isLoginInDB && isGitLoginExisted) {
+      console.log("Done!!");
+      await axios.post("http://localhost:4000/users", {
+        login: inputValue,
+        role: checkedItem,
+      });
+    }
+  };
+
+  // useEffect
   React.useEffect(() => {
     document.body.addEventListener("click", closeModal);
 
@@ -39,46 +63,30 @@ const Login: React.FC = () => {
   }, []);
 
   React.useEffect(() => {
-    if (isMounted)
-      axios
-        .get(`https://api.github.com/users/${inputValue}`)
-        .then((data) => {
-          data && setGitHubLogin(data.data.login);
-          compareWithUsers(data.data.login);
-        })
-        .catch((err) => {
-          err.response.status === 404
-            ? compareWithUsers(null)
-            : openErrorModal();
-        });
-  }, [submitClickIndicator]);
+    getGitLogin();
+  }, [getGitLogin]);
 
+  // Handlers
   const onHandleClickCheckbox = (dataCheckbox: string): void => {
     setCheckedItem(dataCheckbox);
   };
 
-  const onHandleInputValue = (e: React.FormEvent<EventTarget>): void => {
-    const target = e.target as HTMLInputElement;
+  const handleOnChange = (e: React.FormEvent<EventTarget>): void => {
+    let target = e.target as HTMLInputElement;
     setInputValue(target.value);
   };
 
-  const onHandleSubmitClicked = (): void => {
-    setSubmitClick((submitClickIndicator) => !submitClickIndicator);
-  };
-
   // Modal Window
-  const openNotFoundModal = (): void => {
-    Modal.error({
-      title: "Can`t get access",
-      content: "Please enter an existing github login",
-    });
-  };
-
-  const openErrorModal = (): void => {
-    Modal.error({
-      title: "Error",
-      content: "Please try again",
-    });
+  const openModal = (errorStatus: number): void => {
+    errorStatus === 404
+      ? Modal.error({
+          title: "Can`t get access",
+          content: "Please enter an existing github login",
+        })
+      : Modal.error({
+          title: "Error",
+          content: "Please try again",
+        });
   };
 
   const closeModal = (): void => {
@@ -86,26 +94,31 @@ const Login: React.FC = () => {
   };
 
   // Other Functions
-  const compareWithUsers = (login: string): void => {
-    if (!login) {
-      openNotFoundModal();
+  const compareWithUsers = (isLoginExisted: boolean): void => {
+    if (!isLoginExisted) {
+      setIsGitLoginExisted(false);
+    } else {
+      setIsGitLoginExisted(true);
     }
   };
 
-  const onFinishFailed = (errorInfo): void => {
-    console.log("Failed:", errorInfo);
+  const checkOutDB = () => {
+    const logins = usersDB.map((userDB) => userDB.login);
+    return logins.includes(inputValue);
+  };
+
+  const onFinish = (): void => {
+    setIsSubmited((prevState) => !prevState);
+    getGitLogin();
+    postToDB();
   };
 
   return (
     <MainLayout title="login">
-      <Form
-        style={{ marginTop: "100px" }}
-        name="basic"
-        onFinishFailed={onFinishFailed}
-      >
+      <Form style={{ marginTop: "100px" }} name="basic" onFinish={onFinish}>
         <Form.Item
-          label="Username"
-          name="username"
+          label="Login"
+          name="login"
           rules={[
             {
               required: true,
@@ -115,7 +128,7 @@ const Login: React.FC = () => {
         >
           <Input
             value={inputValue}
-            onChange={onHandleInputValue}
+            onChange={handleOnChange}
             prefix={<UserOutlined className="site-form-item-icon" />}
             placeholder="Github login"
           />
@@ -144,14 +157,7 @@ const Login: React.FC = () => {
           </div>
         </Form.Item>
         <Form.Item>
-          <Button
-            onClick={() => {
-              onHandleSubmitClicked();
-            }}
-            block
-            type="primary"
-            htmlType="submit"
-          >
+          <Button block type="primary" htmlType="submit">
             Submit
           </Button>
         </Form.Item>
@@ -160,4 +166,14 @@ const Login: React.FC = () => {
   );
 };
 
+export const getStaticProps = async () => {
+  const res = await fetch("http://localhost:4000/users");
+  const usersDB: User[] = await res.json();
+
+  return {
+    props: {
+      usersDB,
+    },
+  };
+};
 export default Login;
