@@ -23,23 +23,20 @@ const Login: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
 
   // api functions
   const getGitLogin = () => {
-    const isExisted = true;
-    const isNotExisted = false;
     if (inputValue)
       axios
         .get(`https://api.github.com/users/${inputValue}`)
         .then(() => {
-          postToDB(isExisted);
+          postToDB();
         })
         .catch((err) => {
           openModal(err.response.status);
-          postToDB(isNotExisted);
         });
   };
 
-  const postToDB = (isGitLoginExisted: boolean) => {
+  const postToDB = () => {
     const isLoginInDB = checkOutDB();
-    if (!isLoginInDB && isGitLoginExisted) {
+    if (!isLoginInDB) {
       axios.post("http://localhost:4000/users", {
         login: inputValue,
         role: checkedItem,
