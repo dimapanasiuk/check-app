@@ -31,7 +31,7 @@ const addNewTask = (name: string, target: string, technologies: string) => {
     });
 };
 
-const create = () => {
+const Create = () => {
   const onFinish = (values) => {
     const { name, target, technologies } = values;
     addNewTask(name, target, technologies);
@@ -61,4 +61,4 @@ const create = () => {
   );
 };
 
-export default create;
+export default Create;

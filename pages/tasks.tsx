@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-import MainLayout from "../../components/MainLayout";
+import MainLayout from "../components/MainLayout";
 
 import { Typography } from "antd";
 
