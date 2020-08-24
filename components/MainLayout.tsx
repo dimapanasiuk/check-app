@@ -41,9 +41,17 @@ const MainLayout: React.FC<IMainLayout> = ({
             defaultSelectedKeys={["1"]}
             className={styles.links}
           >
-            <Menu.Item key="1">nav 1</Menu.Item>
-            <Menu.Item key="2">nav 2</Menu.Item>
-            <Menu.Item key="3">nav 3</Menu.Item>
+            {/* <Menu.Item key="1">nav 1</Menu.Item> */}
+            <Menu.Item key="2">
+              <Link href="/create">
+                <a>Create task</a>
+              </Link>
+            </Menu.Item>
+            <Menu.Item key="3">
+              <Link href="/tasks">
+                <a>Tasks</a>
+              </Link>
+            </Menu.Item>
           </Menu>
 
           <div className={styles.oauth}>
