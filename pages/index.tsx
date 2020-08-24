@@ -6,7 +6,8 @@ const Home: React.FC = () => {
   return (
     <>
       <MainLayout title="home page">
-        <h1>Home page</h1>
+        <h1>Yuo page</h1>
+
       </MainLayout>
     </>
   );

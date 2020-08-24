@@ -41,7 +41,11 @@ const MainLayout: React.FC<IMainLayout> = ({
             defaultSelectedKeys={["1"]}
             className={styles.links}
           >
-            {/* <Menu.Item key="1">nav 1</Menu.Item> */}
+            <Menu.Item key="1">
+              <Link href="/">
+                <a>cabinet</a>
+              </Link>
+            </Menu.Item>
             <Menu.Item key="2">
               <Link href="/create">
                 <a>Create task</a>
