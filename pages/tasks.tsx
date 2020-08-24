@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
+import { NextPage } from "next";
 
 import MainLayout from "../components/MainLayout";
 
@@ -8,14 +9,18 @@ import { Typography } from "antd";
 
 const { Title } = Typography;
 
-const Tasks: React.FC = () => {
-  const [tasks, setTasks] = useState([]);
-  useEffect(() => {
-    // TODO: panasiuk use Home.getInitialProps instead of useEffect for SEO
-    axios
-      .get(`http://localhost:4000/tasks`)
-      .then((data) => setTasks(data.data));
-  }, []);
+interface ITaskData {
+  id: string;
+  target: string;
+  name: string;
+  technologies: string;
+}
+
+interface IGetInitialProps {
+  tasks: Array<ITaskData>;
+}
+
+const Tasks: NextPage<IGetInitialProps> = ({ tasks }: IGetInitialProps) => {
   return (
     <MainLayout title="tasks">
       <Title level={2}>Your task</Title>
@@ -30,6 +35,13 @@ const Tasks: React.FC = () => {
       </ul>
     </MainLayout>
   );
+};
+
+Tasks.getInitialProps = async () => {
+  const res = await fetch(`http://localhost:4000/tasks`);
+  const json = await res.json();
+
+  return { tasks: json };
 };
 
 export default Tasks;
