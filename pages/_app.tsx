@@ -15,7 +15,7 @@ const httpLink = new HttpLink({ uri: "https://api.github.com/graphql" });
 const authMiddleware = new ApolloLink((operation, forward) => {
   operation.setContext({
     headers: {
-      authorization: `token db65fdbe8b6a01f6b0b3acc59bc45d465e314d22` || null
+      authorization: `token YOUR_TOKEN` || null
     },
   });
 
