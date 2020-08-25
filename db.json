@@ -40,5 +40,17 @@
       "title": "your tittle",
       "body": "your body"
     }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "login": "panasiuk",
+      "role": "Student"
+    },
+    {
+      "login": "GordeySt",
+      "role": "Student",
+      "id": 2
+    }
   ]
 }
