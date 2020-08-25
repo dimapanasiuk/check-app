@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { NextPage } from "next";
+
 import MainLayout from "../components/MainLayout";
 import Chooser from "../components/cabinet/ChooseRepo";
 import CheckCommits from "../components/cabinet/CheckCommits";
@@ -7,6 +8,7 @@ import CheckCommits from "../components/cabinet/CheckCommits";
 import { Steps, Button, message } from "antd";
 
 const { Step } = Steps;
+
 
 interface IHome {
   repositories: Array<any>;
@@ -19,7 +21,6 @@ const Home: NextPage<IHome> = ({
   branches,
   commits,
 }: IHome) => {
-  console.log("commits", commits);
   const steps = [
     {
       title: "Choose Repository",
@@ -109,7 +110,7 @@ Home.getInitialProps = async () => {
   return {
     repositories: [{ name: "jsonRepositories" }],
     branches: [{ name: "jsonBranches" }],
-    commits: ['jsonCommits'],
+    commits: ["jsonCommits"],
   };
 };
 

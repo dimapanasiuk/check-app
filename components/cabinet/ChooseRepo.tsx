@@ -2,9 +2,30 @@ import React from "react";
 import { uuid } from "uuidv4";
 
 import { Typography, Select } from "antd";
+import { useQuery, gql } from "@apollo/client";
 
 const { Title } = Typography;
 const { Option } = Select;
+
+const REPOS = gql`
+  {
+    repositoryOwner(login: "GordeySt") {
+      login
+      repositories(first: 100, orderBy: { field: NAME, direction: ASC }) {
+        nodes {
+          name
+          isPrivate
+          owner {
+            login
+          }
+          defaultBranchRef {
+            name
+          }
+        }
+      }
+    }
+  }
+`;
 
 interface IChooser {
   arr: any;
@@ -28,6 +49,13 @@ const Chooser: React.FC<IChooser> = ({ arr, title }: IChooser) => {
     console.log("search:", val);
   };
 
+  const { loading, error, data } = useQuery(REPOS);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error :(</p>;
+
+  const repos = data.repositoryOwner.repositories.nodes;
+
   return (
     <>
       <Title level={2}>{title}</Title>
@@ -44,7 +72,7 @@ const Chooser: React.FC<IChooser> = ({ arr, title }: IChooser) => {
           option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
         }
       >
-        {arr.map((i) => (
+        {repos.map((i) => (
           <Option key={uuid()} value={i.name}>
             {i.name}
           </Option>
