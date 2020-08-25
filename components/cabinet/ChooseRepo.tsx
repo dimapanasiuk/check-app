@@ -27,6 +27,74 @@ const REPOS = gql`
   }
 `;
 
+const getAllBranches = gql`
+  {
+    search(query: "org:dimapanasiuk", type: REPOSITORY, last: 100) {
+      nodes {
+        ... on Repository {
+          nameWithOwner
+          refs(first: 100, refPrefix: "refs/heads/") {
+            nodes {
+              name
+              target {
+                ... on Commit {
+                  oid
+                  committedDate
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+const getAllCommitsOnBranch = gql`
+  {
+    repository(name: "todoTs", owner: "dimapanasiuk") {
+      ref(qualifiedName: "master") {
+        target {
+          ... on Commit {
+            id
+            history(first: 5) {
+              pageInfo {
+                hasNextPage
+              }
+              edges {
+                node {
+                  messageHeadline
+                  oid
+                  message
+                  author {
+                    name
+                    email
+                    date
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+const getAllReopositories = gql`
+  {
+    repository(name: "songbird", owner: "dimapanasiuk") {
+      pullRequests(last: 25) {
+        nodes {
+          id
+          title
+          createdAt
+        }
+      }
+    }
+  }
+`;
+
 interface IChooser {
   arr: any;
   title: string;
