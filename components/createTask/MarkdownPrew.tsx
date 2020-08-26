@@ -8,9 +8,7 @@ const { TextArea } = Input;
 interface IMarkdownPrew {
   getDataFoo: (data: string) => void;
 }
-const MarkdownPrew: React.FC<IMarkdownPrew> = ({
-  getDataFoo,
-}) => {
+const MarkdownPrew: React.FC<IMarkdownPrew> = ({ getDataFoo }) => {
   const [rmBody, setRmBody] = useState<string>("");
 
   const changeHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -22,7 +20,13 @@ const MarkdownPrew: React.FC<IMarkdownPrew> = ({
   return (
     <Row gutter={[8, 16]}>
       <Col span={12}>
-        <TextArea rows={4} onChange={changeHandler} value={rmBody} />
+        <TextArea
+          style={{ minHeight: "200px" }}
+          defaultValue="Enter the markdown #"
+          autoSize={true}
+          onChange={changeHandler}
+          value={rmBody}
+        />
       </Col>
       <Col span={12}>{rdmd(rmBody)}</Col>
     </Row>
