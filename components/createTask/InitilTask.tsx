@@ -2,10 +2,10 @@ import React from "react";
 import { Form, Input } from "antd";
 
 interface IInitialTask {
-  getDataFoo: any;
+  getDataFoo: (data: string) => void;
 }
 
-const InitialTask: React.FC<IInitialTask> = ({ getDataFoo }: IInitialTask) => {
+const InitialTask: React.FC<IInitialTask> = ({ getDataFoo }) => {
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     getDataFoo(e.target.value);
   };
