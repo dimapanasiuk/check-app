@@ -15,7 +15,7 @@ const httpLink = new HttpLink({ uri: "https://api.github.com/graphql" });
 const authMiddleware = new ApolloLink((operation, forward) => {
   operation.setContext({
     headers: {
-      authorization: `token YOUR_TOKEN` || null
+      authorization: `token YOUR_TOKEN` || null,
     },
   });
 
@@ -38,7 +38,7 @@ const client = new ApolloClient({
 const MyApp: any = ({ Component, pageProps }: any) => {
   return (
     <ApolloProvider client={client}>
-      <Component {...pageProps} />;
+      <Component {...pageProps} />
     </ApolloProvider>
   );
 };
