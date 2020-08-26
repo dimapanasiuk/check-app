@@ -8,6 +8,7 @@ const { TextArea } = Input;
 interface IMarkdownPrew {
   getDataFoo: (data: string) => void;
 }
+
 const MarkdownPrew: React.FC<IMarkdownPrew> = ({ getDataFoo }) => {
   const [rmBody, setRmBody] = useState<string>("");
 
@@ -22,7 +23,6 @@ const MarkdownPrew: React.FC<IMarkdownPrew> = ({ getDataFoo }) => {
       <Col span={12}>
         <TextArea
           style={{ minHeight: "200px" }}
-          defaultValue="Enter the markdown #"
           autoSize={true}
           onChange={changeHandler}
           value={rmBody}

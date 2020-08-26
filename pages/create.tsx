@@ -5,15 +5,18 @@ import InitialTask from "../components/createTask/InitilTask";
 import MarkdownPrew from "../components/createTask/MarkdownPrew";
 import CheckTask from "../components/createTask/CheckTask";
 
-import { Steps, Button, message } from "antd";
+import { Steps, Button, message, Modal } from "antd";
+import { ExclamationCircleOutlined } from "@ant-design/icons";
 
 const { Step } = Steps;
+const { confirm } = Modal;
 
 const Create = () => {
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [inputNumberValue, setInputNumberValue] = useState<number | null>(null);
   const [taskName, setTaskName] = useState<string>("");
   const [mdBodyData, setMdBodyData] = useState<string>("");
+  const [isGoneToNewPage, setIsGoneToNewPage] = useState<boolean>(false);
 
   const getDataFromInput = (data: string) => {
     setTaskName(data);
@@ -31,8 +34,26 @@ const Create = () => {
     message.error("Please enter task name and maximum score!");
   };
 
+  const openConfirmWindow = () => {
+    confirm({
+      title: "Do you Want to leave markdown empty?",
+      icon: <ExclamationCircleOutlined />,
+      onOk() {
+        setCurrentPage(currentPage + 1);
+      },
+      onCancel() {
+        console.log("Cancel");
+      },
+    });
+  };
+
   const checkInputValues = () => {
-    if (!taskName || !inputNumberValue) openErrorMessage();
+    if (!taskName || (!inputNumberValue && currentPage === 0))
+      openErrorMessage();
+  };
+
+  const checkMarkdownTextarea = () => {
+    if (!mdBodyData && currentPage === 1) openConfirmWindow();
   };
 
   const steps = [
@@ -59,7 +80,10 @@ const Create = () => {
 
   const next = () => {
     const current = currentPage + 1;
-    taskName && inputNumberValue && setCurrentPage(current);
+    taskName &&
+      inputNumberValue &&
+      currentPage !== 1 &&
+      setCurrentPage(current);
   };
 
   const prev = () => {
@@ -82,6 +106,7 @@ const Create = () => {
             onClick={() => {
               next();
               checkInputValues();
+              checkMarkdownTextarea();
             }}
           >
             Next
