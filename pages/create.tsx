@@ -12,7 +12,7 @@ const { Step } = Steps;
 const Create = () => {
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [inputNumberValue, setInputNumberValue] = useState<number | null>(null);
-  const [taskName, setTaskName] = useState<string>("error");
+  const [taskName, setTaskName] = useState<string>("");
   const [mdBodyData, setMdBodyData] = useState<string>("");
 
   const getDataFromInput = (data: string) => {
@@ -32,7 +32,7 @@ const Create = () => {
   };
 
   const checkInputValues = () => {
-    taskName === "error" && !inputNumberValue ? openErrorMessage() : "";
+    if (!taskName || !inputNumberValue) openErrorMessage();
   };
 
   const steps = [
@@ -42,6 +42,8 @@ const Create = () => {
         <InitialTask
           getDataFoo={getDataFromInput}
           getDataFromInputNumber={getDataFromInputNumber}
+          taskName={taskName}
+          inputNumberValue={inputNumberValue}
         />
       ),
     },
@@ -57,7 +59,7 @@ const Create = () => {
 
   const next = () => {
     const current = currentPage + 1;
-    taskName !== "error" && inputNumberValue && setCurrentPage(current);
+    taskName && inputNumberValue && setCurrentPage(current);
   };
 
   const prev = () => {

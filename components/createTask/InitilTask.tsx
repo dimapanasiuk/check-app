@@ -4,12 +4,17 @@ import { Form, Input, InputNumber } from "antd";
 interface IInitialTask {
   getDataFoo: (data: string) => void;
   getDataFromInputNumber: (data: number) => void;
+  taskName: string;
+  inputNumberValue: number;
 }
 
 const InitialTask: React.FC<IInitialTask> = ({
   getDataFoo,
   getDataFromInputNumber,
+  taskName,
+  inputNumberValue,
 }) => {
+  console.log(taskName, inputNumberValue);
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     getDataFoo(e.target.value);
   };
@@ -42,7 +47,11 @@ const InitialTask: React.FC<IInitialTask> = ({
           },
         ]}
       >
-        <InputNumber min={1} max={500} onChange={onInputNumberChange} />
+        <InputNumber
+          min={1}
+          max={500}
+          onChange={onInputNumberChange}
+        />
       </Form.Item>
     </Form>
   );
