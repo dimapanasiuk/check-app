@@ -15,12 +15,12 @@ const Home: NextPage = () => {
     {
       title: "Choose Repository",
       content: (
-        <Chooser title="Choose Repository and branch in which you worked" />
+        <Chooser title="Choose Repository and branch you worked with" />
       ),
     },
     {
-      title: "Check your commits",
-      content: <CheckCommits title="Check commits" />,
+      title: "Check out your commits",
+      content: <CheckCommits title="Check out commits" />,
     },
     {
       title: "Choose PR",
