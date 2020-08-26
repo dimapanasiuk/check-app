@@ -11,7 +11,7 @@ const { Title } = Typography;
 export function MainLayout({ children, title = "next app" }) {
   return (
     <>
-      <Layout style={{ height: "100%" }}>
+      <Layout style={{ height: "100vh" }}>
         <Header className={styles.header}>
           <Link href="/">
             <a>
