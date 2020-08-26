@@ -16,7 +16,6 @@ const Create = () => {
   const [inputNumberValue, setInputNumberValue] = useState<number | null>(null);
   const [taskName, setTaskName] = useState<string>("");
   const [mdBodyData, setMdBodyData] = useState<string>("");
-  const [isGoneToNewPage, setIsGoneToNewPage] = useState<boolean>(false);
 
   const getDataFromInput = (data: string) => {
     setTaskName(data);
