@@ -23,8 +23,16 @@ const Create = () => {
     setInputNumberValue(data);
   };
 
-  const getDataFromTextAria = (data: string) => {
+  const getDataFromTextArea = (data: string) => {
     setMdBodyData(data);
+  };
+
+  const openErrorMessage = () => {
+    message.error("Please enter task name and maximum score!");
+  };
+
+  const checkInputValues = () => {
+    taskName === "error" && inputNumberValue === 0 ? openErrorMessage() : "";
   };
 
   const steps = [
@@ -39,7 +47,7 @@ const Create = () => {
     },
     {
       title: "Create Markdown page",
-      content: <MarkdownPrew getDataFoo={getDataFromTextAria} />,
+      content: <MarkdownPrew getDataFoo={getDataFromTextArea} />,
     },
     {
       title: "Check data",
@@ -49,7 +57,7 @@ const Create = () => {
 
   const next = () => {
     const current = currentPage + 1;
-    setCurrentPage(current);
+    taskName !== "error" && inputNumberValue !== 0 && setCurrentPage(current);
   };
 
   const prev = () => {
@@ -67,7 +75,13 @@ const Create = () => {
       <div className="steps-content">{steps[currentPage].content}</div>
       <div className="steps-action">
         {currentPage < steps.length - 1 && (
-          <Button type="primary" onClick={() => next()}>
+          <Button
+            type="primary"
+            onClick={() => {
+              next();
+              checkInputValues();
+            }}
+          >
             Next
           </Button>
         )}
