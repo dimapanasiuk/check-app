@@ -10,10 +10,10 @@ import { Steps, Button, message } from "antd";
 const { Step } = Steps;
 
 const Create = () => {
-  const [currentPage, setCurrentPage] = useState(0);
-  const [inputNumberValue, setInputNumberValue] = useState(0);
-  const [taskName, setTaskName] = useState("error");
-  const [mdBodyData, setMdBodyData] = useState("");
+  const [currentPage, setCurrentPage] = useState<number>(0);
+  const [inputNumberValue, setInputNumberValue] = useState<number | null>(null);
+  const [taskName, setTaskName] = useState<string>("error");
+  const [mdBodyData, setMdBodyData] = useState<string>("");
 
   const getDataFromInput = (data: string) => {
     setTaskName(data);
@@ -32,7 +32,7 @@ const Create = () => {
   };
 
   const checkInputValues = () => {
-    taskName === "error" && inputNumberValue === 0 ? openErrorMessage() : "";
+    taskName === "error" && !inputNumberValue ? openErrorMessage() : "";
   };
 
   const steps = [
@@ -57,7 +57,7 @@ const Create = () => {
 
   const next = () => {
     const current = currentPage + 1;
-    taskName !== "error" && inputNumberValue !== 0 && setCurrentPage(current);
+    taskName !== "error" && inputNumberValue && setCurrentPage(current);
   };
 
   const prev = () => {
