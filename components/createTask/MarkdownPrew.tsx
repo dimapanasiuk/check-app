@@ -6,12 +6,12 @@ import { Row, Col, Input } from "antd";
 const { TextArea } = Input;
 
 interface IMarkdownPrew {
-  getDataFoo: any;
+  getDataFoo: (data: string) => void;
 }
 const MarkdownPrew: React.FC<IMarkdownPrew> = ({
   getDataFoo,
-}: IMarkdownPrew) => {
-  const [rmBody, setRmBody] = useState("# write your markdown");
+}) => {
+  const [rmBody, setRmBody] = useState<string>("");
 
   const changeHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { value } = e.target;
