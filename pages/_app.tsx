@@ -10,6 +10,7 @@ import {
   concat,
 } from "@apollo/client";
 
+
 const httpLink = new HttpLink({ uri: "https://api.github.com/graphql" });
 
 const authMiddleware = new ApolloLink((operation, forward) => {
