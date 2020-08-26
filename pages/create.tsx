@@ -1,62 +1,80 @@
-import React from "react";
-import axios from "axios";
-import { uuid } from "uuidv4";
+import React, { useState } from "react";
 
 import MainLayout from "../components/MainLayout";
+import InitialTask from "../components/createTask/InitilTask";
+import MarkdownPrew from "../components/createTask/MarkdownPrew";
+import CheckTask from "../components/createTask/CheckTask";
 
-import { Form, Input, Button } from "antd";
+import { Steps, Button, message } from "antd";
 
-const layout = {
-  labelCol: {
-    span: 2,
-  },
-  wrapperCol: {
-    span: 12,
-  },
-};
-
-const addNewTask = (name: string, target: string, technologies: string) => {
-  axios
-    .post("http://localhost:4000/tasks", {
-      id: uuid(),
-      name: name,
-      target: target,
-      technologies: technologies,
-    })
-    .then(function (response) {
-      console.log("response", response);
-    })
-    .catch(function (error) {
-      console.log("error", error);
-    });
-};
+const { Step } = Steps;
 
 const Create = () => {
-  const onFinish = (values) => {
-    const { name, target, technologies } = values;
-    addNewTask(name, target, technologies);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [taskName, setTaskName] = useState("error");
+  const [mdBodyData, setMdBodyData] = useState("");
+
+  const getDataFromInput = (data: string) => {
+    setTaskName(data);
+  };
+
+  const getDataFromTextAria = (data: string) => {
+    setMdBodyData(data);
+  };
+
+  const steps = [
+    {
+      title: "Initial task",
+      content: <InitialTask getDataFoo={getDataFromInput} />,
+    },
+    {
+      title: "Create Markdown page",
+      content: <MarkdownPrew getDataFoo={getDataFromTextAria}/>,
+    },
+    {
+      title: "Check data",
+      content: <CheckTask rmBody={mdBodyData} taskName={taskName} />,
+    },
+  ];
+
+  const next = () => {
+    const current = currentPage + 1;
+    setCurrentPage(current);
+  };
+
+  const prev = () => {
+    const current = currentPage - 1;
+    setCurrentPage(current);
   };
 
   return (
     <MainLayout title="create task">
-      <Form {...layout} name="nest-messages" onFinish={onFinish}>
-        <Form.Item name={"name"} label="Name Task">
-          <Input />
-        </Form.Item>
-
-        <Form.Item name={"target"} label="Цели задания">
-          <Input.TextArea />
-        </Form.Item>
-
-        <Form.Item name={"technologies"} label="Технологии">
-          <Input.TextArea />
-        </Form.Item>
-        <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 2 }}>
-          <Button type="primary" htmlType="submit">
-            Submit
+      <Steps current={currentPage} style={{ marginBottom: "20px" }}>
+        {steps.map((item) => (
+          <Step key={item.title} title={item.title} />
+        ))}
+      </Steps>
+      <div className="steps-content">{steps[currentPage].content}</div>
+      <div className="steps-action">
+        {currentPage < steps.length - 1 && (
+          <Button type="primary" onClick={() => next()}>
+            Next
           </Button>
-        </Form.Item>
-      </Form>
+        )}
+        {currentPage === steps.length - 1 && (
+          <Button
+            type="primary"
+            onClick={() => message.success("Processing complete!")}
+          >
+            Done
+          </Button>
+        )}
+        {currentPage > 0 && (
+          <Button style={{ margin: "0 8px" }} onClick={() => prev()}>
+            Previous
+          </Button>
+        )}
+      </div>
     </MainLayout>
   );
 };

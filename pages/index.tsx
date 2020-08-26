@@ -24,19 +24,19 @@ const Home: NextPage<IHome> = ({
   const steps = [
     {
       title: "Choose Repository",
-      content: <Chooser arr={repositories} title="Choose Repository" />,
+      content: <Chooser title="Choose Repository" />,
     },
     {
       title: "Choose Branch",
-      content: <Chooser arr={branches} title="Choose Branch" />,
+      content: <Chooser title="Choose Branch" />,
     },
     {
       title: "Check commits",
-      content: <CheckCommits arr={commits} title="Check commits" />,
+      content: <CheckCommits  title="Check commits" />,
     },
     {
       title: "Choose PR",
-      content: <Chooser arr={repositories} title="Choose PR" />,
+      content: <Chooser title="Choose PR" />,
     },
   ];
 
@@ -84,34 +84,6 @@ const Home: NextPage<IHome> = ({
       </MainLayout>
     </>
   );
-};
-
-Home.getInitialProps = async () => {
-  //get all repos
-  // const resRepositories = await fetch(
-  //   `https://api.github.com/users/dimapanasiuk/repos`
-  // );
-  // const jsonRepositories = await resRepositories.json();
-
-  //get all branches
-  // const resBranches = await fetch(
-  //   `https://api.github.com/repos/dimapanasiuk/todoTS/branches`
-  // );
-  // const jsonBranches = await resBranches.json();
-
-  //get all commits work not good
-  // const resCommits = await fetch(
-  //   `https://api.github.com/repos/dimapanasiuk/todoTS/commits/master`
-  // );
-  // const jsonCommits = await resCommits.json();
-
-  //https://api.github.com/repos/dimapanasiuk/todoTS/branches/master one branches and information about this branch
-
-  return {
-    repositories: [{ name: "jsonRepositories" }],
-    branches: [{ name: "jsonBranches" }],
-    commits: ["jsonCommits"],
-  };
 };
 
 export default Home;

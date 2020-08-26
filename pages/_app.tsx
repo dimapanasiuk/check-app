@@ -10,12 +10,13 @@ import {
   concat,
 } from "@apollo/client";
 
+
 const httpLink = new HttpLink({ uri: "https://api.github.com/graphql" });
 
 const authMiddleware = new ApolloLink((operation, forward) => {
   operation.setContext({
     headers: {
-      authorization: `token YOUR_TOKEN` || null
+      authorization: `token 61f11704bd7360c381f213f604961066e8e74f4c` || null
     },
   });
 
