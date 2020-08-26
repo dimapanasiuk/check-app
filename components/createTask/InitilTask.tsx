@@ -1,13 +1,21 @@
 import React from "react";
-import { Form, Input } from "antd";
+import { Form, Input, InputNumber } from "antd";
 
 interface IInitialTask {
   getDataFoo: (data: string) => void;
+  getDataFromInputNumber: (data: number) => void;
 }
 
-const InitialTask: React.FC<IInitialTask> = ({ getDataFoo }) => {
+const InitialTask: React.FC<IInitialTask> = ({
+  getDataFoo,
+  getDataFromInputNumber,
+}) => {
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     getDataFoo(e.target.value);
+  };
+
+  const onInputNumberChange = (value) => {
+    getDataFromInputNumber(value);
   };
 
   return (
@@ -23,6 +31,18 @@ const InitialTask: React.FC<IInitialTask> = ({ getDataFoo }) => {
         ]}
       >
         <Input onChange={changeHandler} />
+      </Form.Item>
+      <Form.Item
+        name={"score"}
+        label="Maximum score"
+        rules={[
+          {
+            required: true,
+            message: "Please input score!",
+          },
+        ]}
+      >
+        <InputNumber min={1} max={500} onChange={onInputNumberChange} />
       </Form.Item>
     </Form>
   );

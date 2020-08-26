@@ -11,11 +11,16 @@ const { Step } = Steps;
 
 const Create = () => {
   const [currentPage, setCurrentPage] = useState(0);
+  const [inputNumberValue, setInputNumberValue] = useState(0);
   const [taskName, setTaskName] = useState("error");
   const [mdBodyData, setMdBodyData] = useState("");
 
   const getDataFromInput = (data: string) => {
     setTaskName(data);
+  };
+
+  const getDataFromInputNumber = (data: number) => {
+    setInputNumberValue(data);
   };
 
   const getDataFromTextAria = (data: string) => {
@@ -25,11 +30,16 @@ const Create = () => {
   const steps = [
     {
       title: "Initial task",
-      content: <InitialTask getDataFoo={getDataFromInput} />,
+      content: (
+        <InitialTask
+          getDataFoo={getDataFromInput}
+          getDataFromInputNumber={getDataFromInputNumber}
+        />
+      ),
     },
     {
       title: "Create Markdown page",
-      content: <MarkdownPrew getDataFoo={getDataFromTextAria}/>,
+      content: <MarkdownPrew getDataFoo={getDataFromTextAria} />,
     },
     {
       title: "Check data",
