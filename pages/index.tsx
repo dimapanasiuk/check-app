@@ -4,39 +4,27 @@ import { NextPage } from "next";
 import MainLayout from "../components/MainLayout";
 import Chooser from "../components/cabinet/ChooseRepo";
 import CheckCommits from "../components/cabinet/CheckCommits";
+import ChoosePR from "../components/cabinet/ChoosePr";
 
 import { Steps, Button, message } from "antd";
 
 const { Step } = Steps;
 
-
-interface IHome {
-  repositories: Array<any>;
-  branches: Array<any>;
-  commits: Array<any>;
-}
-
-const Home: NextPage<IHome> = ({
-  repositories = [{ name: "nothing", id: 1123234 }],
-  branches,
-  commits,
-}: IHome) => {
+const Home: NextPage = () => {
   const steps = [
     {
       title: "Choose Repository",
-      content: <Chooser title="Choose Repository" />,
+      content: (
+        <Chooser title="Choose Repository and branch in which you worked" />
+      ),
     },
     {
-      title: "Choose Branch",
-      content: <Chooser title="Choose Branch" />,
-    },
-    {
-      title: "Check commits",
-      content: <CheckCommits  title="Check commits" />,
+      title: "Check your commits",
+      content: <CheckCommits title="Check commits" />,
     },
     {
       title: "Choose PR",
-      content: <Chooser title="Choose PR" />,
+      content: <ChoosePR title="Choose your pull request" />,
     },
   ];
 

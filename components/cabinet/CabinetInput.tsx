@@ -6,12 +6,10 @@ import { Select } from "antd";
 const { Option } = Select;
 
 interface ICustomInput {
-  repos: any;
+  arr: any;
 }
 
-const CabinetInput: React.FC<ICustomInput> = ({
-  repos,
-}: ICustomInput) => {
+const CabinetInput: React.FC<ICustomInput> = ({ arr }: ICustomInput) => {
   const onChange = (value: string) => {
     console.log(`selected ${value}`);
   };
@@ -41,9 +39,9 @@ const CabinetInput: React.FC<ICustomInput> = ({
           option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
         }
       >
-        {repos.map((i) => (
+        {arr.map((i) => (
           <Option key={uuid()} value={i.name}>
-            {i.name}
+            {i.name || i.node.name}
           </Option>
         ))}
       </Select>

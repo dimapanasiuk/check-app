@@ -27,68 +27,18 @@ const REPOS = gql`
   }
 `;
 
-const getAllBranches = gql`
+const GET_ALL_BRANCHES_IN_REPO = gql`
   {
-    search(query: "org:dimapanasiuk", type: REPOSITORY, last: 100) {
-      nodes {
-        ... on Repository {
-          nameWithOwner
-          refs(first: 100, refPrefix: "refs/heads/") {
-            nodes {
-              name
-              target {
-                ... on Commit {
-                  oid
-                  committedDate
-                }
-              }
-            }
+    repository(owner: "dimapanasiuk", name: "todoTs") {
+      refs(
+        refPrefix: "refs/heads/"
+        orderBy: { direction: DESC, field: TAG_COMMIT_DATE }
+        first: 100
+      ) {
+        edges {
+          node {
+            name
           }
-        }
-      }
-    }
-  }
-`;
-
-const getAllCommitsOnBranch = gql`
-  {
-    repository(name: "todoTs", owner: "dimapanasiuk") {
-      ref(qualifiedName: "master") {
-        target {
-          ... on Commit {
-            id
-            history(first: 5) {
-              pageInfo {
-                hasNextPage
-              }
-              edges {
-                node {
-                  messageHeadline
-                  oid
-                  message
-                  author {
-                    name
-                    email
-                    date
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
-
-const getAllReopositories = gql`
-  {
-    repository(name: "songbird", owner: "dimapanasiuk") {
-      pullRequests(last: 25) {
-        nodes {
-          id
-          title
-          createdAt
         }
       }
     }
@@ -100,17 +50,22 @@ interface IChooser {
 }
 
 const Chooser: React.FC<IChooser> = ({ title }: IChooser) => {
-  const { loading, error, data } = useQuery(REPOS);
+  const repos = useQuery(REPOS);
+  const branches = useQuery(GET_ALL_BRANCHES_IN_REPO);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
+  if (repos.loading) return <p>Loading...</p>;
+  if (repos.error) return <p>Error :(</p>;
+  if (branches.loading) return <p>Loading...</p>;
+  if (branches.error) return <p>Error :(</p>;
 
-  const repos = data.repositoryOwner.repositories.nodes;
+  const branchesData = branches.data.repository.refs.edges;
+  const reposData = repos.data.repositoryOwner.repositories.nodes;
 
   return (
     <>
       <Title level={2}>{title}</Title>
-      <CabinetInput repos={repos} />
+      <CabinetInput arr={reposData} />
+      <CabinetInput arr={branchesData} />
     </>
   );
 };
