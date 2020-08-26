@@ -21,7 +21,7 @@ const MainLayout: React.FC<IMainLayout> = ({
 }: IMainLayout) => {
   return (
     <>
-      <Layout style={{ height: "100vh" }}>
+      <Layout style={{ minHeight: "100vh" }}>
         <Header className={styles.header}>
           <Link href="/">
             <a>
