@@ -21,11 +21,7 @@ const MainLayout: React.FC<IMainLayout> = ({
 }: IMainLayout) => {
   return (
     <>
-      <Head>
-        <title>{title}</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <Layout style={{ height: "100%" }}>
+      <Layout style={{ height: "100vh" }}>
         <Header className={styles.header}>
           <Link href="/">
             <a>
