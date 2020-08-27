@@ -17,15 +17,15 @@ const Create = () => {
   const [taskName, setTaskName] = useState<string>("");
   const [mdBodyData, setMdBodyData] = useState<string>("");
 
-  const getDataFromInput = (data: string) => {
+  const getDataFromTaskname = (data: string) => {
     setTaskName(data);
   };
 
-  const getDataFromInputNumber = (data: number) => {
+  const getDataFromMaxScore = (data: number) => {
     setInputNumberValue(data);
   };
 
-  const getDataFromTextArea = (data: string) => {
+  const getDataFromMarkdown = (data: string) => {
     setMdBodyData(data);
   };
 
@@ -60,8 +60,8 @@ const Create = () => {
       title: "Initial task",
       content: (
         <InitialTask
-          getDataFoo={getDataFromInput}
-          getDataFromInputNumber={getDataFromInputNumber}
+          getDataFoo={getDataFromTaskname}
+          getDataFromInputNumber={getDataFromMaxScore}
           taskName={taskName}
           inputNumberValue={inputNumberValue}
         />
@@ -69,7 +69,7 @@ const Create = () => {
     },
     {
       title: "Create Markdown page",
-      content: <MarkdownPrew getDataFoo={getDataFromTextArea} />,
+      content: <MarkdownPrew getDataFoo={getDataFromMarkdown} />,
     },
     {
       title: "Check data",
