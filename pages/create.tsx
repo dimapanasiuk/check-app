@@ -15,6 +15,7 @@ const Create = () => {
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [inputNumberValue, setInputNumberValue] = useState<number | null>(null);
   const [taskName, setTaskName] = useState<string>("");
+  const [taskDescription, setTaskDescription] = useState<string>("");
   const [mdBodyData, setMdBodyData] = useState<string>("");
 
   const getDataFromTaskname = (data: string) => {
@@ -28,6 +29,10 @@ const Create = () => {
   const getDataFromMarkdown = (data: string) => {
     setMdBodyData(data);
   };
+
+  const getDataFromTaskDescription = (data: string) => {
+    setTaskDescription(data);
+  }
 
   const openErrorMessage = () => {
     message.error("Please enter task name and maximum score!");
@@ -62,8 +67,10 @@ const Create = () => {
         <InitialTask
           getDataFoo={getDataFromTaskname}
           getDataFromInputNumber={getDataFromMaxScore}
+          getDataFromTextArea={getDataFromTaskDescription}
           taskName={taskName}
           inputNumberValue={inputNumberValue}
+
         />
       ),
     },

@@ -4,6 +4,7 @@ import { Form, Input, InputNumber } from "antd";
 interface IInitialTask {
   getDataFoo: (data: string) => void;
   getDataFromInputNumber: (data: number) => void;
+  getDataFromTextArea: (data: string) => void;
   taskName: string;
   inputNumberValue: number;
 }
@@ -13,6 +14,7 @@ const { TextArea } = Input;
 const InitialTask: React.FC<IInitialTask> = ({
   getDataFoo,
   getDataFromInputNumber,
+  getDataFromTextArea,
   taskName,
   inputNumberValue,
 }) => {
@@ -22,10 +24,10 @@ const InitialTask: React.FC<IInitialTask> = ({
   };
 
   const changeTextAreaHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    getDataFoo(e.target.value);
+    getDataFromTextArea(e.target.value);
   };
 
-  const onInputNumberChange = (value) => {
+  const changeInputNumberHandler = (value) => {
     getDataFromInputNumber(value);
   };
 
@@ -56,7 +58,7 @@ const InitialTask: React.FC<IInitialTask> = ({
           },
         ]}
       >
-        <InputNumber min={1} max={500} onChange={onInputNumberChange} />
+        <InputNumber min={1} max={500} onChange={changeInputNumberHandler} />
       </Form.Item>
     </Form>
   );
