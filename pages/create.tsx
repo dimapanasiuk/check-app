@@ -73,7 +73,13 @@ const Create = () => {
     },
     {
       title: "Check data",
-      content: <CheckTask rmBody={mdBodyData} taskName={taskName} />,
+      content: (
+        <CheckTask
+          rmBody={mdBodyData}
+          taskName={taskName}
+          maxScore={inputNumberValue}
+        />
+      ),
     },
   ];
 
