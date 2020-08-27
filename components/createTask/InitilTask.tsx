@@ -7,6 +7,7 @@ interface IInitialTask {
   getDataFromTextArea: (data: string) => void;
   taskName: string;
   inputNumberValue: number;
+  taskDescription: string;
 }
 
 const { TextArea } = Input;
@@ -17,8 +18,8 @@ const InitialTask: React.FC<IInitialTask> = ({
   getDataFromTextArea,
   taskName,
   inputNumberValue,
+  taskDescription,
 }) => {
-  
   const changeInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     getDataFoo(e.target.value);
   };
@@ -36,6 +37,7 @@ const InitialTask: React.FC<IInitialTask> = ({
       <Form.Item
         name={"name"}
         label="Task Name"
+        initialValue={taskName}
         rules={[
           {
             required: true,
@@ -45,12 +47,21 @@ const InitialTask: React.FC<IInitialTask> = ({
       >
         <Input onChange={changeInputHandler} />
       </Form.Item>
-      <Form.Item name={"description"} label="Task description">
-        <TextArea onChange={changeTextAreaHandler} autoSize={true} style={{ minHeight: "200px" }} />
+      <Form.Item
+        name={"description"}
+        label="Task description"
+        initialValue={taskDescription}
+      >
+        <TextArea
+          onChange={changeTextAreaHandler}
+          autoSize={true}
+          style={{ minHeight: "200px" }}
+        />
       </Form.Item>
       <Form.Item
         name={"score"}
         label="Maximum score"
+        initialValue={inputNumberValue}
         rules={[
           {
             required: true,

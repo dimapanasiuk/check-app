@@ -32,7 +32,7 @@ const Create = () => {
 
   const getDataFromTaskDescription = (data: string) => {
     setTaskDescription(data);
-  }
+  };
 
   const openErrorMessage = () => {
     message.error("Please enter task name and maximum score!");
@@ -70,7 +70,7 @@ const Create = () => {
           getDataFromTextArea={getDataFromTaskDescription}
           taskName={taskName}
           inputNumberValue={inputNumberValue}
-
+          taskDescription={taskDescription}
         />
       ),
     },
