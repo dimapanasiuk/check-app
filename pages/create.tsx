@@ -85,6 +85,7 @@ const Create = () => {
           rmBody={mdBodyData}
           taskName={taskName}
           maxScore={inputNumberValue}
+          taskDescription={taskDescription}
         />
       ),
     },
