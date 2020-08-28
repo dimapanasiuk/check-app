@@ -1,4 +1,6 @@
 import React from "react";
+import { AppProps } from "next/app";
+import { wrapper } from "../redux/store";
 
 import "antd/dist/antd.css";
 import {
@@ -9,7 +11,6 @@ import {
   InMemoryCache,
   concat,
 } from "@apollo/client";
-
 
 const httpLink = new HttpLink({ uri: "https://api.github.com/graphql" });
 
@@ -26,17 +27,9 @@ const authMiddleware = new ApolloLink((operation, forward) => {
 const client = new ApolloClient({
   cache: new InMemoryCache(),
   link: concat(authMiddleware, httpLink),
-  // onError: ({ networkError, graphQLErrors }) => {
-  //   if (graphQLErrors) {
-  //     console.warn("graphQLErrors", graphQLErrors);
-  //   }
-  //   if (networkError) {
-  //     console.warn("networkError", networkError);
-  //   }
-  // },
 });
 
-const MyApp: any = ({ Component, pageProps }: any) => {
+const MyApp: React.FC<AppProps> = ({ Component, pageProps }: AppProps) => {
   return (
     <ApolloProvider client={client}>
       <Component {...pageProps} />
@@ -44,4 +37,4 @@ const MyApp: any = ({ Component, pageProps }: any) => {
   );
 };
 
-export default MyApp;
+export default wrapper.withRedux(MyApp);
