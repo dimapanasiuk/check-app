@@ -11,7 +11,7 @@ import { ExclamationCircleOutlined } from "@ant-design/icons";
 const { Step } = Steps;
 const { confirm } = Modal;
 
-const Create = () => {
+const Create = (): JSX.Element => {
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [inputNumberValue, setInputNumberValue] = useState<number | null>(null);
   const [taskName, setTaskName] = useState<string>("");

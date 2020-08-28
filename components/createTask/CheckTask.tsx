@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import rdmd from "@readme/markdown";
 
 interface ICheckTask {
@@ -13,7 +13,7 @@ const CheckTask: React.FC<ICheckTask> = ({
   taskName,
   maxScore,
   taskDescription,
-}) => {
+}: ICheckTask) => {
   return (
     <>
       <div style={{ textAlign: "center" }}>

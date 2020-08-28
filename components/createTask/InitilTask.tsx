@@ -19,7 +19,7 @@ const InitialTask: React.FC<IInitialTask> = ({
   taskName,
   inputNumberValue,
   taskDescription,
-}) => {
+}: IInitialTask) => {
   const changeInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     getDataFoo(e.target.value);
   };

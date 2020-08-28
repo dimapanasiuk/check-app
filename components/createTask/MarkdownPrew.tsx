@@ -9,7 +9,7 @@ interface IMarkdownPrew {
   getDataFoo: (data: string) => void;
 }
 
-const MarkdownPrew: React.FC<IMarkdownPrew> = ({ getDataFoo }) => {
+const MarkdownPrew: React.FC<IMarkdownPrew> = ({ getDataFoo }: IMarkdownPrew) => {
   const [rmBody, setRmBody] = useState<string>("");
 
   const changeHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
