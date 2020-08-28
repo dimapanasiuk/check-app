@@ -28,9 +28,8 @@ const CheckTask: React.FC<ICheckTask> = ({
             </h1>
           </React.Fragment>
         )}
-
-        {rdmd(rmBody)}
       </div>
+      {rdmd(rmBody)}
     </>
   );
 };
