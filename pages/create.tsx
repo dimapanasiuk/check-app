@@ -43,21 +43,17 @@ const Create = () => {
       title: "Do you Want to leave markdown empty?",
       icon: <ExclamationCircleOutlined />,
       onOk() {
-        setCurrentPage(currentPage + 1);
-      },
-      onCancel() {
-        console.log("Cancel");
+        next();
       },
     });
   };
 
   const checkInputValues = () => {
-    if (!taskName || (!inputNumberValue && currentPage === 0))
-      openErrorMessage();
+    !taskName || !inputNumberValue ? openErrorMessage() : next();
   };
 
   const checkMarkdownTextarea = () => {
-    if (!mdBodyData && currentPage === 1) openConfirmWindow();
+    !mdBodyData ? openConfirmWindow() : next();
   };
 
   const steps = [
@@ -92,11 +88,7 @@ const Create = () => {
   ];
 
   const next = () => {
-    const current = currentPage + 1;
-    taskName &&
-      inputNumberValue &&
-      currentPage !== 1 &&
-      setCurrentPage(current);
+    setCurrentPage(currentPage + 1);
   };
 
   const prev = () => {
@@ -117,9 +109,8 @@ const Create = () => {
           <Button
             type="primary"
             onClick={() => {
-              next();
-              checkInputValues();
-              checkMarkdownTextarea();
+              currentPage === 0 && checkInputValues();
+              currentPage === 1 && checkMarkdownTextarea();
             }}
           >
             Next
