@@ -23,6 +23,7 @@ interface IGetInitialProps {
 }
 
 const Tasks: NextPage<IGetInitialProps> = ({ tasks }: IGetInitialProps) => {
+
   return (
     <MainLayout title="tasks">
       <Title level={2}>Your task</Title>

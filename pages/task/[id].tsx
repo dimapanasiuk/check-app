@@ -2,9 +2,10 @@ import React from "react";
 import { NextPage } from "next";
 import MaiLayout from "../../components/MainLayout";
 import { ITaskData } from "../tasks";
-import { Divider, Button, Modal } from "antd";
+import { Divider, Button, Modal, message } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
-import { ExclamationCircleOutlined } from '@ant-design/icons';
+import { ExclamationCircleOutlined } from "@ant-design/icons";
+import { useRouter } from "next/router";
 
 const { confirm } = Modal;
 
@@ -13,18 +14,36 @@ interface IGetInitialProps {
 }
 
 const Task: NextPage<IGetInitialProps> = ({ taskData }: IGetInitialProps) => {
+  const router = useRouter();
+
+  const deleteTask = async () => {
+    const nodeId = router.query.id;
+    try {
+      await fetch(`http://localhost:4000/tasks/${nodeId}`, {
+        method: "Delete",
+      });
+
+      router.push("/tasks");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const showSuccessMessage = () => {
+    message.success("Task has been deleted");
+  };
+
   const showConfirm = () => {
     confirm({
       title: "Do you really want to delete this task?",
       icon: <ExclamationCircleOutlined />,
       onOk() {
-        console.log("OK");
-      },
-      onCancel() {
-        console.log("Cancel");
+        deleteTask();
+        showSuccessMessage();
       },
     });
-  }
+  };
+
   return (
     <MaiLayout title={`task ${taskData.taskName}`}>
       <div style={{ fontSize: "16px" }}>
