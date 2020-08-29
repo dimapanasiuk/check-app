@@ -13,7 +13,7 @@ const { Title } = Typography;
 interface ITaskData {
   id: string;
   taskName: string;
-  taskDecription: string;
+  taskDescription: string;
   maxScore: number;
   markdown: string;
 }
@@ -27,17 +27,22 @@ const Tasks: NextPage<IGetInitialProps> = ({ tasks }: IGetInitialProps) => {
     <MainLayout title="tasks">
       <Title level={2}>Your task</Title>
       <ul className={styles.layout}>
-        {tasks.map((i) => (
-          <li key={i.id} className={styles.list}>
-            <Link href={`task/[id]`} as={`/task/${i.id}`}>
-              <a>
-                <Card hoverable style={{ width: 240, listStyleType: "none" }}>
-                  <Meta title={i.taskName} description={i.taskDecription} />
-                </Card>
-              </a>
-            </Link>
-          </li>
-        ))}
+        {tasks.map((i) => {
+          const description =
+            i.taskDescription &&
+            i.taskDescription.split(" ").splice(0, 5).join(" ");
+          return (
+            <li key={i.id} className={styles.list}>
+              <Link href={`task/[id]`} as={`/task/${i.id}`}>
+                <a>
+                  <Card hoverable style={{ width: 240, listStyleType: "none" }}>
+                    <Meta title={i.taskName} description={description} />
+                  </Card>
+                </a>
+              </Link>
+            </li>
+          );
+        })}
       </ul>
     </MainLayout>
   );
