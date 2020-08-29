@@ -1,15 +1,53 @@
 import React from "react";
 import { NextPage } from "next";
 import MaiLayout from "../../components/MainLayout";
+import { ITaskData } from "../tasks";
+import { Divider, Button, Modal } from "antd";
+import { DeleteOutlined } from "@ant-design/icons";
+import { ExclamationCircleOutlined } from '@ant-design/icons';
+
+const { confirm } = Modal;
 
 interface IGetInitialProps {
-  taskData: any;
+  taskData: ITaskData;
 }
 
 const Task: NextPage<IGetInitialProps> = ({ taskData }: IGetInitialProps) => {
+  const showConfirm = () => {
+    confirm({
+      title: "Do you really want to delete this task?",
+      icon: <ExclamationCircleOutlined />,
+      onOk() {
+        console.log("OK");
+      },
+      onCancel() {
+        console.log("Cancel");
+      },
+    });
+  }
   return (
-    <MaiLayout title={`task ${taskData.name}`}>
-      <h1>{taskData.name}</h1>
+    <MaiLayout title={`task ${taskData.taskName}`}>
+      <div style={{ fontSize: "16px" }}>
+        <Button type="danger" onClick={showConfirm}>
+          <DeleteOutlined /> Delete
+        </Button>
+        <Divider orientation="left">Task name</Divider>
+        <div>{taskData.taskName}</div>
+        {taskData.taskDescription && (
+          <React.Fragment>
+            <Divider orientation="left">Task description</Divider>
+            <div>{taskData.taskDescription}</div>
+          </React.Fragment>
+        )}
+        <Divider orientation="left">Max score</Divider>
+        <div>{taskData.maxScore}</div>
+        {taskData.markdown && (
+          <React.Fragment>
+            <Divider orientation="left">Markdown</Divider>
+            <div>{taskData.markdown}</div>
+          </React.Fragment>
+        )}
+      </div>
     </MaiLayout>
   );
 };

@@ -10,7 +10,7 @@ import { Typography, Card } from "antd";
 const { Meta } = Card;
 const { Title } = Typography;
 
-interface ITaskData {
+export interface ITaskData {
   id: string;
   taskName: string;
   taskDescription: string;
