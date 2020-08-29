@@ -12,9 +12,10 @@ const { Title } = Typography;
 
 interface ITaskData {
   id: string;
-  target: string;
-  name: string;
-  technologies: string;
+  taskName: string;
+  taskDecription: string;
+  maxScore: number;
+  markdown: string;
 }
 
 interface IGetInitialProps {
@@ -31,7 +32,7 @@ const Tasks: NextPage<IGetInitialProps> = ({ tasks }: IGetInitialProps) => {
             <Link href={`task/[id]`} as={`/task/${i.id}`}>
               <a>
                 <Card hoverable style={{ width: 240, listStyleType: "none" }}>
-                  <Meta title={i.name} description={i.target} />
+                  <Meta title={i.taskName} description={i.taskDecription} />
                 </Card>
               </a>
             </Link>

@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import axios from "axios";
+import { uuid } from "uuidv4";
 
 import MainLayout from "../components/MainLayout";
 import InitialTask from "../components/createTask/InitilTask";
@@ -17,6 +19,16 @@ const Create = (): JSX.Element => {
   const [taskName, setTaskName] = useState<string>("");
   const [taskDescription, setTaskDescription] = useState<string>("");
   const [mdBodyData, setMdBodyData] = useState<string>("");
+
+  const addTaskToDB = () => {
+    axios.post("http://localhost:4000/tasks", {
+      id: uuid(),
+      taskName,
+      taskDescription,
+      maxScore: inputNumberValue,
+      markdown: mdBodyData,
+    });
+  };
 
   const getDataFromTaskname = (data: string) => {
     setTaskName(data);
@@ -119,7 +131,10 @@ const Create = (): JSX.Element => {
         {currentPage === steps.length - 1 && (
           <Button
             type="primary"
-            onClick={() => message.success("Processing complete!")}
+            onClick={() => {
+              message.success("Processing complete!");
+              addTaskToDB();
+            }}
           >
             Done
           </Button>

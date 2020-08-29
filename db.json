@@ -1,22 +1,11 @@
 {
   "tasks": [
     {
-      "id": 1,
-      "target": "test",
-      "name": "test",
-      "technologies": "ttest"
-    },
-    {
       "id": "68a5a202-842b-4324-9394-a8b9b155d398",
-      "name": "123",
-      "target": "123",
-      "technologies": "123"
-    },
-    {
-      "id": "3ecd5fea-e295-473c-aa3d-b805f137d699",
-      "name": "name task",
-      "target": "target",
-      "technologies": "technology"
+      "taskName": "123",
+      "taskDescription": "123",
+      "maxScore": 200,
+      "markdown": ""
     }
   ],
   "posts": [
