@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { uuid } from "uuidv4";
+import { v4 as uuidv4 } from "uuid";
 
 import MainLayout from "../components/MainLayout";
 import InitialTask from "../components/createTask/InitilTask";
@@ -9,6 +9,7 @@ import CheckTask from "../components/createTask/CheckTask";
 
 import { Steps, Button, message, Modal } from "antd";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
+import Router from "next/router";
 
 const { Step } = Steps;
 const { confirm } = Modal;
@@ -20,14 +21,18 @@ const Create = (): JSX.Element => {
   const [taskDescription, setTaskDescription] = useState<string>("");
   const [mdBodyData, setMdBodyData] = useState<string>("");
 
-  const addTaskToDB = () => {
-    axios.post("http://localhost:4000/tasks", {
-      id: uuid(),
-      taskName,
-      taskDescription,
-      maxScore: inputNumberValue,
-      markdown: mdBodyData,
-    });
+  const addTaskToDB = async () => {
+    await axios
+      .post("http://localhost:4000/tasks", {
+        id: uuidv4(),
+        taskName,
+        taskDescription,
+        maxScore: inputNumberValue,
+        markdown: mdBodyData,
+      })
+      .then(() => {
+        Router.push("/tasks");
+      });
   };
 
   const getDataFromTaskname = (data: string) => {
