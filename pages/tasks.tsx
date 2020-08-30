@@ -23,15 +23,15 @@ interface IGetInitialProps {
 }
 
 const Tasks: NextPage<IGetInitialProps> = ({ tasks }: IGetInitialProps) => {
-
   return (
     <MainLayout title="tasks">
       <Title level={2}>Your task</Title>
       <ul className={styles.layout}>
         {tasks.map((i) => {
           const description =
-            i.taskDescription &&
-            i.taskDescription.split(" ").splice(0, 5).join(" ");
+            i.taskDescription && i.taskDescription.split(" ").splice(0, 5);
+          i.taskDescription.split(" ").length > 5 && description.push("...");
+          description.join(" ");
           return (
             <li key={i.id} className={styles.list}>
               <Link href={`task/[id]`} as={`/task/${i.id}`}>
