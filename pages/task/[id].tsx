@@ -6,6 +6,7 @@ import { Divider, Button, Modal, message } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
+import axios from "axios";
 
 const { confirm } = Modal;
 
@@ -19,9 +20,7 @@ const Task: NextPage<IGetInitialProps> = ({ taskData }: IGetInitialProps) => {
   const deleteTask = async () => {
     const nodeId = router.query.id;
     try {
-      await fetch(`http://localhost:4000/tasks/${nodeId}`, {
-        method: "Delete",
-      });
+      await axios.delete(`http://localhost:4000/tasks/${nodeId}`);
 
       router.push("/tasks");
     } catch (error) {
