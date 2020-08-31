@@ -1,5 +1,6 @@
 import React from "react";
 import { Typography } from "antd";
+import { connect } from "react-redux";
 
 const { Text } = Typography;
 
@@ -9,14 +10,14 @@ const { Title } = Typography;
 
 interface IWelcome {
   imgSrc: string;
-  name: string;
+  login: string;
 }
 
-const Welcome: React.FC<IWelcome> = ({ imgSrc, name }: IWelcome) => {
+const Welcome: React.FC<IWelcome> = ({ imgSrc, login }: IWelcome) => {
   if (imgSrc) {
     return (
       <div className={styles.text}>
-        <Title level={2}> Hello {name}</Title>
+        <Title level={2}> Hello {login}</Title>
         <img className={styles.images} src={imgSrc} />
       </div>
     );
@@ -32,4 +33,6 @@ const Welcome: React.FC<IWelcome> = ({ imgSrc, name }: IWelcome) => {
   );
 };
 
-export default Welcome;
+const mapStateToProps = (state) => ({ login: state.chooseRole.login });
+
+export default connect(mapStateToProps)(Welcome);

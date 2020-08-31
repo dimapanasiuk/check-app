@@ -53,6 +53,12 @@
       "role": "mentor",
       "img": "https://avatars3.githubusercontent.com/u/383316?v=4",
       "id": 3
+    },
+    {
+      "login": "tester",
+      "role": "mentor",
+      "img": "https://avatars3.githubusercontent.com/u/23267?v=4",
+      "id": 4
     }
   ]
 }
