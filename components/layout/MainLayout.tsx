@@ -14,7 +14,7 @@ const { Title } = Typography;
 interface IMainLayout {
   title: string;
   children: React.ReactNode;
-  role?: string;
+  role: string;
 }
 
 const MainLayout: React.FC<IMainLayout> = ({
@@ -22,7 +22,6 @@ const MainLayout: React.FC<IMainLayout> = ({
   title,
   role,
 }: IMainLayout) => {
-  console.log("role", role);
   return (
     <>
       <Head>{title}</Head>

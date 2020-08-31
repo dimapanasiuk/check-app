@@ -13,8 +13,13 @@ import { UserOutlined } from "@ant-design/icons";
 
 const users = ["student", "mentor", "admin", "super_user"];
 
+interface IChangeValue {
+  role: string;
+  login: string;
+}
+
 interface ILogin {
-  changeValue: (role: string) => void;
+  changeValue: (data: IChangeValue) => void;
 }
 
 const Login: React.FC<ILogin> = ({ changeValue }: ILogin) => {
@@ -60,7 +65,6 @@ const Login: React.FC<ILogin> = ({ changeValue }: ILogin) => {
   };
 
   const onHandleClickCheckbox = (dataCheckbox: string): void => {
-    // console.log("dataCheckbox", dataCheckbox);
     setCheckedItem(dataCheckbox);
   };
 
@@ -82,15 +86,14 @@ const Login: React.FC<ILogin> = ({ changeValue }: ILogin) => {
   };
 
   const submitFormHandler = (e) => {
-    // setCurrentUserName(e.login); [TODO] don't work
     getGitHubLogin(e.login);
-    changeValue(checkedItem);
+    changeValue({ role: checkedItem, login: currentUserName });
   };
 
   return (
     <MainLayout title="login page">
       <div className={styles.container}>
-        <Welcome imgSrc={currentImg} name={currentUserName} />
+        <Welcome imgSrc={currentImg} />
         <Form name="basic" onFinish={submitFormHandler}>
           <Form.Item
             label="Login"
@@ -147,7 +150,7 @@ export const getStaticProps = async () => {
   };
 };
 
-const mapStateToProps = (state) => ({ chooseRole: state.chooseRole.data });
+const mapStateToProps = (state) => ({ chooseRole: state.chooseRole });
 
 const mapDispatchToProps = {
   changeValue: changeStore,
