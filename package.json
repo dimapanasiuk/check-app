@@ -26,7 +26,7 @@
     "react-redux": "^7.2.1",
     "redux": "^4.0.5",
     "sass": "^1.26.10",
-    "uuidv4": "^6.2.3"
+    "uniqid": "^5.2.0"
   },
   "devDependencies": {
     "@types/next": "^7.0.8",

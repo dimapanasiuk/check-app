@@ -1,5 +1,5 @@
 import React from "react";
-import { uuid } from "uuidv4";
+import { uniqid } from "uniqid";
 
 import { Select } from "antd";
 
@@ -40,7 +40,7 @@ const CabinetInput: React.FC<ICustomInput> = ({ arr }: ICustomInput) => {
         }
       >
         {arr.map((i) => (
-          <Option key={uuid()} value={i.name}>
+          <Option key={uniqid()} value={i.name}>
             {i.name || i.node.name}
           </Option>
         ))}
