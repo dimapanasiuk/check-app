@@ -1,7 +1,8 @@
 import React from "react";
 import axios from "axios";
-import { InferGetStaticPropsType } from "next";
+import { connect } from "react-redux";
 
+import { changeStore } from "../redux/actions/roleAction";
 import MainLayout from "../components/MainLayout";
 
 import { Form, Input, Button, Checkbox, Modal } from "antd";
@@ -15,9 +16,12 @@ type User = {
   role: string;
 };
 
-const Login: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
-  usersDB,
-}) => {
+interface ILogin {
+  usersDB: any;
+  changeValue: () => void;
+}
+
+const Login: React.FC<ILogin> = ({ usersDB, changeValue }: ILogin) => {
   const [checkedItem, setCheckedItem] = React.useState<string>(users[0]);
   const [inputValue, setInputValue] = React.useState<string>("");
 
@@ -53,11 +57,12 @@ const Login: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
   }, []);
 
   const onHandleClickCheckbox = (dataCheckbox: string): void => {
+    // console.log("dataCheckbox", dataCheckbox);
     setCheckedItem(dataCheckbox);
   };
 
   const handleOnChange = (e: React.FormEvent<EventTarget>): void => {
-    let target = e.target as HTMLInputElement;
+    const target = e.target as HTMLInputElement;
     setInputValue(target.value);
   };
 
@@ -85,6 +90,7 @@ const Login: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
 
   const onFinish = (): void => {
     getGitLogin();
+    changeValue(checkedItem);
   };
 
   return (
@@ -150,4 +156,13 @@ export const getStaticProps = async () => {
     },
   };
 };
-export default Login;
+
+const mapStateToProps = (state) => ({
+  chooseRole: state.chooseRole.data,
+});
+
+const mapDispatchToProps = {
+  changeValue: changeStore,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

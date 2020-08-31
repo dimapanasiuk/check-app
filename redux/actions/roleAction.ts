@@ -1,7 +1,7 @@
 export const CHANGE_ROLE = "CHANGE_ROLE";
 
-export const changeStore = (num: number) =>
+export const changeStore = (role: string) =>
   ({
     type: CHANGE_ROLE,
-    testData: num
+    role: role
   } as const);
