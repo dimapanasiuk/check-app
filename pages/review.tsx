@@ -2,10 +2,21 @@ import React from "react";
 import { NextPage } from "next";
 
 import MainLayout from "../components/layout/MainLayout";
+import {
+  Form,
+  Select,
+  Input,
+  InputNumber,
+  Button,
+  Checkbox,
+  Modal,
+} from "antd";
 
-import { Select } from "antd";
+import { UserOutlined } from "@ant-design/icons";
+
 import uniqid from "uniqid";
 
+const { TextArea } = Input;
 const { Option } = Select;
 
 interface ITaskData {
@@ -27,17 +38,82 @@ const Review: NextPage<IGetInitialProps> = ({ tasks }: IGetInitialProps) => {
     </Option>
   ));
 
-  const handleChange = (value) => {
-    console.log(`selected ${value}`);
+  const handleChange = (e) => {
+    console.log(`handleChange ${e}`);
+  };
+
+  const changeInputNumberHandler = (e) => {
+    console.log("changeInputNumberHandler", e);
+  };
+
+  const changeTextAreaHandler = (e) => {
+    console.log("changeTextAreaHandler", e);
+  };
+
+  const onCheck = (e) => {
+    console.log("onCheck", e);
+  };
+
+  const submitFormHandler = (e) => {
+    console.log("submitFormHandler", e);
   };
 
   return (
     <MainLayout title="review page">
-      <h1>Review</h1>
+      <Form name="basic" layout="vertical" onFinish={submitFormHandler}>
+        <Form.Item
+          label="Login"
+          name="login"
+          rules={[
+            {
+              required: true,
+              message: "Please choose your task!",
+            },
+          ]}
+        >
+          <Select defaultValue="please check task" onChange={handleChange}>
+            {tasksNames}
+          </Select>
+        </Form.Item>
+        <Form.Item
+          label="Student"
+          name="student"
+          rules={[
+            {
+              required: true,
+              message: "Please enter student!",
+            },
+          ]}
+        >
+          <Input
+            value=""
+            prefix={<UserOutlined className="site-form-item-icon" />}
+            placeholder="Github login"
+          />
+        </Form.Item>
 
-      <Select defaultValue='please check task' onChange={handleChange}   style={{ width: 200 }}>
-        {tasksNames}
-      </Select>
+        <Form.Item label="Student" name="student">
+          <Checkbox onClick={onCheck} name="check-box">
+            check me
+          </Checkbox>
+        </Form.Item>
+
+        <Form.Item label="Student" name="student">
+          <InputNumber min={1} max={500} onChange={changeInputNumberHandler} />
+        </Form.Item>
+        <Form.Item name="Comment" label="comment">
+          <TextArea
+            onChange={changeTextAreaHandler}
+            autoSize={true}
+            style={{ minHeight: "70px" }}
+          />
+        </Form.Item>
+        <Form.Item>
+          <Button type="primary" htmlType="submit">
+            Submit
+          </Button>
+        </Form.Item>
+      </Form>
     </MainLayout>
   );
 };
