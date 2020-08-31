@@ -4,31 +4,50 @@ import {
   decrementCounter,
   incrementCounter,
 } from "../redux/actions/counterActions";
+import { changeStore } from "../redux/actions/roleAction";
 
 interface IAppProps {
-  counter: number;
-  decrementCounter: () => void;
-  incrementCounter: () => void;
+  counter1: number;
+  counter2: number;
+  inc: () => void;
+  dec: () => void;
+  changeValue: (num: number) => void;
 }
 
-class App extends React.Component<IAppProps> {
-  render() {
-    return (
-      <div>
-        <button onClick={this.props.incrementCounter}>Increment</button>
-        <button onClick={this.props.decrementCounter}>Decrement</button>
-        <h1>{this.props.counter}</h1>
-      </div>
-    );
-  }
-}
+let counter = 0;
 
-const mapStateToProps = (state) => ({
-  counter: state.counter.value,
-});
+const App: React.FC<IAppProps> = ({
+  inc,
+  dec,
+  changeValue,
+  counter1,
+  counter2,
+}: IAppProps) => {
+  return (
+    <div>
+      <button onClick={inc}>Increment</button>
+      <button onClick={dec}>Decrement</button>
+      <h1>{counter1}</h1>
+      <button onClick={() => changeValue((counter++ ))}>
+        Chooser button
+      </button>
+      <h1>{counter2}</h1>
+    </div>
+  );
+};
+
+const mapStateToProps = (state) => {
+  console.log("state", state);
+  return {
+    counter1: state.counter1.value,
+    counter2: state.counter2.data,
+  };
+};
 
 const mapDispatchToProps = {
-  incrementCounter: incrementCounter,
-  decrementCounter: decrementCounter,
+  inc: incrementCounter,
+  dec: decrementCounter,
+  changeValue: changeStore,
 };
+
 export default connect(mapStateToProps, mapDispatchToProps)(App);
