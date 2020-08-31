@@ -35,17 +35,19 @@ const Login: React.FC<ILogin> = ({ changeValue }: ILogin) => {
   }, []);
 
   // api functions
-  const getGitHubLogin = (login) => {
+  const isGetGitHubLogin = (login) => {
     if (login)
-      axios
+      return axios
         .get(`https://api.github.com/users/${login}`)
         .then((data) => {
           const img = data.data.avatar_url;
           setCurrentImg(img);
           postToDB(login, checkedItem, img);
+          return true;
         })
         .catch((err) => {
           openModal(err.response.status);
+          return false;
         });
   };
 
@@ -86,8 +88,12 @@ const Login: React.FC<ILogin> = ({ changeValue }: ILogin) => {
   };
 
   const submitFormHandler = (e) => {
-    getGitHubLogin(e.login);
-    changeValue({ role: checkedItem, login: currentUserName });
+    const checkUser = isGetGitHubLogin(e.login);
+    checkUser.then((data) => {
+      if (data) {
+        changeValue({ role: checkedItem, login: currentUserName });
+      }
+    });
   };
 
   return (
