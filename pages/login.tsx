@@ -147,9 +147,7 @@ export const getStaticProps = async () => {
   };
 };
 
-const mapStateToProps = (state) => ({
-  chooseRole: state.chooseRole.data,
-});
+const mapStateToProps = (state) => ({ chooseRole: state.chooseRole.data });
 
 const mapDispatchToProps = {
   changeValue: changeStore,
