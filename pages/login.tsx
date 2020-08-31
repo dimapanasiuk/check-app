@@ -1,64 +1,67 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { InferGetStaticPropsType } from "next";
+import { connect } from "react-redux";
+import { changeStore } from "../redux/actions/roleAction";
 
-import MainLayout from "../components/MainLayout";
+import Welcome from "../components/login/Welcome";
+import MainLayout from "../components/layout/MainLayout";
+
+import styles from "../styles/login.module.scss";
 
 import { Form, Input, Button, Checkbox, Modal } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 
-const users = ["Student", "Mentor", "Admin", "Super User"];
+const users = ["student", "mentor", "admin", "super_user"];
 
-type User = {
-  id: number;
-  login: string;
-  role: string;
-};
+interface ILogin {
+  changeValue: (role: string) => void;
+}
 
-const Login: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
-  usersDB,
-}) => {
-  const [checkedItem, setCheckedItem] = React.useState<string>(users[0]);
-  const [inputValue, setInputValue] = React.useState<string>("");
+const Login: React.FC<ILogin> = ({ changeValue }: ILogin) => {
+  const [checkedItem, setCheckedItem] = useState(users[0]);
+  const [currentUserName, setCurrentUserName] = useState("");
+  const [currentImg, setCurrentImg] = useState("");
+  const [usersDB, setUsersDB] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/users")
+      .then((res) => setUsersDB(res.data));
+  }, []);
 
   // api functions
-  const getGitLogin = () => {
-    if (inputValue)
+  const getGitHubLogin = (login) => {
+    if (login)
       axios
-        .get(`https://api.github.com/users/${inputValue}`)
-        .then(() => {
-          postToDB();
+        .get(`https://api.github.com/users/${login}`)
+        .then((data) => {
+          const img = data.data.avatar_url;
+          setCurrentImg(img);
+          postToDB(login, checkedItem, img);
         })
         .catch((err) => {
           openModal(err.response.status);
         });
   };
 
-  const postToDB = () => {
-    const isLoginInDB = checkOutDB();
-    if (!isLoginInDB) {
+  const isCheckUserInDB = (currentUser, users) => {
+    const usersArr = users.map((i) => i.login);
+    return usersArr.includes(currentUser);
+  };
+
+  const postToDB = (login, role, img) => {
+    if (!isCheckUserInDB(login, usersDB)) {
       axios.post("http://localhost:4000/users", {
-        login: inputValue,
-        role: checkedItem,
+        login: login,
+        role: role,
+        img: img,
       });
     }
   };
 
-  React.useEffect(() => {
-    document.body.addEventListener("click", closeModal);
-
-    return () => {
-      document.body.removeEventListener("click", closeModal);
-    };
-  }, []);
-
   const onHandleClickCheckbox = (dataCheckbox: string): void => {
+    // console.log("dataCheckbox", dataCheckbox);
     setCheckedItem(dataCheckbox);
-  };
-
-  const handleOnChange = (e: React.FormEvent<EventTarget>): void => {
-    let target = e.target as HTMLInputElement;
-    setInputValue(target.value);
   };
 
   // Modal Window
@@ -74,75 +77,68 @@ const Login: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
         });
   };
 
-  const closeModal = (): void => {
-    Modal.destroyAll();
+  const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCurrentUserName(e.target.value);
   };
 
-  const checkOutDB = () => {
-    const logins = usersDB.map((userDB) => userDB.login);
-    return logins.includes(inputValue);
-  };
-
-  const onFinish = (): void => {
-    getGitLogin();
+  const submitFormHandler = (e) => {
+    // setCurrentUserName(e.login); [TODO] don't work
+    getGitHubLogin(e.login);
+    changeValue(checkedItem);
   };
 
   return (
-    <MainLayout title="Login">
-      <Form style={{ marginTop: "100px" }} name="basic" onFinish={onFinish}>
-        <Form.Item
-          label="Login"
-          name="login"
-          rules={[
-            {
-              required: true,
-              message: "Please input your github login!",
-            },
-          ]}
-        >
-          <Input
-            value={inputValue}
-            onChange={handleOnChange}
-            prefix={<UserOutlined className="site-form-item-icon" />}
-            placeholder="Github login"
-          />
-        </Form.Item>
-        <Form.Item>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-around",
-              marginBottom: "30px",
-              marginTop: "10px",
-            }}
+    <MainLayout title="login page">
+      <div className={styles.container}>
+        <Welcome imgSrc={currentImg} name={currentUserName} />
+        <Form name="basic" onFinish={submitFormHandler}>
+          <Form.Item
+            label="Login"
+            name="login"
+            rules={[
+              {
+                required: true,
+                message: "Please input your github login!",
+              },
+            ]}
           >
-            {users.map((user, index) => (
-              <Checkbox
-                onClick={() => {
-                  onHandleClickCheckbox(user);
-                }}
-                name={user}
-                key={index}
-                checked={checkedItem === user}
-              >
-                {user}
-              </Checkbox>
-            ))}
-          </div>
-        </Form.Item>
-        <Form.Item>
-          <Button block type="primary" htmlType="submit">
-            Submit
-          </Button>
-        </Form.Item>
-      </Form>
+            <Input
+              value=""
+              onChange={changeHandler}
+              prefix={<UserOutlined className="site-form-item-icon" />}
+              placeholder="Github login"
+            />
+          </Form.Item>
+          <Form.Item>
+            <div className={styles.checkBoxes}>
+              {users.map((user, index) => (
+                <Checkbox
+                  onClick={() => {
+                    onHandleClickCheckbox(user);
+                  }}
+                  name={user}
+                  key={index}
+                  checked={checkedItem === user}
+                >
+                  {user}
+                </Checkbox>
+              ))}
+            </div>
+          </Form.Item>
+          <Form.Item>
+            <Button block type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+        </Form>
+      </div>
     </MainLayout>
   );
 };
 
 export const getStaticProps = async () => {
   const res = await fetch("http://localhost:4000/users");
-  const usersDB: User[] = await res.json();
+  const usersDB = await res.json();
 
   return {
     props: {
@@ -150,4 +146,11 @@ export const getStaticProps = async () => {
     },
   };
 };
-export default Login;
+
+const mapStateToProps = (state) => ({ chooseRole: state.chooseRole.data });
+
+const mapDispatchToProps = {
+  changeValue: changeStore,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

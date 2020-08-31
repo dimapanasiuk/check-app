@@ -47,6 +47,12 @@
       "login": "GordeySt",
       "role": "Student",
       "id": 2
+    },
+    {
+      "login": "test",
+      "role": "mentor",
+      "img": "https://avatars3.githubusercontent.com/u/383316?v=4",
+      "id": 3
     }
   ]
 }

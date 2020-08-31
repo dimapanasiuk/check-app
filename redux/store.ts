@@ -1,6 +1,6 @@
 import rootReducer from "./reducers/rootReducer";
-import { createStore, AnyAction } from 'redux';
-import { MakeStore, createWrapper, Context, HYDRATE } from 'next-redux-wrapper';
+import { createStore } from 'redux';
+import { MakeStore, createWrapper, Context } from 'next-redux-wrapper';
 
 export interface State {
     tick: string;

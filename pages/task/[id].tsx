@@ -1,6 +1,6 @@
 import React from "react";
 import { NextPage } from "next";
-import MaiLayout from "../../components/MainLayout";
+import MaiLayout from "../../components/layout/MainLayout";
 import { ITaskData } from "../tasks";
 import { Divider, Button, Modal, message } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
@@ -46,7 +46,7 @@ const Task: NextPage<IGetInitialProps> = ({ taskData }: IGetInitialProps) => {
   return (
     <MaiLayout title={`task ${taskData.taskName}`}>
       <div style={{ fontSize: "16px" }}>
-        <Button type="danger" onClick={showConfirm}>
+        <Button danger onClick={showConfirm}>
           <DeleteOutlined /> Delete
         </Button>
         <Divider orientation="left">Task name</Divider>
