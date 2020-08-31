@@ -33,7 +33,7 @@ const InitialTask: React.FC<IInitialTask> = ({
   };
 
   return (
-    <Form name="basic">
+    <Form name="basic" layout="vertical">
       <Form.Item
         name={"name"}
         label="Task Name"
