@@ -3,8 +3,8 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { changeStore } from "../redux/actions/roleAction";
 
-// import Welcome from "../components/login/Welcome";
-// import MainLayout from "../components/layout/MainLayout";
+import Welcome from "../components/login/Welcome";
+import MainLayout from "../components/MainLayout";
 
 import styles from "../styles/login.module.scss";
 
@@ -88,7 +88,7 @@ const Login: React.FC<ILogin> = ({ changeValue }: ILogin) => {
   };
 
   return (
-    <MainLayout title="login page" role={checkedItem}>
+    <MainLayout title="login page">
       <div className={styles.container}>
         <Welcome imgSrc={currentImg} name={currentUserName} />
         <Form name="basic" onFinish={submitFormHandler}>

@@ -46,7 +46,7 @@ const Task: NextPage<IGetInitialProps> = ({ taskData }: IGetInitialProps) => {
   return (
     <MaiLayout title={`task ${taskData.taskName}`}>
       <div style={{ fontSize: "16px" }}>
-        <Button type="danger" onClick={showConfirm}>
+        <Button onClick={showConfirm}>
           <DeleteOutlined /> Delete
         </Button>
         <Divider orientation="left">Task name</Divider>
