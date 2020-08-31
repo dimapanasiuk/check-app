@@ -1,6 +1,6 @@
 import React from "react";
 import { NextPage } from "next";
-import MaiLayout from "../../components/MainLayout";
+import MaiLayout from "../../components/layout/MainLayout";
 import { ITaskData } from "../tasks";
 import { Divider, Button, Modal, message } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";

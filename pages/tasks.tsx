@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { NextPage } from "next";
 
-import MainLayout from "../components/MainLayout";
+import MainLayout from "../components/layout/MainLayout";
 import styles from "../styles/Tasks.module.scss";
 
 import { Typography, Card } from "antd";

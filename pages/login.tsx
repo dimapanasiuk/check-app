@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { changeStore } from "../redux/actions/roleAction";
 
 import Welcome from "../components/login/Welcome";
-import MainLayout from "../components/MainLayout";
+import MainLayout from "../components/layout/MainLayout";
 
 import styles from "../styles/login.module.scss";
 

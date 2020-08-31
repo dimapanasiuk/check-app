@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import Head from "next/head";
 
-import styles from "../styles/MainLayout.module.scss";
+import styles from "../../styles/MainLayout.module.scss";
 
 import { LoginOutlined } from "@ant-design/icons";
 import { Layout, Menu, Typography, Button } from "antd";

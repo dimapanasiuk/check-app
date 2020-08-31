@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 
-import MainLayout from "../components/MainLayout";
+import MainLayout from "../components/layout/MainLayout";
 import InitialTask from "../components/createTask/InitilTask";
 import MarkdownPrew from "../components/createTask/MarkdownPrew";
 import CheckTask from "../components/createTask/CheckTask";
