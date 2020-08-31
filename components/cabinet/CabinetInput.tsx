@@ -14,25 +14,12 @@ const CabinetInput: React.FC<ICustomInput> = ({ arr }: ICustomInput) => {
     console.log(`selected ${value}`);
   };
 
-  const onBlur = () => {
-    console.log("blur");
-  };
-
-  const onFocus = () => {
-    console.log("focus");
-  };
-
-  const onSearch = (val: string) => {
-    console.log("search:", val);
-  };
-
   return (
     <>
       <Select
         showSearch
         style={{ width: 200, marginRight: "20px" }}
         onChange={onChange}
-        onSearch={onSearch}
         filterOption={(input, option) =>
           option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
         }
