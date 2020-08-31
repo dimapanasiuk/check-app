@@ -36,7 +36,14 @@ const Tasks: NextPage<IGetInitialProps> = ({ tasks }: IGetInitialProps) => {
             <li key={i.id} className={styles.list}>
               <Link href={`task/[id]`} as={`/task/${i.id}`}>
                 <a>
-                  <Card hoverable style={{ width: 240, listStyleType: "none" }}>
+                  <Card
+                    hoverable
+                    style={{
+                      width: 240,
+                      listStyleType: "none",
+                      margin: "0 20px 20px 0",
+                    }}
+                  >
                     <Meta title={i.taskName} description={description} />
                   </Card>
                 </a>
