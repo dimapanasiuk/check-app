@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import Head from "next/head";
+import { connect } from "react-redux";
 
 import styles from "../../styles/MainLayout.module.scss";
 
@@ -13,14 +14,18 @@ const { Title } = Typography;
 interface IMainLayout {
   title: string;
   children: React.ReactNode;
+  role?: string;
 }
 
 const MainLayout: React.FC<IMainLayout> = ({
   children,
   title,
+  role,
 }: IMainLayout) => {
+  console.log("role", role);
   return (
     <>
+      <Head>{title}</Head>
       <Layout style={{ minHeight: "100vh" }}>
         <Header className={styles.header}>
           <Link href="/">
@@ -37,21 +42,40 @@ const MainLayout: React.FC<IMainLayout> = ({
             // defaultSelectedKeys={["1","2","3"]}
             className={styles.links}
           >
-            <Menu.Item key="1">
-              <Link href="/">
-                <a>cabinet</a>
-              </Link>
-            </Menu.Item>
-            <Menu.Item key="2">
-              <Link href="/create">
-                <a>Create task</a>
-              </Link>
-            </Menu.Item>
-            <Menu.Item key="3">
-              <Link href="/tasks">
-                <a>Tasks</a>
-              </Link>
-            </Menu.Item>
+            {(() => {
+              if (role === "admin" || role === "student") {
+                return (
+                  <Menu.Item key="1">
+                    <Link href="/">
+                      <a>cabinet</a>
+                    </Link>
+                  </Menu.Item>
+                );
+              }
+            })()}
+            {(() => {
+              if (role === "admin") {
+                return (
+                  <Menu.Item key="2">
+                    <Link href="/create">
+                      <a>Create task</a>
+                    </Link>
+                  </Menu.Item>
+                );
+              }
+            })()}
+
+            {(() => {
+              if (role === "admin" || role === "mentor" || role === "student") {
+                return (
+                  <Menu.Item key="3">
+                    <Link href="/tasks">
+                      <a>Tasks</a>
+                    </Link>
+                  </Menu.Item>
+                );
+              }
+            })()}
           </Menu>
 
           <div className={styles.oauth}>
@@ -75,4 +99,8 @@ const MainLayout: React.FC<IMainLayout> = ({
   );
 };
 
-export default MainLayout;
+const mapStateToProps = (state) => {
+  return { role: state.chooseRole.role };
+};
+
+export default connect(mapStateToProps)(MainLayout);

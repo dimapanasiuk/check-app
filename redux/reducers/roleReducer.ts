@@ -2,14 +2,14 @@ import {
     CHANGE_ROLE,
 } from "../actions/roleAction";
 
-const initialState = { role: '' };
+const initialState = { role: 'admin' };
 
 export type TState = typeof initialState;
 
 const counterReducer = (state: TState = initialState, action: any) => {
     switch (action.type) {
         case CHANGE_ROLE:
-            return { data: action.role };
+            return { role: action.role };
         default:
             return { ...state };
     }
