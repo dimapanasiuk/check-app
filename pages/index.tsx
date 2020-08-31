@@ -14,9 +14,7 @@ const Home: NextPage = () => {
   const steps = [
     {
       title: "Choose Repository",
-      content: (
-        <Chooser title="Choose Repository and branch you worked with" />
-      ),
+      content: <Chooser title="Choose Repository and branch you worked with" />,
     },
     {
       title: "Check out your commits",
@@ -49,7 +47,7 @@ const Home: NextPage = () => {
           ))}
         </Steps>
         <div className="steps-content">{steps[currentPage].content}</div>
-        <div className="steps-action">
+        <div className="steps-action" style={{ marginTop: "20px" }}>
           {currentPage < steps.length - 1 && (
             <Button type="primary" onClick={() => next()}>
               Next

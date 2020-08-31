@@ -30,10 +30,8 @@ const CabinetInput: React.FC<ICustomInput> = ({ arr }: ICustomInput) => {
     <>
       <Select
         showSearch
-        style={{ width: 200 }}
+        style={{ width: 200, marginRight: "20px" }}
         onChange={onChange}
-        onFocus={onFocus}
-        onBlur={onBlur}
         onSearch={onSearch}
         filterOption={(input, option) =>
           option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0

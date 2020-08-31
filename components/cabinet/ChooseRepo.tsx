@@ -63,7 +63,9 @@ const Chooser: React.FC<IChooser> = ({ title }: IChooser) => {
 
   return (
     <>
-      <Title level={2}>{title}</Title>
+      <Title style={{ marginTop: "20px" }} level={2}>
+        {title}
+      </Title>
       <CabinetInput arr={reposData} />
       <CabinetInput arr={branchesData} />
     </>
