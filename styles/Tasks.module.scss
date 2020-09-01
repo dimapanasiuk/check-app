@@ -1,9 +1,13 @@
 .layout {
   display: flex;
-  align-items: center;
   flex-wrap: wrap;
+  min-height: 65vh;
 }
 
 .list {
   list-style: none;
+}
+
+.pagination {
+  text-align: center;
 }

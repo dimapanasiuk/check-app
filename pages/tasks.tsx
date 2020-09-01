@@ -3,7 +3,7 @@ import Link from "next/link";
 import { NextPage } from "next";
 
 import MainLayout from "../components/layout/MainLayout";
-import styles from "../styles/Tasks.module.scss";
+import styles from "../styles/tasks.module.scss";
 
 import { Pagination, Typography, Card } from "antd";
 
@@ -58,8 +58,6 @@ const Tasks: NextPage<IGetInitialProps> = ({ tasks }: IGetInitialProps) => {
     });
   };
 
-  console.log("task", allTaskHtml(tasks));
-
   return (
     <MainLayout title="tasks">
       <Title level={2}>Your task</Title>
@@ -75,7 +73,7 @@ const Tasks: NextPage<IGetInitialProps> = ({ tasks }: IGetInitialProps) => {
           }
         })()}
       </ul>
-      <Pagination
+      <Pagination  className={styles.pagination}
         defaultCurrent={currentPaginationPage}
         total={tasksAmount}
         defaultPageSize={defaultPageSize}
