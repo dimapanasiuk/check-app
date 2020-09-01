@@ -2,7 +2,7 @@ import {
     CHANGE_ROLE,
 } from "../actions/roleAction";
 
-const initialState = { role: 'admin', login: '' };
+const initialState = { role: '', login: '' };
 
 export type TState = typeof initialState;
 

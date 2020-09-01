@@ -59,6 +59,12 @@
       "role": "mentor",
       "img": "https://avatars3.githubusercontent.com/u/23267?v=4",
       "id": 4
+    },
+    {
+      "login": "dimapanasiuk",
+      "role": "student",
+      "img": "https://avatars2.githubusercontent.com/u/33260556?v=4",
+      "id": 5
     }
   ]
 }
