@@ -30,7 +30,7 @@ const Home: NextPage<IHome> = ({ login }: IHome) => {
   const steps = [
     {
       title: "Choose Repository",
-      content: <Chooser title="Choose Repository and branch you worked with" />,
+      content: <Chooser login={login} title="Choose Repository and branch you worked with" />,
     },
     {
       title: "Check out your commits",

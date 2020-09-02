@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const REPOS = gql`
-  {
-    repositoryOwner(login: "GordeySt") {
+  query FindRepos($login: String!) {
+    repositoryOwner(login: $login) {
       login
       repositories(first: 100, orderBy: { field: NAME, direction: ASC }) {
         nodes {
@@ -21,8 +21,8 @@ export const REPOS = gql`
 `;
 
 export const GET_ALL_BRANCHES_IN_REPO = gql`
-  query FindBrunches($repo_name: String!) {
-    repository(owner: "GordeySt", name: $repo_name) {
+  query FindBrunches($repo_name: String!, $login: String!) {
+    repository(owner: $login, name: $repo_name) {
       refs(
         refPrefix: "refs/heads/"
         orderBy: { direction: DESC, field: TAG_COMMIT_DATE }

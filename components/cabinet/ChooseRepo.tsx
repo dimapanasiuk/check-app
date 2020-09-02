@@ -11,20 +11,34 @@ const { Title } = Typography;
 
 interface IChooser {
   title: string;
+  login: string;
 }
 
-const Chooser: React.FC<IChooser> = ({ title }: IChooser) => {
-  const [selectRepo, setSelectRepo] = React.useState<string>("");
-  const repos = useQuery(REPOS);
-  const branches = useQuery(GET_ALL_BRANCHES_IN_REPO, {
+const Chooser: React.FC<IChooser> = React.memo(({ title, login }: IChooser) => {
+  const [selectedRepo, setSelectedRepo] = React.useState<string | null>(null);
+  const [selectedBrunch, setSelectedBrunch] = React.useState<string | null>(
+    null
+  );
+  const repos = useQuery(REPOS, {
     variables: {
-      repo_name: selectRepo || "check-app",
+      login,
     },
   });
 
-  const onHandleRepoSelect = (value: string): void => {
-    setSelectRepo(value);
-  }
+  const branches = useQuery(GET_ALL_BRANCHES_IN_REPO, {
+    variables: {
+      repo_name: selectedRepo || "songbird",
+      login,
+    },
+  });
+
+  const onHandleRepoSelect = (value?: string): void => {
+    setSelectedBrunch(null);
+    setSelectedRepo(value);
+  };
+  const onHandleBrunchSelect = (value: string): void => {
+    setSelectedBrunch(value);
+  };
 
   if (repos.loading) return <p>Loading...</p>;
   if (repos.error) return <p>Error :(</p>;
@@ -33,17 +47,29 @@ const Chooser: React.FC<IChooser> = ({ title }: IChooser) => {
 
   const branchesData: IBrunch[] = branches.data.repository.refs.edges;
   const reposData: IRepository[] =
-    repos.data.repositoryOwner.repositories.nodes;
+    repos.data && repos.data.repositoryOwner.repositories.nodes;
 
   return (
     <>
       <Title style={{ marginTop: "20px" }} level={2}>
         {title}
       </Title>
-      <CabinetInput onHandleRepoSelect={onHandleRepoSelect} arr={reposData} isRepo={true} />
-      {selectRepo && <CabinetInput arr={branchesData} />}
+      <CabinetInput
+        onHandleRepoSelect={onHandleRepoSelect}
+        arr={reposData}
+        isRepo={true}
+        selectedRepo={selectedRepo}
+      />
+      {selectedRepo && (
+        <CabinetInput
+          arr={branchesData}
+          isRepo={false}
+          onHandleBrunchSelect={onHandleBrunchSelect}
+          selectedBrunch={selectedBrunch}
+        />
+      )}
     </>
   );
-};
+});
 
 export default Chooser;
