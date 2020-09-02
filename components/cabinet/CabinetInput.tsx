@@ -45,7 +45,7 @@ const CabinetInput: React.FC<ICustomInput> = ({
             option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
           }
         >
-          {arr.map((i) => (
+          {(arr as Array <IRepository>).map((i) => (
             <Option key={uuidv4()} value={i.name}>
               {i.name}
             </Option>
@@ -62,7 +62,7 @@ const CabinetInput: React.FC<ICustomInput> = ({
             option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
           }
         >
-          {arr.map((i) => (
+          {(arr as Array<IBrunch>).map((i) => (
             <Option key={uuidv4()} value={i.node.name}>
               {i.node.name}
             </Option>
