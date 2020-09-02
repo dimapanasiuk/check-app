@@ -1,5 +1,5 @@
 import React from "react";
-import { uuid } from "uuidv4";
+import { v4 as uuidv4 } from "uuid";
 
 import { Select } from "antd";
 
@@ -14,7 +14,7 @@ interface ICustomInput {
 const CabinetInput: React.FC<ICustomInput> = ({
   arr,
   isRepo,
-  onHandleRepoSelect
+  onHandleRepoSelect,
 }: ICustomInput) => {
   const onChange = (value: string) => {
     onHandleRepoSelect(value);
@@ -31,13 +31,11 @@ const CabinetInput: React.FC<ICustomInput> = ({
           option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
         }
       >
-        {arr.map((i) => {
-          return (
-            <Option key={uuid()} value={i.name}>
-              {i.name || i.node.name}
-            </Option>
-          );
-        })}
+        {arr.map((i) => (
+          <Option key={uuidv4()} value={i.name}>
+            {i.name || i.node.name}
+          </Option>
+        ))}
       </Select>
     </>
   );

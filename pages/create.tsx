@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { v4 as uuidv4 } from "uuid";
+import uniqid  from "uniqid";
 
 import MainLayout from "../components/layout/MainLayout";
 import InitialTask from "../components/createTask/InitilTask";
@@ -24,7 +24,7 @@ const Create = (): JSX.Element => {
   const addTaskToDB = async () => {
     await axios
       .post("http://localhost:4000/tasks", {
-        id: uuidv4(),
+        id: uniqid(),
         taskName,
         taskDescription,
         maxScore: inputNumberValue,

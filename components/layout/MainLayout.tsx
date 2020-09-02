@@ -14,7 +14,7 @@ const { Title } = Typography;
 interface IMainLayout {
   title: string;
   children: React.ReactNode;
-  role?: string;
+  role: string;
 }
 
 const MainLayout: React.FC<IMainLayout> = ({
@@ -22,10 +22,12 @@ const MainLayout: React.FC<IMainLayout> = ({
   title,
   role,
 }: IMainLayout) => {
-  console.log("role", role);
   return (
     <>
-      <Head>{title}</Head>
+      <Head>
+        <title> {title}</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
       <Layout style={{ minHeight: "100vh" }}>
         <Header className={styles.header}>
           <Link href="/">
@@ -71,6 +73,17 @@ const MainLayout: React.FC<IMainLayout> = ({
                   <Menu.Item key="3">
                     <Link href="/tasks">
                       <a>Tasks</a>
+                    </Link>
+                  </Menu.Item>
+                );
+              }
+            })()}
+            {(() => {
+              if (role === "admin" || role === "mentor" || role === "student") {
+                return (
+                  <Menu.Item key="4">
+                    <Link href="/review">
+                      <a>Review</a>
                     </Link>
                   </Menu.Item>
                 );

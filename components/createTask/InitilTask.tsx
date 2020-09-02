@@ -55,7 +55,7 @@ const InitialTask: React.FC<IInitialTask> = ({
         <TextArea
           onChange={changeTextAreaHandler}
           autoSize={true}
-          style={{ minHeight: "200px" }}
+          style={{ minHeight: "100px" }}
         />
       </Form.Item>
       <Form.Item

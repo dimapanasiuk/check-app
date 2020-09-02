@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NextPage } from "next";
+import { useRouter } from "next/router";
+import { connect } from "react-redux";
 
 import MainLayout from "../components/layout/MainLayout";
 import Chooser from "../components/cabinet/ChooseRepo";
@@ -10,7 +12,21 @@ import { Steps, Button, message } from "antd";
 
 const { Step } = Steps;
 
-const Home: NextPage = () => {
+interface IHome {
+  login: string;
+}
+
+const Home: NextPage<IHome> = ({ login }: IHome) => {
+  const router = useRouter();
+
+  console.log("login", login);
+
+  useEffect(() => {
+    if (login === "") {
+      router.push("/login");
+    }
+  }, []);
+
   const steps = [
     {
       title: "Choose Repository",
@@ -72,4 +88,8 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+const mapStateToProps = (state) => {
+  return { login: state.chooseRole.login };
+};
+
+export default connect(mapStateToProps)(Home);

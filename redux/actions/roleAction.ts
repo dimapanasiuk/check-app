@@ -1,7 +1,13 @@
 export const CHANGE_ROLE = "CHANGE_ROLE";
 
-export const changeStore = (role: string) =>
-  ({
-    type: CHANGE_ROLE,
-    role: role
-  } as const);
+
+interface IChangeStore {
+  role: string;
+  login: string;
+}
+
+export const changeStore = (data: IChangeStore) => ({
+  type: CHANGE_ROLE,
+  role: data.role,
+  login: data.login
+} as const);
