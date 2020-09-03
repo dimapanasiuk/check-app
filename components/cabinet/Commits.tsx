@@ -1,15 +1,28 @@
 import React from "react";
 import { Timeline } from "antd";
 import { useQuery } from "@apollo/client";
-import { GET_ALL_COMMITS_IN_BRANCH } from "./graphs/commits"
-
+import { GET_ALL_COMMITS_IN_BRANCH } from "./graphs/commits";
 
 interface ICheckCommit {
   title: string;
+  selectedBrunch: string | null;
+  selectedRepo: string | null;
+  login: string;
 }
 
-const Commits: React.FC<ICheckCommit> = ({ title }: ICheckCommit) => {
-  const commits = useQuery(GET_ALL_COMMITS_IN_BRANCH);
+const Commits: React.FC<ICheckCommit> = ({
+  title,
+  selectedRepo,
+  selectedBrunch,
+  login,
+}: ICheckCommit) => {
+  const commits = useQuery(GET_ALL_COMMITS_IN_BRANCH, {
+    variables: {
+      repo_name: selectedRepo,
+      brunch: selectedBrunch,
+      login,
+    },
+  });
 
   if (commits.loading) return <p>Loading...</p>;
   if (commits.error) return <p>Error :(</p>;

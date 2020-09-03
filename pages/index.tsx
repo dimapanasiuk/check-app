@@ -4,11 +4,12 @@ import { useRouter } from "next/router";
 import { connect } from "react-redux";
 
 import MainLayout from "../components/layout/MainLayout";
-import Chooser from "../components/cabinet/BrunchAndRepoContainer";
-import CheckCommits from "../components/cabinet/Commits";
-import ChoosePR from "../components/cabinet/PullRequests";
 
 import { Steps, Button, message } from "antd";
+
+import BrunchAndRepoContainer from "../components/cabinet/BrunchAndRepoContainer";
+import Commits from "../components/cabinet/Commits";
+import PullRequests from "../components/cabinet/PullRequests";
 
 const { Step } = Steps;
 
@@ -17,9 +18,12 @@ interface IHome {
 }
 
 const Home: NextPage<IHome> = ({ login }: IHome) => {
+  const [currentPage, setCurrentPage] = useState<number>(0);
+  const [selectedRepo, setSelectedRepo] = React.useState<string | null>(null);
+  const [selectedBrunch, setSelectedBrunch] = React.useState<string | null>(
+    null
+  );
   const router = useRouter();
-
-  console.log("login", login);
 
   useEffect(() => {
     if (login === "") {
@@ -27,22 +31,44 @@ const Home: NextPage<IHome> = ({ login }: IHome) => {
     }
   }, []);
 
+  const onHandleRepoSelect = (value: string): void => {
+    setSelectedBrunch(null);
+    setSelectedRepo(value);
+  };
+  const onHandleBrunchSelect = (value: string): void => {
+    setSelectedBrunch(value);
+  };
+
   const steps = [
     {
       title: "Choose Repository",
-      content: <Chooser login={login} title="Choose Repository and branch you worked with" />,
+      content: (
+        <BrunchAndRepoContainer
+          selectedRepo={selectedRepo}
+          selectedBrunch={selectedBrunch}
+          onHandleBrunchSelect={onHandleBrunchSelect}
+          onHandleRepoSelect={onHandleRepoSelect}
+          login={login}
+          title="Choose Repository and branch you worked with"
+        />
+      ),
     },
     {
       title: "Check out your commits",
-      content: <CheckCommits title="Check out commits" />,
+      content: (
+        <Commits
+          selectedBrunch={selectedBrunch}
+          selectedRepo={selectedRepo}
+          login={login}
+          title="Check out commits"
+        />
+      ),
     },
     {
       title: "Choose PR",
-      content: <ChoosePR title="Choose your pull request" />,
+      content: <PullRequests title="Choose your pull request" />,
     },
   ];
-
-  const [currentPage, setCurrentPage] = useState(0);
 
   const next = () => {
     const current = currentPage + 1;
