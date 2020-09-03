@@ -5,24 +5,32 @@ import { connect } from "react-redux";
 
 import MainLayout from "../components/layout/MainLayout";
 
+import { ITaskData } from "./tasks";
+
 import { Steps, Button, message } from "antd";
 
 import BrunchAndRepoContainer from "../components/cabinet/BrunchAndRepoContainer";
 import Commits from "../components/cabinet/Commits";
 import PullRequests from "../components/cabinet/PullRequests";
+import TaskSelect from "../components/cabinet/TaskSelect";
 
 const { Step } = Steps;
 
-interface IHome {
-  login: string;
+interface IGetInitialProps {
+  login?: string;
+  tasks: Array<ITaskData>;
 }
 
-const Home: NextPage<IHome> = ({ login }: IHome) => {
+const Home: NextPage<IGetInitialProps> = ({
+  login,
+  tasks,
+}: IGetInitialProps) => {
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [selectedRepo, setSelectedRepo] = React.useState<string | null>(null);
   const [selectedBrunch, setSelectedBrunch] = React.useState<string | null>(
     null
   );
+  const [selectedTask, setSelectedTask] = React.useState<string | null>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -38,8 +46,22 @@ const Home: NextPage<IHome> = ({ login }: IHome) => {
   const onHandleBrunchSelect = (value: string): void => {
     setSelectedBrunch(value);
   };
+  const onHandleTaskSelect = (value: string): void => {
+    setSelectedTask(value);
+  };
 
   const steps = [
+    {
+      title: "Choose Task",
+      content: (
+        <TaskSelect
+          tasks={tasks}
+          selectedTask={selectedTask}
+          onHandleTaskChange={onHandleTaskSelect}
+          title={"Choose task you want mentors to check"}
+        />
+      ),
+    },
     {
       title: "Choose Repository",
       content: (
@@ -118,6 +140,12 @@ const Home: NextPage<IHome> = ({ login }: IHome) => {
       </MainLayout>
     </>
   );
+};
+Home.getInitialProps = async () => {
+  const res = await fetch(`http://localhost:4000/tasks`);
+  const tasks = await res.json();
+
+  return { tasks };
 };
 
 const mapStateToProps = (state) => {

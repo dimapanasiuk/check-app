@@ -73,7 +73,8 @@ const Tasks: NextPage<IGetInitialProps> = ({ tasks }: IGetInitialProps) => {
           }
         })()}
       </ul>
-      <Pagination  className={styles.pagination}
+      <Pagination
+        className={styles.pagination}
         defaultCurrent={currentPaginationPage}
         total={tasksAmount}
         defaultPageSize={defaultPageSize}
