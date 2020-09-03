@@ -66,7 +66,13 @@ const Home: NextPage<IHome> = ({ login }: IHome) => {
     },
     {
       title: "Choose PR",
-      content: <PullRequests title="Choose your pull request" />,
+      content: (
+        <PullRequests
+          selectedRepo={selectedRepo}
+          login={login}
+          title="Choose your pull request"
+        />
+      ),
     },
   ];
 
