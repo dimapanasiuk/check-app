@@ -1,10 +1,13 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
-import { REPOS, GET_ALL_BRANCHES_IN_REPO } from "./graphs";
+import { GET_ALL_BRANCHES_IN_REPO } from "./graphs/brunches";
+import { REPOS } from "./graphs/repositories"
 
-import CabinetInput from "./CabinetInput";
 import { IRepository } from "./interfaces/repositoriesInterface";
 import { IBrunch } from "./interfaces/brunchesInterface";
+
+import BrunchAndRepoSelect from "./BrunchAndRepoSelect";
+
 import { Typography } from "antd";
 
 const { Title } = Typography;
@@ -14,7 +17,7 @@ interface IChooser {
   login: string;
 }
 
-const Chooser: React.FC<IChooser> = React.memo(({ title, login }: IChooser) => {
+const BrunchAndRepoContainer: React.FC<IChooser> = React.memo(({ title, login }: IChooser) => {
   const [selectedRepo, setSelectedRepo] = React.useState<string | null>(null);
   const [selectedBrunch, setSelectedBrunch] = React.useState<string | null>(
     null
@@ -54,14 +57,14 @@ const Chooser: React.FC<IChooser> = React.memo(({ title, login }: IChooser) => {
       <Title style={{ marginTop: "20px" }} level={2}>
         {title}
       </Title>
-      <CabinetInput
+      <BrunchAndRepoSelect
         onHandleRepoSelect={onHandleRepoSelect}
         arr={reposData}
         isRepo={true}
         selectedRepo={selectedRepo}
       />
       {selectedRepo && (
-        <CabinetInput
+        <BrunchAndRepoSelect
           arr={branchesData}
           isRepo={false}
           onHandleBrunchSelect={onHandleBrunchSelect}
@@ -72,4 +75,4 @@ const Chooser: React.FC<IChooser> = React.memo(({ title, login }: IChooser) => {
   );
 });
 
-export default Chooser;
+export default BrunchAndRepoContainer;

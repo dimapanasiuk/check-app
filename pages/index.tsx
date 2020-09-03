@@ -4,9 +4,9 @@ import { useRouter } from "next/router";
 import { connect } from "react-redux";
 
 import MainLayout from "../components/layout/MainLayout";
-import Chooser from "../components/cabinet/ChooseRepo";
-import CheckCommits from "../components/cabinet/CheckCommits";
-import ChoosePR from "../components/cabinet/ChoosePr";
+import Chooser from "../components/cabinet/BrunchAndRepoContainer";
+import CheckCommits from "../components/cabinet/Commits";
+import ChoosePR from "../components/cabinet/PullRequests";
 
 import { Steps, Button, message } from "antd";
 

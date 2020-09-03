@@ -1,5 +1,6 @@
 import React from "react";
 import { v4 as uuidv4 } from "uuid";
+
 import { IRepository } from "./interfaces/repositoriesInterface";
 import { IBrunch } from "./interfaces/brunchesInterface";
 
@@ -16,7 +17,7 @@ interface ICustomInput {
   selectedBrunch?: string;
 }
 
-const CabinetInput: React.FC<ICustomInput> = ({
+const BrunchAndRepoSelect: React.FC<ICustomInput> = ({
   arr,
   isRepo,
   onHandleRepoSelect,
@@ -73,4 +74,4 @@ const CabinetInput: React.FC<ICustomInput> = ({
   );
 };
 
-export default CabinetInput;
+export default BrunchAndRepoSelect;

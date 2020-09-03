@@ -1,29 +1,17 @@
 import React from "react";
-import { useQuery, gql } from "@apollo/client";
+import { useQuery } from "@apollo/client";
+
+import { GET_ALL_PR } from "./graphs/pullRequests"
 
 import { Typography } from "antd";
 
 const { Title } = Typography;
 
-const GET_ALL_PR = gql`
-  {
-    repository(name: "songbird", owner: "dimapanasiuk") {
-      pullRequests(last: 25) {
-        nodes {
-          id
-          title
-          createdAt
-        }
-      }
-    }
-  }
-`;
-
 interface IChoosePR {
   title: string;
 }
 
-const ChoosePR: React.FC<IChoosePR> = ({ title }: IChoosePR) => {
+const PullRequests: React.FC<IChoosePR> = ({ title }: IChoosePR) => {
   const pr = useQuery(GET_ALL_PR);
 
   if (pr.loading) return <p>Loading...</p>;
@@ -40,4 +28,4 @@ const ChoosePR: React.FC<IChoosePR> = ({ title }: IChoosePR) => {
     </>
   );
 };
-export default ChoosePR;
+export default PullRequests;
