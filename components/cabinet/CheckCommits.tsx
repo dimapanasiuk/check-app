@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Timeline } from "antd";
 import { useQuery, gql } from "@apollo/client";
 
 const GET_ALL_COMMITS_IN_BRANCH = gql`
@@ -40,10 +40,12 @@ const CheckCommits: React.FC<ICheckCommit> = ({ title }: ICheckCommit) => {
 
   return (
     <>
-      <h1>{title}</h1>
-      {commitsData.map((item, i) => (
-        <h1 key={i}>{item.node.messageHeadline}</h1>
-      ))}
+      <h1 style={{ margin: "20px 0 20px " }}>{title}</h1>
+      <Timeline>
+        {commitsData.map((item, i) => (
+          <Timeline.Item key={i}>{item.node.messageHeadline}</Timeline.Item>
+        ))}
+      </Timeline>
     </>
   );
 };
