@@ -29,13 +29,22 @@ const PullRequests: React.FC<IChoosePR> = ({
   if (pr.error) return <p>Error :(</p>;
 
   const PR = pr.data.repository.pullRequests.nodes;
+  console.log(PR);
 
   return (
     <>
-      <Title level={2}>{title}</Title>
-      {PR.map((item, i) => (
-        <h1 key={i}>{item.title}</h1>
-      ))}
+      <Title style={{ marginTop: "20px" }} level={2}>
+        {title}
+      </Title>
+      {PR.length === 0 ? (
+        <h2 style={{ margin: "20px 0 20px" }}>No Pull Requests</h2>
+      ) : (
+        PR.map((item, i) => (
+          <h1 style={{ margin: "20px 0 20px" }} key={i}>
+            {item.title}
+          </h1>
+        ))
+      )}
     </>
   );
 };
