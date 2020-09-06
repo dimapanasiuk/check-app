@@ -2,12 +2,17 @@ import React from "react";
 
 import { Button, message } from "antd";
 
+interface ISteps {
+  title: string;
+  content: React.Component;
+}
+
 interface ICabinetButtons {
   currentPage: number;
   checkSelects: (pageID: string) => void;
   next: () => void;
   prev: () => void;
-  steps: any;
+  steps: ISteps[];
 }
 
 const CabinetButtons: React.FC<ICabinetButtons> = ({
@@ -17,6 +22,7 @@ const CabinetButtons: React.FC<ICabinetButtons> = ({
   next,
   steps,
 }: ICabinetButtons) => {
+  console.log(steps);
   return (
     <div>
       <div className="steps-action" style={{ marginTop: "20px" }}>
