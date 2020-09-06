@@ -32,6 +32,7 @@ const Home: NextPage<IGetInitialProps> = ({
     null
   );
   const [selectedTask, setSelectedTask] = React.useState<string | null>(null);
+  const [selectedPR, setSelectedPR] = React.useState<string | null>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -49,6 +50,9 @@ const Home: NextPage<IGetInitialProps> = ({
   };
   const onHandleTaskSelect = (value: string): void => {
     setSelectedTask(value);
+  };
+  const onHandlePRSelect = (value: string): void => {
+    setSelectedPR(value);
   };
 
   const steps = [
@@ -91,6 +95,8 @@ const Home: NextPage<IGetInitialProps> = ({
       title: "Choose PR",
       content: (
         <PullRequests
+          selectedPR={selectedPR}
+          onHandlePRSelect={onHandlePRSelect}
           selectedRepo={selectedRepo}
           login={login}
           title="Choose your pull request"
@@ -105,6 +111,7 @@ const Home: NextPage<IGetInitialProps> = ({
           selectedRepo={selectedRepo}
           selectedBrunch={selectedBrunch}
           selectedTask={selectedTask}
+          selectedPR={selectedPR}
         />
       ),
     },

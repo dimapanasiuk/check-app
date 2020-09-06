@@ -8,6 +8,7 @@ interface ICheckOutData {
   selectedRepo: string;
   selectedTask: string;
   selectedBrunch: string;
+  selectedPR: string;
 }
 
 const CheckOutData: React.FC<ICheckOutData> = ({
@@ -15,6 +16,7 @@ const CheckOutData: React.FC<ICheckOutData> = ({
   selectedBrunch,
   selectedRepo,
   selectedTask,
+  selectedPR,
 }: ICheckOutData) => {
   return (
     <div style={{ textAlign: "center" }}>
@@ -24,7 +26,7 @@ const CheckOutData: React.FC<ICheckOutData> = ({
       <h2>Your task: {selectedTask} </h2>
       <h2>Your repository: {selectedRepo} </h2>
       <h2>Your brunch: {selectedBrunch} </h2>
-      <h2>Your pull request: </h2>
+      <h2>Your pull request: {selectedPR}</h2>
     </div>
   );
 };
