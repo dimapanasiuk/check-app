@@ -4,7 +4,7 @@ import { Button, message } from "antd";
 
 interface ISteps {
   title: string;
-  content: React.Component;
+  content: JSX.Element;
 }
 
 interface ICabinetButtons {
@@ -22,7 +22,6 @@ const CabinetButtons: React.FC<ICabinetButtons> = ({
   next,
   steps,
 }: ICabinetButtons) => {
-  console.log(steps);
   return (
     <div>
       <div className="steps-action" style={{ marginTop: "20px" }}>
