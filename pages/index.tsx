@@ -13,6 +13,7 @@ import BrunchAndRepoContainer from "../components/cabinet/BrunchAndRepoContainer
 import Commits from "../components/cabinet/Commits";
 import PullRequests from "../components/cabinet/PullRequests";
 import TaskSelect from "../components/cabinet/TaskSelect";
+import CheckOutData from "../components/cabinet/CheckOutData";
 
 const { Step } = Steps;
 
@@ -93,6 +94,17 @@ const Home: NextPage<IGetInitialProps> = ({
           selectedRepo={selectedRepo}
           login={login}
           title="Choose your pull request"
+        />
+      ),
+    },
+    {
+      title: "Check out data",
+      content: (
+        <CheckOutData
+          title="Check out your data"
+          selectedRepo={selectedRepo}
+          selectedBrunch={selectedBrunch}
+          selectedTask={selectedTask}
         />
       ),
     },
