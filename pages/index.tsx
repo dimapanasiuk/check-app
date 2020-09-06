@@ -55,6 +55,22 @@ const Home: NextPage<IGetInitialProps> = ({
     setSelectedPR(value);
   };
 
+  const openErrorMessage = (valueToSelect: string): void => {
+    message.error(`Please select ${valueToSelect}`);
+  };
+
+  const checkSelects = (pageID: string): void => {
+    if (pageID === "tasks") {
+      selectedTask === null ? openErrorMessage("task") : next();
+    } else if (pageID === "repos") {
+      selectedRepo === null || selectedBrunch === null
+        ? openErrorMessage("repository and brunch")
+        : next();
+    } else if (pageID === "PR") {
+      selectedPR === null ? openErrorMessage("pull request") : next();
+    } else next();
+  };
+
   const steps = [
     {
       title: "Choose Task",
@@ -138,7 +154,15 @@ const Home: NextPage<IGetInitialProps> = ({
         <div className="steps-content">{steps[currentPage].content}</div>
         <div className="steps-action" style={{ marginTop: "20px" }}>
           {currentPage < steps.length - 1 && (
-            <Button type="primary" onClick={() => next()}>
+            <Button
+              type="primary"
+              onClick={() => {
+                currentPage === 0 && checkSelects("tasks");
+                currentPage === 1 && checkSelects("repos");
+                currentPage === 2 && next();
+                currentPage === 3 && checkSelects("PR");
+              }}
+            >
               Next
             </Button>
           )}
