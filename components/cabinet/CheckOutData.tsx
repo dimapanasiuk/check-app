@@ -26,7 +26,7 @@ const CheckOutData: React.FC<ICheckOutData> = ({
       <h2>Your task: {selectedTask} </h2>
       <h2>Your repository: {selectedRepo} </h2>
       <h2>Your brunch: {selectedBrunch} </h2>
-      <h2>Your pull request: {selectedPR}</h2>
+      {selectedPR && <h2>Your pull request: {selectedPR}</h2>}
     </div>
   );
 };
