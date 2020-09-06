@@ -9,6 +9,7 @@ import { IBrunch } from "./interfaces/brunchesInterface";
 import BrunchAndRepoSelect from "./BrunchAndRepoSelect";
 
 import { Typography } from "antd";
+import LoadingComponent from "./LoadingComponent";
 
 const { Title } = Typography;
 
@@ -43,9 +44,9 @@ const BrunchAndRepoContainer: React.FC<IChooser> = React.memo(
       },
     });
 
-    if (repos.loading) return <p>Loading...</p>;
+    if (repos.loading) return <LoadingComponent />;
     if (repos.error) return <p>Error :(</p>;
-    if (branches.loading) return <p>Loading...</p>;
+    if (branches.loading) return <LoadingComponent />;
     if (branches.error) return <p>Error :(</p>;
 
     const branchesData: IBrunch[] = branches.data.repository.refs.edges;

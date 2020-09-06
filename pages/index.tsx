@@ -7,13 +7,14 @@ import MainLayout from "../components/layout/MainLayout";
 
 import { ITaskData } from "./tasks";
 
-import { Steps, Button, message } from "antd";
+import { Steps, message } from "antd";
 
 import BrunchAndRepoContainer from "../components/cabinet/BrunchAndRepoContainer";
 import Commits from "../components/cabinet/Commits";
 import PullRequests from "../components/cabinet/PullRequests";
 import TaskSelect from "../components/cabinet/TaskSelect";
 import CheckOutData from "../components/cabinet/CheckOutData";
+import CabinetButtons from "../components/cabinet/CabinetButtons";
 
 const { Step } = Steps;
 
@@ -151,35 +152,23 @@ const Home: NextPage<IGetInitialProps> = ({
             <Step key={item.title} title={item.title} />
           ))}
         </Steps>
+        {currentPage === 2 && (
+          <CabinetButtons
+            prev={prev}
+            next={next}
+            checkSelects={checkSelects}
+            currentPage={currentPage}
+            steps={steps}
+          />
+        )}
         <div className="steps-content">{steps[currentPage].content}</div>
-        <div className="steps-action" style={{ marginTop: "20px" }}>
-          {currentPage < steps.length - 1 && (
-            <Button
-              type="primary"
-              onClick={() => {
-                currentPage === 0 && checkSelects("tasks");
-                currentPage === 1 && checkSelects("repos");
-                currentPage === 2 && next();
-                currentPage === 3 && checkSelects("PR");
-              }}
-            >
-              Next
-            </Button>
-          )}
-          {currentPage === steps.length - 1 && (
-            <Button
-              type="primary"
-              onClick={() => message.success("Processing complete!")}
-            >
-              Done
-            </Button>
-          )}
-          {currentPage > 0 && (
-            <Button style={{ margin: "0 8px" }} onClick={() => prev()}>
-              Previous
-            </Button>
-          )}
-        </div>
+        <CabinetButtons
+          prev={prev}
+          next={next}
+          checkSelects={checkSelects}
+          currentPage={currentPage}
+          steps={steps}
+        />
       </MainLayout>
     </>
   );

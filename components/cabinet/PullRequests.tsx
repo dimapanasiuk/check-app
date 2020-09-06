@@ -6,6 +6,7 @@ import { GET_ALL_PR } from "./graphs/pullRequests";
 
 import { Select } from "antd";
 import { Typography } from "antd";
+import LoadingComponent from "./LoadingComponent";
 
 const { Title } = Typography;
 const { Option } = Select;
@@ -32,7 +33,7 @@ const PullRequests: React.FC<IChoosePR> = ({
     },
   });
 
-  if (pr.loading) return <p>Loading...</p>;
+  if (pr.loading) return <LoadingComponent/>
   if (pr.error) return <p>Error :(</p>;
 
   const PR = pr.data.repository.pullRequests.nodes;
