@@ -5,6 +5,7 @@ import { IRepository } from "./interfaces/repositoriesInterface";
 import { IBrunch } from "./interfaces/brunchesInterface";
 
 import { Select } from "antd";
+import { CloudTwoTone } from "@ant-design/icons";
 
 const { Option } = Select;
 
@@ -46,9 +47,9 @@ const BrunchAndRepoSelect: React.FC<ICustomInput> = ({
             option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
           }
         >
-          {(arr as Array <IRepository>).map((i) => (
+          {(arr as Array<IRepository>).map((i) => (
             <Option key={uuidv4()} value={i.name}>
-              {i.name}
+              <CloudTwoTone /> {i.name}
             </Option>
           ))}
         </Select>
