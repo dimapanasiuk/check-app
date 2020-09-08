@@ -60,7 +60,7 @@ const MainLayout: React.FC<IMainLayout> = ({
                 return (
                   <Menu.Item key="2">
                     <Link href="/create">
-                      <a>Create task</a>
+                      <a>create task</a>
                     </Link>
                   </Menu.Item>
                 );
@@ -72,7 +72,7 @@ const MainLayout: React.FC<IMainLayout> = ({
                 return (
                   <Menu.Item key="3">
                     <Link href="/tasks">
-                      <a>Tasks</a>
+                      <a>tasks</a>
                     </Link>
                   </Menu.Item>
                 );
@@ -83,7 +83,18 @@ const MainLayout: React.FC<IMainLayout> = ({
                 return (
                   <Menu.Item key="4">
                     <Link href="/review">
-                      <a>Review</a>
+                      <a>review</a>
+                    </Link>
+                  </Menu.Item>
+                );
+              }
+            })()}
+               {(() => {
+              if (role === "admin" || role === "student") {
+                return (
+                  <Menu.Item key="5">
+                    <Link href="/dashboard">
+                      <a>dashboard</a>
                     </Link>
                   </Menu.Item>
                 );
