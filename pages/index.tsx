@@ -3,6 +3,8 @@ import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { connect } from "react-redux";
 
+import { useSelector } from "react-redux";
+
 import MainLayout from "../components/layout/MainLayout";
 
 import { ITaskData } from "./tasks";
@@ -34,13 +36,16 @@ const Home: NextPage<IGetInitialProps> = ({
   );
   const [selectedTask, setSelectedTask] = React.useState<string | null>(null);
   const [selectedPR, setSelectedPR] = React.useState<string | null>(null);
+
   const router = useRouter();
+
+  const pullRequests = useSelector((state) => state.requests.pullRequests);
 
   useEffect(() => {
     if (login === "") {
       router.push("/login");
     }
-  }, []);
+  }, [login, router]);
 
   const onHandleRepoSelect = (value: string): void => {
     setSelectedBrunch(null);
@@ -68,7 +73,9 @@ const Home: NextPage<IGetInitialProps> = ({
         ? openErrorMessage("repository and brunch")
         : next();
     } else if (pageID === "PR") {
-      selectedPR === null ? openErrorMessage("pull request") : next();
+      selectedPR === null && pullRequests.length !== 0
+        ? openErrorMessage("pull request")
+        : next();
     } else next();
   };
 

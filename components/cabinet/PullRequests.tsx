@@ -2,11 +2,14 @@ import React from "react";
 import { useQuery } from "@apollo/client";
 import { v4 as uuidv4 } from "uuid";
 
+import { useDispatch } from "react-redux";
+
 import { GET_ALL_PR } from "./graphs/pullRequests";
 
 import { Select } from "antd";
 import { Typography } from "antd";
 import LoadingComponent from "./LoadingComponent";
+import { changePullRequest } from "../../redux/actions/pullRequestAction";
 
 const { Title } = Typography;
 const { Option } = Select;
@@ -26,6 +29,7 @@ const PullRequests: React.FC<IChoosePR> = ({
   selectedPR,
   onHandlePRSelect,
 }: IChoosePR) => {
+  const dispatch = useDispatch();
   const pr = useQuery(GET_ALL_PR, {
     variables: {
       repo_name: selectedRepo,
@@ -33,10 +37,11 @@ const PullRequests: React.FC<IChoosePR> = ({
     },
   });
 
-  if (pr.loading) return <LoadingComponent/>
+  if (pr.loading) return <LoadingComponent />;
   if (pr.error) return <p>Error :(</p>;
 
   const PR = pr.data.repository.pullRequests.nodes;
+  dispatch(changePullRequest(PR));
 
   return (
     <>
