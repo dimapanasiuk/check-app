@@ -36,6 +36,7 @@ const Home: NextPage<IGetInitialProps> = ({
   );
   const [selectedTask, setSelectedTask] = React.useState<string | null>(null);
   const [selectedPR, setSelectedPR] = React.useState<string | null>(null);
+  const [isFailed, setIsFailed] = React.useState<boolean>(false);
 
   const router = useRouter();
 
@@ -61,21 +62,27 @@ const Home: NextPage<IGetInitialProps> = ({
     setSelectedPR(value);
   };
 
+  const setFailed = (): void => {
+    setIsFailed(true);
+  };
+
   const openErrorMessage = (valueToSelect: string): void => {
-    message.error(`Please select ${valueToSelect}`);
+    message.error(`Please ${valueToSelect}`);
   };
 
   const checkSelects = (pageID: string): void => {
     if (pageID === "tasks") {
-      selectedTask === null ? openErrorMessage("task") : next();
-    } else if (pageID === "repos") {
+      selectedTask === null ? openErrorMessage("select task") : next();
+    } else if (pageID === "repos" && !isFailed) {
       selectedRepo === null || selectedBrunch === null
-        ? openErrorMessage("repository and brunch")
+        ? openErrorMessage("select repository and brunch")
         : next();
-    } else if (pageID === "PR") {
+    } else if (pageID === "PR" && !isFailed) {
       selectedPR === null && pullRequests.length !== 0
-        ? openErrorMessage("pull request")
+        ? openErrorMessage("select pull request")
         : next();
+    } else if (isFailed) {
+      openErrorMessage("refresh the page");
     } else next();
   };
 
@@ -99,6 +106,7 @@ const Home: NextPage<IGetInitialProps> = ({
           selectedBrunch={selectedBrunch}
           onHandleBrunchSelect={onHandleBrunchSelect}
           onHandleRepoSelect={onHandleRepoSelect}
+          setFailed={setFailed}
           login={login}
           title="Choose Repository and branch you worked with"
         />
@@ -123,6 +131,7 @@ const Home: NextPage<IGetInitialProps> = ({
           onHandlePRSelect={onHandlePRSelect}
           selectedRepo={selectedRepo}
           login={login}
+          setFailed={setFailed}
           title="Choose your pull request"
         />
       ),

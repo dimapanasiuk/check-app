@@ -1,4 +1,4 @@
-import { CHANGE_PR } from "../actions/pullRequestAction";
+import { CHANGE_PR } from "../../actions/CabinetActions/pullRequestAction";
 
 const initialState = { pullRequests: [] };
 

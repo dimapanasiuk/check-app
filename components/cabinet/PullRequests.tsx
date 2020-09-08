@@ -9,7 +9,8 @@ import { GET_ALL_PR } from "./graphs/pullRequests";
 import { Select } from "antd";
 import { Typography } from "antd";
 import LoadingComponent from "./LoadingComponent";
-import { changePullRequest } from "../../redux/actions/pullRequestAction";
+import { changePullRequest } from "../../redux/actions/CabinetActions/pullRequestAction";
+import ErrorComponent from "./ErrorComponent";
 
 const { Title } = Typography;
 const { Option } = Select;
@@ -20,6 +21,7 @@ interface IChoosePR {
   selectedRepo: string | null;
   selectedPR: string | null;
   onHandlePRSelect: (value: string) => void;
+  setFailed: () => void;
 }
 
 const PullRequests: React.FC<IChoosePR> = ({
@@ -28,6 +30,7 @@ const PullRequests: React.FC<IChoosePR> = ({
   selectedRepo,
   selectedPR,
   onHandlePRSelect,
+  setFailed,
 }: IChoosePR) => {
   const dispatch = useDispatch();
   const pr = useQuery(GET_ALL_PR, {
@@ -38,7 +41,10 @@ const PullRequests: React.FC<IChoosePR> = ({
   });
 
   if (pr.loading) return <LoadingComponent />;
-  if (pr.error) return <p>Error :(</p>;
+  if (pr.error) {
+    setFailed();
+    return <ErrorComponent />;
+  }
 
   const PR = pr.data.repository.pullRequests.nodes;
   dispatch(changePullRequest(PR));

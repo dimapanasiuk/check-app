@@ -10,6 +10,7 @@ import BrunchAndRepoSelect from "./BrunchAndRepoSelect";
 
 import { Typography } from "antd";
 import LoadingComponent from "./LoadingComponent";
+import ErrorComponent from "./ErrorComponent";
 
 const { Title } = Typography;
 
@@ -20,6 +21,7 @@ interface IChooser {
   selectedBrunch: string | null;
   onHandleRepoSelect: (value: string) => void;
   onHandleBrunchSelect: (value: string) => void;
+  setFailed: () => void;
 }
 
 const BrunchAndRepoContainer: React.FC<IChooser> = React.memo(
@@ -30,6 +32,7 @@ const BrunchAndRepoContainer: React.FC<IChooser> = React.memo(
     selectedRepo,
     onHandleBrunchSelect,
     onHandleRepoSelect,
+    setFailed,
   }: IChooser) => {
     const repos = useQuery(REPOS, {
       variables: {
@@ -45,9 +48,15 @@ const BrunchAndRepoContainer: React.FC<IChooser> = React.memo(
     });
 
     if (repos.loading) return <LoadingComponent />;
-    if (repos.error) return <p>Error :(</p>;
+    if (repos.error) {
+      setFailed();
+      return <ErrorComponent />;
+    }
     if (branches.loading) return <LoadingComponent />;
-    if (branches.error) return <p>Error :(</p>;
+    if (branches.error) {
+      setFailed();
+      return <ErrorComponent />;
+    }
 
     const branchesData: IBrunch[] = branches.data.repository.refs.edges;
     const reposData: IRepository[] =

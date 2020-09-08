@@ -1,5 +1,5 @@
 import roleReducer from "./roleReducer";
-import pullReqReducer from "./pullReqReducer";
+import pullReqReducer from "./CabinetReducers/pullReqReducer";
 import { combineReducers } from "redux";
 
 const rootReducer = combineReducers({

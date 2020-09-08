@@ -3,6 +3,7 @@ import { Timeline } from "antd";
 import { useQuery } from "@apollo/client";
 import { GET_ALL_COMMITS_IN_BRANCH } from "./graphs/commits";
 import LoadingComponent from "./LoadingComponent";
+import ErrorComponent from "./ErrorComponent";
 
 interface ICheckCommit {
   title: string;
@@ -25,8 +26,8 @@ const Commits: React.FC<ICheckCommit> = ({
     },
   });
 
-  if (commits.loading) return <LoadingComponent/>
-  if (commits.error) return <p>Error :</p>
+  if (commits.loading) return <LoadingComponent />;
+  if (commits.error) return <ErrorComponent />;
 
   const commitsData = commits.data.repository.ref.target.history.edges;
 
