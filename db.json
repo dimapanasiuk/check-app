@@ -29,6 +29,18 @@
       "role": "admin",
       "img": "https://avatars2.githubusercontent.com/u/33260556?v=4",
       "id": 3
+    },
+    {
+      "login": "burik84",
+      "role": "mentor",
+      "img": "https://avatars3.githubusercontent.com/u/32265200?v=4",
+      "id": 4
+    },
+    {
+      "login": "burik84",
+      "role": "admin",
+      "img": "https://avatars3.githubusercontent.com/u/32265200?v=4",
+      "id": 5
     }
   ]
 }
