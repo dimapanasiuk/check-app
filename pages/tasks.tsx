@@ -67,15 +67,14 @@ const Tasks: NextPage<IGetInitialProps> = ({ tasks }: IGetInitialProps) => {
               <Title level={2}>Your task</Title>
               <ul className={styles.layout}>
                 {(() => {
-                  return allTaskHtml(tasks);
-                  // let start = currentPaginationPage - 1;
-                  // const end = currentPaginationPage * defaultPageSize;
-                  // if (currentPaginationPage === 1) {
-                  //   return allTaskHtml(tasks).slice(start, end);
-                  // } else {
-                  //   start = currentPaginationPage * defaultPageSize - defaultPageSize;
-                  //   return allTaskHtml(tasks).slice(start, end);
-                  // }
+                  let start = currentPaginationPage - 1;
+                  const end = currentPaginationPage * defaultPageSize;
+                  if (currentPaginationPage === 1) {
+                    return allTaskHtml(tasks).slice(start, end);
+                  } else {
+                    start = currentPaginationPage * defaultPageSize - defaultPageSize;
+                    return allTaskHtml(tasks).slice(start, end);
+                  }
                 })()}
               </ul>
 
