@@ -2,6 +2,7 @@ import React from "react";
 import { NextPage } from "next";
 
 import MainLayout from "../components/layout/MainLayout";
+
 import {
   Form,
   Select,
@@ -9,7 +10,6 @@ import {
   InputNumber,
   Button,
   Checkbox,
-  Modal,
 } from "antd";
 
 import { UserOutlined } from "@ant-design/icons";
