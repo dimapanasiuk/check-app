@@ -11,12 +11,12 @@ interface ICabinetButtons {
   currentPage: number;
   checkSelects: (pageID: string) => void;
   next: () => void;
-  prev: () => void;
+  checkIsFailedForPrev: () => void;
   steps: ISteps[];
 }
 
 const CabinetButtons: React.FC<ICabinetButtons> = ({
-  prev,
+  checkIsFailedForPrev,
   currentPage,
   checkSelects,
   next,
@@ -47,7 +47,10 @@ const CabinetButtons: React.FC<ICabinetButtons> = ({
           </Button>
         )}
         {currentPage > 0 && (
-          <Button style={{ margin: "0 8px" }} onClick={() => prev()}>
+          <Button
+            style={{ margin: "0 8px" }}
+            onClick={() => checkIsFailedForPrev()}
+          >
             Previous
           </Button>
         )}

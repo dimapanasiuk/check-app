@@ -86,6 +86,10 @@ const Home: NextPage<IGetInitialProps> = ({
     } else next();
   };
 
+  const checkIsFailedForPrev = (): void => {
+    !isFailed ? prev() : openErrorMessage("refresh the page");
+  };
+
   const steps = [
     {
       title: "Choose Task",
@@ -170,7 +174,7 @@ const Home: NextPage<IGetInitialProps> = ({
         </Steps>
         {currentPage === 2 && (
           <CabinetButtons
-            prev={prev}
+            checkIsFailedForPrev={checkIsFailedForPrev}
             next={next}
             checkSelects={checkSelects}
             currentPage={currentPage}
@@ -179,7 +183,7 @@ const Home: NextPage<IGetInitialProps> = ({
         )}
         <div className="steps-content">{steps[currentPage].content}</div>
         <CabinetButtons
-          prev={prev}
+          checkIsFailedForPrev={checkIsFailedForPrev}
           next={next}
           checkSelects={checkSelects}
           currentPage={currentPage}
