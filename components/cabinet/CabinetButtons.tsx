@@ -12,6 +12,7 @@ interface ICabinetButtons {
   checkSelects: (pageID: string) => void;
   next: () => void;
   checkIsFailedForPrev: () => void;
+  addCompletedTaskToDB?: () => void;
   steps: ISteps[];
 }
 
@@ -21,6 +22,7 @@ const CabinetButtons: React.FC<ICabinetButtons> = ({
   checkSelects,
   next,
   steps,
+  addCompletedTaskToDB,
 }: ICabinetButtons) => {
   return (
     <div>
@@ -41,7 +43,10 @@ const CabinetButtons: React.FC<ICabinetButtons> = ({
         {currentPage === steps.length - 1 && (
           <Button
             type="primary"
-            onClick={() => message.success("Processing complete!")}
+            onClick={() => {
+              message.success("Processing complete!");
+              addCompletedTaskToDB();
+            }}
           >
             Done
           </Button>

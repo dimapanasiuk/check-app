@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { connect } from "react-redux";
+import axios from "axios";
 
 import { useSelector } from "react-redux";
 
@@ -48,6 +49,19 @@ const Home: NextPage<IGetInitialProps> = ({
       router.push("/login");
     }
   }, [login, router]);
+
+  const addCompletedTaskToDB = async () => {
+      await axios
+        .post("http://localhost:4000/completedTasks", {
+          taskName: selectedTask,
+          repository: selectedRepo,
+          branch: selectedBrunch,
+          pullRequest: selectedPRUrl
+        })
+        .then(() => {
+          router.push("/tasks");
+        });
+  }
 
   const onHandleRepoSelect = (value: string): void => {
     setSelectedBrunch(null);
@@ -188,6 +202,7 @@ const Home: NextPage<IGetInitialProps> = ({
         )}
         <div className="steps-content">{steps[currentPage].content}</div>
         <CabinetButtons
+          addCompletedTaskToDB={addCompletedTaskToDB}
           checkIsFailedForPrev={checkIsFailedForPrev}
           next={next}
           checkSelects={checkSelects}
