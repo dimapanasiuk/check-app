@@ -2,6 +2,7 @@ import React from "react";
 import { AppProps } from "next/app";
 import { wrapper } from "../redux/store";
 import NextNprogress from "nextjs-progressbar";
+
 import "../styles/globals.css";
 import "antd/dist/antd.css";
 import {
