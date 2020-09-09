@@ -3,6 +3,7 @@ import { NextPage } from "next";
 
 import MainLayout from "../components/layout/MainLayout";
 import Performance from "../components/dashboard/Performance";
+import Deadline from "../components/dashboard/deadline";
 
 import styles from "../styles/dashboard.module.scss";
 
@@ -21,13 +22,13 @@ interface IGetInitialProps {
   tasks: Array<ITaskData>;
 }
 
-const Dashboard:  NextPage<IGetInitialProps> = ({tasks}: IGetInitialProps) => {
+const Dashboard: NextPage<IGetInitialProps> = ({ tasks }: IGetInitialProps) => {
   return (
     <>
       <MainLayout title="dashboard page">
         <div className={styles.layout}>
           <Card title="Performance" bordered={false} style={{ maxWidth: 500 }}>
-            <Performance tasks={tasks}/>
+            <Performance tasks={tasks} />
           </Card>
           <Card title="Statistics" bordered={false} style={{ maxWidth: 500 }}>
             <p>Card content</p>
@@ -37,7 +38,7 @@ const Dashboard:  NextPage<IGetInitialProps> = ({tasks}: IGetInitialProps) => {
             bordered={false}
             style={{ maxWidth: 500 }}
           >
-            <p>Card content</p>
+            <Deadline tasks={tasks} />
           </Card>
         </div>
       </MainLayout>
