@@ -8,7 +8,7 @@ interface ICheckOutData {
   selectedRepo: string;
   selectedTask: string;
   selectedBrunch: string;
-  selectedPR: string;
+  selectedPRUrl: string;
 }
 
 const CheckOutData: React.FC<ICheckOutData> = ({
@@ -16,7 +16,7 @@ const CheckOutData: React.FC<ICheckOutData> = ({
   selectedBrunch,
   selectedRepo,
   selectedTask,
-  selectedPR,
+  selectedPRUrl,
 }: ICheckOutData) => {
   return (
     <div style={{ textAlign: "center" }}>
@@ -26,7 +26,11 @@ const CheckOutData: React.FC<ICheckOutData> = ({
       <h2>Your task: {selectedTask} </h2>
       <h2>Your repository: {selectedRepo} </h2>
       <h2>Your brunch: {selectedBrunch} </h2>
-      {selectedPR && <h2>Your pull request: {selectedPR}</h2>}
+      {selectedPRUrl && (
+        <h2>
+          Your pull request: <a href={selectedPRUrl}>{selectedPRUrl}</a>
+        </h2>
+      )}
     </div>
   );
 };

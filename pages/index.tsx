@@ -35,6 +35,7 @@ const Home: NextPage<IGetInitialProps> = ({
     null
   );
   const [selectedTask, setSelectedTask] = React.useState<string | null>(null);
+  const [selectedPRUrl, setSelectedPRUrl] = React.useState<string | null>(null);
   const [selectedPR, setSelectedPR] = React.useState<string | null>(null);
   const [isFailed, setIsFailed] = React.useState<boolean>(false);
 
@@ -60,6 +61,9 @@ const Home: NextPage<IGetInitialProps> = ({
   };
   const onHandlePRSelect = (value: string): void => {
     setSelectedPR(value);
+  }
+  const onHandlePRUrlChange = (value: string): void => {
+    setSelectedPRUrl(value);
   };
 
   const setFailed = (): void => {
@@ -78,7 +82,7 @@ const Home: NextPage<IGetInitialProps> = ({
         ? openErrorMessage("select repository and brunch")
         : next();
     } else if (pageID === "PR" && !isFailed) {
-      selectedPR === null && pullRequests.length !== 0
+      selectedPRUrl === null && pullRequests.length !== 0
         ? openErrorMessage("select pull request")
         : next();
     } else if (isFailed) {
@@ -133,6 +137,7 @@ const Home: NextPage<IGetInitialProps> = ({
         <PullRequests
           selectedPR={selectedPR}
           onHandlePRSelect={onHandlePRSelect}
+          onHandlePRUrlChange={onHandlePRUrlChange}
           selectedRepo={selectedRepo}
           login={login}
           setFailed={setFailed}
@@ -148,7 +153,7 @@ const Home: NextPage<IGetInitialProps> = ({
           selectedRepo={selectedRepo}
           selectedBrunch={selectedBrunch}
           selectedTask={selectedTask}
-          selectedPR={selectedPR}
+          selectedPRUrl={selectedPRUrl}
         />
       ),
     },

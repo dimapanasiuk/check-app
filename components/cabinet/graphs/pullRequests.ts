@@ -8,6 +8,7 @@ export const GET_ALL_PR = gql`
           id
           title
           createdAt
+          url
         }
       }
     }
