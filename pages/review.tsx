@@ -135,7 +135,6 @@ Review.getInitialProps = async () => {
 
   const resUsers = await fetch(`http://localhost:4000/users`);
   const jsonUsers = await resUsers.json();
-  // console.log("jsonUsers", jsonUsers);
 
   return { tasks: jsonTasks, users: jsonUsers };
 };
