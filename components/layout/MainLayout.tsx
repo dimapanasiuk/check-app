@@ -56,7 +56,7 @@ const MainLayout: React.FC<IMainLayout> = ({
               }
             })()}
             {(() => {
-              if (role === "admin") {
+              if (role === "mentor" || role === "admin") {
                 return (
                   <Menu.Item key="2">
                     <Link href="/create">
@@ -66,7 +66,6 @@ const MainLayout: React.FC<IMainLayout> = ({
                 );
               }
             })()}
-
             {(() => {
               if (role === "admin" || role === "mentor" || role === "student") {
                 return (
@@ -101,7 +100,7 @@ const MainLayout: React.FC<IMainLayout> = ({
               }
             })()}
             {(() => {
-              if (role === "admin" || role === "student") {
+              if (role === "mentor" || role === "student" || role === "admin") {
                 return (
                   <Menu.Item key="6">
                     <Link href="/score">
