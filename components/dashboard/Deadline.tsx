@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import styles from "../../styles/Performance.module.scss";
 
-import { Progress, Typography } from "antd";
+import { Typography } from "antd";
 const { Title } = Typography;
 
 interface ITaskData {
@@ -19,22 +19,21 @@ interface IGetInitialProps {
   tasks: Array<ITaskData>;
 }
 
-const Performance: React.FC<IGetInitialProps> = ({
-  tasks,
-}: IGetInitialProps) => {
+const Deadline: React.FC<IGetInitialProps> = ({ tasks }: IGetInitialProps) => {
   let tasksHml;
 
   if (tasks.length !== 0) {
     tasksHml = tasks.map((i) => {
       return (
         <div key={uuidv4()}>
-          <Progress type="circle" percent={0} width={80} />
-          <Title level={4}>{i.taskName}</Title>
+          <Title>{i.taskName}</Title>
+          <Title>Start {i.date[0]}</Title>
+          <Title>Finish {i.date[1]}</Title>
         </div>
       );
     });
   } else {
-    tasksHml = <Title level={4}>{`U don't have any task`}</Title>;
+    tasksHml = <Title level={4}>{`U don't have any deadline`}</Title>;
   }
 
   return (
@@ -44,4 +43,4 @@ const Performance: React.FC<IGetInitialProps> = ({
   );
 };
 
-export default Performance;
+export default Deadline;
