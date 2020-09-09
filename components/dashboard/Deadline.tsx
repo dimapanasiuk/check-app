@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import styles from "../../styles/Performance.module.scss";
 
-import { Progress, Typography } from "antd";
+import { Typography } from "antd";
 const { Title } = Typography;
 
 interface ITaskData {

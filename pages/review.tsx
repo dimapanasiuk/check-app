@@ -3,14 +3,7 @@ import { NextPage } from "next";
 
 import MainLayout from "../components/layout/MainLayout";
 
-import {
-  Form,
-  Select,
-  Input,
-  InputNumber,
-  Button,
-  Checkbox,
-} from "antd";
+import { Form, Select, Input, InputNumber, Button, Checkbox } from "antd";
 
 import { UserOutlined } from "@ant-design/icons";
 
@@ -30,14 +23,28 @@ interface ITaskData {
 
 interface IGetInitialProps {
   tasks: Array<ITaskData>;
+  users: Array<any>;
 }
 
-const Review: NextPage<IGetInitialProps> = ({ tasks }: IGetInitialProps) => {
+const Review: NextPage<IGetInitialProps> = ({
+  tasks,
+  users,
+}: IGetInitialProps) => {
   const tasksNames = tasks.map((i) => (
     <Option value={i.taskName} key={uniqid()}>
       {i.taskName}
     </Option>
   ));
+
+  const userNames = users.map((i) => (
+    <Option value={i.login} key={uniqid()}>
+      {i.login}
+    </Option>
+  ));
+
+  const handleChangeStudent = (e) => {
+    console.log("handleChangeStudent", e);
+  };
 
   const handleChange = (e) => {
     console.log(`handleChange ${e}`);
@@ -63,8 +70,8 @@ const Review: NextPage<IGetInitialProps> = ({ tasks }: IGetInitialProps) => {
     <MainLayout title="review page">
       <Form name="basic" layout="vertical" onFinish={submitFormHandler}>
         <Form.Item
-          label="Login"
-          name="login"
+          label="Task"
+          name="task"
           rules={[
             {
               required: true,
@@ -72,7 +79,7 @@ const Review: NextPage<IGetInitialProps> = ({ tasks }: IGetInitialProps) => {
             },
           ]}
         >
-          <Select defaultValue="please check task" onChange={handleChange}>
+          <Select placeholder="please check task" onChange={handleChange}>
             {tasksNames}
           </Select>
         </Form.Item>
@@ -86,20 +93,23 @@ const Review: NextPage<IGetInitialProps> = ({ tasks }: IGetInitialProps) => {
             },
           ]}
         >
-          <Input
-            value=""
-            prefix={<UserOutlined className="site-form-item-icon" />}
-            placeholder="Github login"
-          />
+          <Select
+            placeholder="student"
+            onChange={handleChangeStudent}
+            menuItemSelectedIcon={
+              <UserOutlined className="site-form-item-icon" />
+            }
+          >
+            {userNames}
+          </Select>
         </Form.Item>
 
-        <Form.Item label="Student" name="student">
-          <Checkbox onClick={onCheck} name="check-box">
-            check me
+        <Form.Item name="checkbox">
+          <Checkbox onClick={onCheck} name="check-box" checked={false}>
+            Make my name visible in feedback
           </Checkbox>
         </Form.Item>
-
-        <Form.Item label="Student" name="student">
+        <Form.Item label="Score" name="score">
           <InputNumber min={1} max={500} onChange={changeInputNumberHandler} />
         </Form.Item>
         <Form.Item name="Comment" label="comment">
@@ -120,10 +130,14 @@ const Review: NextPage<IGetInitialProps> = ({ tasks }: IGetInitialProps) => {
 };
 
 Review.getInitialProps = async () => {
-  const res = await fetch(`http://localhost:4000/tasks`);
-  const json = await res.json();
+  const resTasks = await fetch(`http://localhost:4000/tasks`);
+  const jsonTasks = await resTasks.json();
 
-  return { tasks: json };
+  const resUsers = await fetch(`http://localhost:4000/users`);
+  const jsonUsers = await resUsers.json();
+  // console.log("jsonUsers", jsonUsers);
+
+  return { tasks: jsonTasks, users: jsonUsers };
 };
 
 export default Review;
