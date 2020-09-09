@@ -18,9 +18,6 @@ interface IHome {
 
 const Home: NextPage<IHome> = ({ login }: IHome) => {
   const router = useRouter();
-
-  console.log("login", login);
-
   useEffect(() => {
     if (login === "") {
       router.push("/login");

@@ -25,6 +25,7 @@ interface ITaskData {
   taskDescription: string;
   maxScore: number;
   markdown: string;
+  date: Array<string>;
 }
 
 interface IGetInitialProps {
