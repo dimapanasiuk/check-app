@@ -5,7 +5,7 @@ import { NextPage } from "next";
 import MainLayout from "../components/layout/MainLayout";
 import styles from "../styles/tasks.module.scss";
 
-import { Pagination, Typography, Card } from "antd";
+import { Button, Pagination, Typography, Card } from "antd";
 
 const { Meta } = Card;
 const { Title } = Typography;
@@ -60,25 +60,47 @@ const Tasks: NextPage<IGetInitialProps> = ({ tasks }: IGetInitialProps) => {
 
   return (
     <MainLayout title="tasks">
-      <Title level={2}>Your task</Title>
-      <ul className={styles.layout}>
-        {(() => {
-          let start = currentPaginationPage - 1;
-          const end = currentPaginationPage * defaultPageSize;
-          if (currentPaginationPage === 1) {
-            return allTaskHtml(tasks).slice(start, end);
-          } else {
-            start = currentPaginationPage * defaultPageSize - defaultPageSize;
-            return allTaskHtml(tasks).slice(start, end);
-          }
-        })()}
-      </ul>
-      <Pagination  className={styles.pagination}
-        defaultCurrent={currentPaginationPage}
-        total={tasksAmount}
-        defaultPageSize={defaultPageSize}
-        onChange={changeHandlerPagination}
-      />
+      {(() => {
+        if (tasks.length !== 0) {
+          return (
+            <>
+              <Title level={2}>Your task</Title>
+              <ul className={styles.layout}>
+                {(() => {
+                  return allTaskHtml(tasks);
+                  // let start = currentPaginationPage - 1;
+                  // const end = currentPaginationPage * defaultPageSize;
+                  // if (currentPaginationPage === 1) {
+                  //   return allTaskHtml(tasks).slice(start, end);
+                  // } else {
+                  //   start = currentPaginationPage * defaultPageSize - defaultPageSize;
+                  //   return allTaskHtml(tasks).slice(start, end);
+                  // }
+                })()}
+              </ul>
+
+              <Pagination
+                className={styles.pagination}
+                defaultCurrent={currentPaginationPage}
+                total={tasksAmount}
+                defaultPageSize={defaultPageSize}
+                onChange={changeHandlerPagination}
+              />
+            </>
+          );
+        } else {
+          return (
+            <>
+              <Title level={2}>{"You don't have tasks"}</Title>
+              <Button type="primary">
+                <Link href="/dashboard">
+                  <a>Go to dashboard</a>
+                </Link>
+              </Button>
+            </>
+          );
+        }
+      })()}
     </MainLayout>
   );
 };

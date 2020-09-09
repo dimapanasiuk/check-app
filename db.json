@@ -1,18 +1,17 @@
 {
   "tasks": [
-    {
-      "id": "68a5a202-842b-4324-9394-a8b9b155d398",
-      "taskName": "123",
-      "taskDescription": "123",
-      "maxScore": 200,
-      "markdown": ""
-    }
   ],
   "users": [
     {
       "id": 1,
       "login": "panasiuk",
       "role": "Student"
+    },
+    {
+      "login": "test",
+      "role": "admin",
+      "img": "https://avatars3.githubusercontent.com/u/383316?v=4",
+      "id": 2
     }
   ]
 }
