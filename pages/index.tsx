@@ -51,17 +51,17 @@ const Home: NextPage<IGetInitialProps> = ({
   }, [login, router]);
 
   const addCompletedTaskToDB = async () => {
-      await axios
-        .post("http://localhost:4000/completedTasks", {
-          taskName: selectedTask,
-          repository: selectedRepo,
-          branch: selectedBrunch,
-          pullRequest: selectedPRUrl
-        })
-        .then(() => {
-          router.push("/tasks");
-        });
-  }
+    await axios
+      .post("http://localhost:4000/completedTasks", {
+        taskName: selectedTask,
+        repository: selectedRepo,
+        branch: selectedBrunch,
+        pullRequest: selectedPRUrl,
+      })
+      .then(() => {
+        router.push("/tasks");
+      });
+  };
 
   const onHandleRepoSelect = (value: string): void => {
     setSelectedBrunch(null);
@@ -75,7 +75,7 @@ const Home: NextPage<IGetInitialProps> = ({
   };
   const onHandlePRSelect = (value: string): void => {
     setSelectedPR(value);
-  }
+  };
   const onHandlePRUrlChange = (value: string): void => {
     setSelectedPRUrl(value);
   };
@@ -96,9 +96,11 @@ const Home: NextPage<IGetInitialProps> = ({
         ? openErrorMessage("select repository and brunch")
         : next();
     } else if (pageID === "PR" && !isFailed) {
-      selectedPRUrl === null && pullRequests.length !== 0
-        ? openErrorMessage("select pull request")
-        : next();
+      if (selectedPRUrl === null && pullRequests.length !== 0)
+        openErrorMessage("select pull request");
+      else if (pullRequests.length === 0)
+        openErrorMessage("come back and select repository with pull request");
+      else next();
     } else if (isFailed) {
       openErrorMessage("refresh the page");
     } else next();
