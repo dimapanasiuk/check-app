@@ -23,11 +23,13 @@ const { Step } = Steps;
 
 interface IGetInitialProps {
   login?: string;
+  role?: string;
   tasks: Array<ITaskData>;
 }
 
 const Home: NextPage<IGetInitialProps> = ({
   login,
+  role,
   tasks,
 }: IGetInitialProps) => {
   const [currentPage, setCurrentPage] = useState<number>(0);
@@ -53,6 +55,8 @@ const Home: NextPage<IGetInitialProps> = ({
   const addCompletedTaskToDB = async () => {
     await axios
       .post("http://localhost:4000/completedTasks", {
+        user: login,
+        role: role,
         taskName: selectedTask,
         repository: selectedRepo,
         branch: selectedBrunch,
@@ -223,7 +227,7 @@ Home.getInitialProps = async () => {
 };
 
 const mapStateToProps = (state) => {
-  return { login: state.chooseRole.login };
+  return { login: state.chooseRole.login, role: state.chooseRole.role };
 };
 
 export default connect(mapStateToProps)(Home);

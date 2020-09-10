@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { NextPage } from "next";
 
 import MainLayout from "../components/layout/MainLayout";
@@ -12,115 +12,113 @@ import uniqid from "uniqid";
 const { TextArea } = Input;
 const { Option } = Select;
 
-interface ITaskData {
-  id: string;
-  taskName: string;
-  taskDescription: string;
-  maxScore: number;
-  markdown: string;
-  date: Array<string>;
-}
-
 interface IGetInitialProps {
-  tasks: Array<ITaskData>;
-  users: Array<any>;
+  data: any;
 }
 
-const Review: NextPage<IGetInitialProps> = ({
-  tasks,
-  users,
-}: IGetInitialProps) => {
-  const tasksNames = tasks.map((i) => (
-    <Option value={i.taskName} key={uniqid()}>
-      {i.taskName}
+const Review: NextPage<IGetInitialProps> = ({ data }: IGetInitialProps) => {
+  const [chooseTask, setChooseTask] = useState(false);
+  const [chooseUser, setChooseUser] = useState(false);
+  const [isCheck, setIsCheck] = useState(false);
+  const [users, setUsers] = useState([]);
+
+  const tasks = data.map((i) => i.taskName);
+  const uniqueTasks = Array.from(new Set(tasks));
+
+  const usersWithThisTasks = (task, arr) =>
+    arr.filter((i) => i.taskName === task);
+
+  const tasksNames = uniqueTasks.map((i) => (
+    <Option value={`${i}`} key={uniqid()}>
+      {i}
     </Option>
   ));
 
-  const userNames = users.map((i) => (
-    <Option value={i.login} key={uniqid()}>
-      {i.login}
+  const usersHtml = users.map((i) => (
+    <Option value={`${i}`} key={uniqid()}>
+      {i}
     </Option>
   ));
+
+  const handleChangeTask = (task) => {
+    setChooseTask(true);
+
+    const users = usersWithThisTasks(task, data).map((i) => i.user);
+    setUsers(users);
+  };
 
   const handleChangeStudent = (e) => {
-    console.log("handleChangeStudent", e);
-  };
-
-  const handleChange = (e) => {
-    console.log(`handleChange ${e}`);
-  };
-
-  const changeInputNumberHandler = (e) => {
-    console.log("changeInputNumberHandler", e);
-  };
-
-  const changeTextAreaHandler = (e) => {
-    console.log("changeTextAreaHandler", e);
-  };
-
-  const onCheck = (e) => {
-    console.log("onCheck", e);
+    setChooseUser(true);
   };
 
   const submitFormHandler = (e) => {
-    console.log("submitFormHandler", e);
+    const { task, student, score, comment } = e;
+    isCheck;
+  };
+
+  const checkBoxHandler = () => {
+    setIsCheck(!isCheck);
   };
 
   return (
     <MainLayout title="review page">
       <Form name="basic" layout="vertical" onFinish={submitFormHandler}>
-        <Form.Item
-          label="Task"
-          name="task"
-          rules={[
-            {
-              required: true,
-              message: "Please choose your task!",
-            },
-          ]}
-        >
-          <Select placeholder="please check task" onChange={handleChange}>
+        <Form.Item label="Task" name="task">
+          <Select placeholder="please check task" onChange={handleChangeTask}>
             {tasksNames}
           </Select>
         </Form.Item>
-        <Form.Item
-          label="Student"
-          name="student"
-          rules={[
-            {
-              required: true,
-              message: "Please enter student!",
-            },
-          ]}
-        >
+        <Form.Item label="Student" name="student">
           <Select
             placeholder="student"
             onChange={handleChangeStudent}
+            disabled={!chooseTask}
             menuItemSelectedIcon={
               <UserOutlined className="site-form-item-icon" />
             }
           >
-            {userNames}
+            {usersHtml}
           </Select>
         </Form.Item>
-
         <Form.Item name="checkbox">
-          <Checkbox onClick={onCheck} name="check-box" checked={false}>
+          <Checkbox
+            onChange={checkBoxHandler}
+            checked={isCheck}
+            disabled={!chooseUser}
+          >
             Make my name visible in feedback
           </Checkbox>
         </Form.Item>
-        <Form.Item label="Score" name="score">
-          <InputNumber min={1} max={500} onChange={changeInputNumberHandler} />
+        <Form.Item
+          label="Score"
+          name="score"
+          rules={[
+            {
+              required: true,
+              message: "enter score",
+            },
+          ]}
+        >
+          <InputNumber min={1} max={500} disabled={!chooseUser} />
         </Form.Item>
-        <Form.Item name="Comment" label="comment">
+        <Form.Item
+          name="comment"
+          label="comment"
+          rules={[
+            {
+              required: true,
+              message: "enter comment",
+            },
+          ]}
+        >
           <TextArea
-            onChange={changeTextAreaHandler}
+            disabled={!chooseUser}
             autoSize={true}
             style={{ minHeight: "70px" }}
           />
         </Form.Item>
         <Form.Item>
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit" disabled={!chooseUser}>
             Submit
           </Button>
         </Form.Item>
@@ -136,7 +134,10 @@ Review.getInitialProps = async () => {
   const resUsers = await fetch(`http://localhost:4000/users`);
   const jsonUsers = await resUsers.json();
 
-  return { tasks: jsonTasks, users: jsonUsers };
+  const res = await fetch(`http://localhost:4000/completedTasks`);
+  const json = await res.json();
+
+  return { tasks: jsonTasks, users: jsonUsers, data: json };
 };
 
 export default Review;
