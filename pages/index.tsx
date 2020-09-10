@@ -35,7 +35,9 @@ const Home: NextPage<IGetInitialProps> = React.memo(
     const [selectedPRUrl, setSelectedPRUrl] = React.useState<string | null>(
       null
     );
-    const [maxScoreValue, setMaxScoreValue] = React.useState<number | null>(null);
+    const [maxScoreValue, setMaxScoreValue] = React.useState<number | null>(
+      null
+    );
     const [selectedPR, setSelectedPR] = React.useState<string | null>(null);
     const [isFailed, setIsFailed] = React.useState<boolean>(false);
 
@@ -85,7 +87,7 @@ const Home: NextPage<IGetInitialProps> = React.memo(
     };
     const onHandleMaxScoreChange = (value: number): void => {
       setMaxScoreValue(value);
-    }
+    };
 
     const setFailed = (): void => {
       setIsFailed(true);
@@ -95,15 +97,17 @@ const Home: NextPage<IGetInitialProps> = React.memo(
       message.error(`Please ${valueToSelect}`);
     };
 
-    const checkSelects = (pageID: string): void => {
-      if (pageID === "tasks") {
-        selectedTask === null ? openErrorMessage("select task") : next();
-      } else if (pageID === "repos" && !isFailed) {
-        selectedRepo === null || selectedBrunch === null
-          ? openErrorMessage("select repository and brunch")
+    const checkSelects = (pageID: number): void => {
+      if (pageID === 0) {
+        !selectedTask || !maxScoreValue
+          ? openErrorMessage("select task and max score")
           : next();
-      } else if (pageID === "PR" && !isFailed) {
-        if (selectedPRUrl === null && pullRequests.length !== 0)
+      } else if (pageID === 1 && !isFailed) {
+        !selectedRepo || !selectedBrunch
+          ? openErrorMessage("select repository and branch")
+          : next();
+      } else if (pageID === 3 && !isFailed) {
+        if (!selectedPRUrl && pullRequests.length !== 0)
           openErrorMessage("select pull request");
         else if (pullRequests.length === 0)
           openErrorMessage("come back and select repository with pull request");
