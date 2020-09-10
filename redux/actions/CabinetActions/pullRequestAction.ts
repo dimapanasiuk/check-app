@@ -1,11 +1,9 @@
+import { IPullRequests } from "../../../components/cabinet/interfaces/pullRequestsInterface";
+
 export const CHANGE_PR = "CHANGE_PR";
 
-
-interface IChangePullReq {
-  pullRequests: any
-}
-
-export const changePullRequest = (data: IChangePullReq) => ({
-  type: CHANGE_PR,
-  payload: data,
-} as const);
+export const changePullRequest = (data: IPullRequests[]) =>
+  ({
+    type: CHANGE_PR,
+    payload: data,
+  } as const);

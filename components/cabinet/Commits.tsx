@@ -2,12 +2,11 @@ import React from "react";
 import { Timeline } from "antd";
 import { useQuery } from "@apollo/client";
 import { GET_ALL_COMMITS_IN_BRANCH } from "./graphs/commits";
-import LoadingComponent from "./LoadingComponent";
-import ErrorComponent from "./ErrorComponent";
+import { LoadingComponent, ErrorComponent } from "./index";
 
 interface ICheckCommit {
   title: string;
-  selectedBrunch: string | null;
+  selectedBranch: string | null;
   selectedRepo: string | null;
   login: string;
 }
@@ -15,17 +14,18 @@ interface ICheckCommit {
 const Commits: React.FC<ICheckCommit> = ({
   title,
   selectedRepo,
-  selectedBrunch,
+  selectedBranch,
   login,
 }: ICheckCommit) => {
+  console.log(selectedRepo, selectedBranch, login);
   const commits = useQuery(GET_ALL_COMMITS_IN_BRANCH, {
     variables: {
       repo_name: selectedRepo,
-      brunch: selectedBrunch,
+      branch: selectedBranch,
       login,
     },
   });
-
+  console.log(commits);
   if (commits.loading) return <LoadingComponent />;
   if (commits.error) return <ErrorComponent />;
 

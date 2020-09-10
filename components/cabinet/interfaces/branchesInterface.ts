@@ -1,4 +1,4 @@
-export interface IBrunch {
+export interface IBranch {
   node: INode;
   __typename: string;
 }

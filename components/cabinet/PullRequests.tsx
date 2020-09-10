@@ -6,13 +6,13 @@ import { useDispatch } from "react-redux";
 
 import { GET_ALL_PR } from "./graphs/pullRequests";
 
-import { Select } from "antd";
-import { Typography } from "antd";
+import { Select, Typography } from "antd";
 import { WarningTwoTone, PullRequestOutlined } from "@ant-design/icons";
 
-import LoadingComponent from "./LoadingComponent";
+import { LoadingComponent, ErrorComponent } from "./index";
+
 import { changePullRequest } from "../../redux/actions/CabinetActions/pullRequestAction";
-import ErrorComponent from "./ErrorComponent";
+import { IPullRequests } from "./interfaces/pullRequestsInterface";
 
 const { Title } = Typography;
 const { Option } = Select;
@@ -51,14 +51,16 @@ const PullRequests: React.FC<IChoosePR> = ({
     return <ErrorComponent />;
   }
 
-  const pullRequests = pr.data.repository.pullRequests.nodes;
+  const pullRequests: IPullRequests[] = pr.data.repository.pullRequests.nodes;
   dispatch(changePullRequest(pullRequests));
-  const pullReqUrl =
+
+  const pullReqUrl: string[] =
     selectedPR &&
     pullRequests.map((item) => {
       if (item.title === selectedPR.slice(0, -1)) return item.url;
     });
-  const pullReqNumber = selectedPR && parseInt(selectedPR.slice(-1));
+
+  const pullReqNumber: number = selectedPR && parseInt(selectedPR.slice(-1));
   selectedPR && onHandlePRUrlChange(pullReqUrl[pullReqNumber - 1]);
 
   return (

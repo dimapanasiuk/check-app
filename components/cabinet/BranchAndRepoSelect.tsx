@@ -2,7 +2,7 @@ import React from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import { IRepository } from "./interfaces/repositoriesInterface";
-import { IBrunch } from "./interfaces/brunchesInterface";
+import { IBranch } from "./interfaces/branchesInterface";
 
 import { Select } from "antd";
 import { DesktopOutlined, BranchesOutlined } from "@ant-design/icons";
@@ -10,28 +10,27 @@ import { DesktopOutlined, BranchesOutlined } from "@ant-design/icons";
 const { Option } = Select;
 
 interface ICustomInput {
-  arr: IRepository[] | IBrunch[];
+  arrayData: IRepository[] | IBranch[];
   isRepo: boolean;
   onHandleRepoSelect?: (value: string) => void;
-  onHandleBrunchSelect?: (value: string) => void;
+  onHandleBranchSelect?: (value: string) => void;
   selectedRepo?: string;
-  selectedBrunch?: string;
+  selectedBranch?: string;
 }
 
 const BrunchAndRepoSelect: React.FC<ICustomInput> = ({
-  arr,
+  arrayData,
   isRepo,
   onHandleRepoSelect,
-  onHandleBrunchSelect,
+  onHandleBranchSelect,
   selectedRepo,
-  selectedBrunch,
+  selectedBranch,
 }: ICustomInput) => {
   const onHandleRepoChange = (value: string) => {
     onHandleRepoSelect(value);
   };
-
   const onHandleBrunchChange = (value: string) => {
-    onHandleBrunchSelect(value);
+    onHandleBranchSelect(value);
   };
 
   return (
@@ -47,7 +46,7 @@ const BrunchAndRepoSelect: React.FC<ICustomInput> = ({
             option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
           }
         >
-          {(arr as Array<IRepository>).map((i) => (
+          {(arrayData as Array<IRepository>).map((i) => (
             <Option key={uuidv4()} value={i.name}>
               <DesktopOutlined /> {i.name}
             </Option>
@@ -55,7 +54,7 @@ const BrunchAndRepoSelect: React.FC<ICustomInput> = ({
         </Select>
       ) : (
         <Select
-          value={selectedBrunch}
+          value={selectedBranch}
           showSearch
           style={{ width: 200, marginRight: "20px" }}
           onChange={onHandleBrunchChange}
@@ -64,7 +63,7 @@ const BrunchAndRepoSelect: React.FC<ICustomInput> = ({
             option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
           }
         >
-          {(arr as Array<IBrunch>).map((i) => (
+          {(arrayData as Array<IBranch>).map((i) => (
             <Option key={uuidv4()} value={i.node.name}>
               <BranchesOutlined /> {i.node.name}
             </Option>

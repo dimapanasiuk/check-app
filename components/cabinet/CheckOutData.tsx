@@ -7,14 +7,14 @@ interface ICheckOutData {
   title: string;
   selectedRepo: string;
   selectedTask: string;
-  selectedBrunch: string;
+  selectedBranch: string;
   selectedPRUrl: string;
   maxScoreValue: number;
 }
 
 const CheckOutData: React.FC<ICheckOutData> = ({
   title,
-  selectedBrunch,
+  selectedBranch,
   selectedRepo,
   selectedTask,
   selectedPRUrl,
@@ -27,7 +27,7 @@ const CheckOutData: React.FC<ICheckOutData> = ({
       </Title>
       <h3>Your task: {selectedTask} </h3>
       <h3>Your repository: {selectedRepo} </h3>
-      <h3>Your brunch: {selectedBrunch} </h3>
+      <h3>Your branch: {selectedBranch} </h3>
       <h3>Your max score: {maxScoreValue}</h3>
       {selectedPRUrl && (
         <h3>

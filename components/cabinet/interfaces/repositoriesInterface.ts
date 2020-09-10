@@ -1,12 +1,12 @@
 export interface IRepository {
-    defaultBrunchRef: IBrunchRef;
+    defaultBrunchRef: IBranchRef;
     isPrivate: boolean;
     name: string;
     owner: IOwner;
     __typename: string;
 }
 
-interface IBrunchRef {
+interface IBranchRef {
     name: string;
     __typename: string;
 }

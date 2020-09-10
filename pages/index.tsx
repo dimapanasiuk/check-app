@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import axios from "axios";
-import { useSelector } from "react-redux";
 
 import { ITaskData } from "./tasks";
 import MainLayout from "../components/layout/MainLayout";
-import BrunchAndRepoContainer from "../components/cabinet/BranchandReposContainer";
-import Commits from "../components/cabinet/Commits";
-import PullRequests from "../components/cabinet/PullRequests";
-import TaskSelect from "../components/cabinet/TaskSelect";
-import CheckOutData from "../components/cabinet/CheckOutData";
-import CabinetButtons from "../components/cabinet/CabinetButtons";
+import {
+  BranchAndReposContainer,
+  Commits,
+  PullRequests,
+  TaskSelect,
+  CheckOutData,
+  CabinetButtons,
+} from "../components/cabinet/index";
 
 import { Steps, message } from "antd";
 
@@ -28,7 +29,7 @@ const Home: NextPage<IGetInitialProps> = React.memo(
   ({ login, role, tasks }: IGetInitialProps) => {
     const [currentPage, setCurrentPage] = useState<number>(0);
     const [selectedRepo, setSelectedRepo] = React.useState<string | null>(null);
-    const [selectedBrunch, setSelectedBrunch] = React.useState<string | null>(
+    const [selectedBranch, setSelectedBranch] = React.useState<string | null>(
       null
     );
     const [selectedTask, setSelectedTask] = React.useState<string | null>(null);
@@ -61,7 +62,7 @@ const Home: NextPage<IGetInitialProps> = React.memo(
           role: role,
           taskName: selectedTask,
           repository: selectedRepo,
-          branch: selectedBrunch,
+          branch: selectedBranch,
           pullRequest: selectedPRUrl,
         })
         .then(() => {
@@ -70,11 +71,11 @@ const Home: NextPage<IGetInitialProps> = React.memo(
     };
 
     const onHandleRepoSelect = (value: string): void => {
-      setSelectedBrunch(null);
+      setSelectedBranch(null);
       setSelectedRepo(value);
     };
-    const onHandleBrunchSelect = (value: string): void => {
-      setSelectedBrunch(value);
+    const onHandleBranchSelect = (value: string): void => {
+      setSelectedBranch(value);
     };
     const onHandleTaskSelect = (value: string): void => {
       setSelectedTask(value);
@@ -103,7 +104,7 @@ const Home: NextPage<IGetInitialProps> = React.memo(
           ? openErrorMessage("select task and max score")
           : next();
       } else if (pageID === 1 && !isFailed) {
-        !selectedRepo || !selectedBrunch
+        !selectedRepo || !selectedBranch
           ? openErrorMessage("select repository and branch")
           : next();
       } else if (pageID === 3 && !isFailed) {
@@ -139,10 +140,10 @@ const Home: NextPage<IGetInitialProps> = React.memo(
       {
         title: "Choose Repository",
         content: (
-          <BrunchAndRepoContainer
+          <BranchAndReposContainer
             selectedRepo={selectedRepo}
-            selectedBrunch={selectedBrunch}
-            onHandleBrunchSelect={onHandleBrunchSelect}
+            selectedBranch={selectedBranch}
+            onHandleBranchSelect={onHandleBranchSelect}
             onHandleRepoSelect={onHandleRepoSelect}
             setFailed={setFailed}
             login={login}
@@ -154,7 +155,7 @@ const Home: NextPage<IGetInitialProps> = React.memo(
         title: "Check out your commits",
         content: (
           <Commits
-            selectedBrunch={selectedBrunch}
+            selectedBranch={selectedBranch}
             selectedRepo={selectedRepo}
             login={login}
             title="Check out commits"
@@ -182,7 +183,7 @@ const Home: NextPage<IGetInitialProps> = React.memo(
             title="Check out your data"
             maxScoreValue={maxScoreValue}
             selectedRepo={selectedRepo}
-            selectedBrunch={selectedBrunch}
+            selectedBranch={selectedBranch}
             selectedTask={selectedTask}
             selectedPRUrl={selectedPRUrl}
           />
