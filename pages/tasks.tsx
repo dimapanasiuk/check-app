@@ -3,6 +3,8 @@ import Link from "next/link";
 import { NextPage } from "next";
 
 import MainLayout from "../components/layout/MainLayout";
+import Performance from "../components/tasks/Performance";
+import Deadline from "../components/tasks/Deadline";
 import styles from "../styles/tasks.module.scss";
 
 import { Button, Pagination, Typography, Card } from "antd";
@@ -50,6 +52,8 @@ const Tasks: NextPage<IGetInitialProps> = ({ tasks }: IGetInitialProps) => {
                 }}
               >
                 <Meta title={i.taskName} description={description} />
+                <Deadline start={i.date[0]} end={i.date[1]}/>
+                <Performance  maxScore={i.maxScore}  />
               </Card>
             </a>
           </Link>
@@ -72,7 +76,8 @@ const Tasks: NextPage<IGetInitialProps> = ({ tasks }: IGetInitialProps) => {
                   if (currentPaginationPage === 1) {
                     return allTaskHtml(tasks).slice(start, end);
                   } else {
-                    start = currentPaginationPage * defaultPageSize - defaultPageSize;
+                    start =
+                      currentPaginationPage * defaultPageSize - defaultPageSize;
                     return allTaskHtml(tasks).slice(start, end);
                   }
                 })()}
@@ -92,8 +97,8 @@ const Tasks: NextPage<IGetInitialProps> = ({ tasks }: IGetInitialProps) => {
             <>
               <Title level={2}>{"You don't have tasks"}</Title>
               <Button type="primary">
-                <Link href="/dashboard">
-                  <a>Go to dashboard</a>
+                <Link href="/">
+                  <a>Go to home</a>
                 </Link>
               </Button>
             </>
