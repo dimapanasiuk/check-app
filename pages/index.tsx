@@ -35,12 +35,16 @@ const Home: NextPage<IGetInitialProps> = React.memo(
     const [selectedPRUrl, setSelectedPRUrl] = React.useState<string | null>(
       null
     );
+    const [maxScoreValue, setMaxScoreValue] = React.useState<number | null>(null);
     const [selectedPR, setSelectedPR] = React.useState<string | null>(null);
     const [isFailed, setIsFailed] = React.useState<boolean>(false);
 
     const router = useRouter();
 
     const pullRequests = useSelector((state) => state.requests.pullRequests);
+
+    const taskWithMaxScore =
+      selectedTask && tasks.find((task) => task.taskName === selectedTask);
 
     useEffect(() => {
       if (login === "") {
@@ -79,6 +83,9 @@ const Home: NextPage<IGetInitialProps> = React.memo(
     const onHandlePRUrlChange = (value: string): void => {
       setSelectedPRUrl(value);
     };
+    const onHandleMaxScoreChange = (value: number): void => {
+      setMaxScoreValue(value);
+    }
 
     const setFailed = (): void => {
       setIsFailed(true);
@@ -115,9 +122,12 @@ const Home: NextPage<IGetInitialProps> = React.memo(
         title: "Choose Task",
         content: (
           <TaskSelect
+            maxScore={taskWithMaxScore && taskWithMaxScore.maxScore}
             tasks={tasks}
             selectedTask={selectedTask}
             onHandleTaskChange={onHandleTaskSelect}
+            onHandleMaxScoreChange={onHandleMaxScoreChange}
+            maxScoreValue={maxScoreValue}
             title={"Choose task you want mentors to check"}
           />
         ),
@@ -166,6 +176,7 @@ const Home: NextPage<IGetInitialProps> = React.memo(
         content: (
           <CheckOutData
             title="Check out your data"
+            maxScoreValue={maxScoreValue}
             selectedRepo={selectedRepo}
             selectedBrunch={selectedBrunch}
             selectedTask={selectedTask}

@@ -9,6 +9,7 @@ interface ICheckOutData {
   selectedTask: string;
   selectedBrunch: string;
   selectedPRUrl: string;
+  maxScoreValue: number;
 }
 
 const CheckOutData: React.FC<ICheckOutData> = ({
@@ -17,19 +18,21 @@ const CheckOutData: React.FC<ICheckOutData> = ({
   selectedRepo,
   selectedTask,
   selectedPRUrl,
+  maxScoreValue
 }: ICheckOutData) => {
   return (
     <div style={{ textAlign: "center" }}>
       <Title style={{ marginTop: "20px" }} level={2}>
         {title}
       </Title>
-      <h2>Your task: {selectedTask} </h2>
-      <h2>Your repository: {selectedRepo} </h2>
-      <h2>Your brunch: {selectedBrunch} </h2>
+      <h3>Your task: {selectedTask} </h3>
+      <h3>Your repository: {selectedRepo} </h3>
+      <h3>Your brunch: {selectedBrunch} </h3>
+      <h3>Your max score: {maxScoreValue}</h3>
       {selectedPRUrl && (
-        <h2>
+        <h3>
           Your pull request: <a href={selectedPRUrl}>{selectedPRUrl}</a>
-        </h2>
+        </h3>
       )}
     </div>
   );
