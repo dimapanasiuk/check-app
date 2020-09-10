@@ -3,21 +3,18 @@ import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { connect } from "react-redux";
 import axios from "axios";
-
 import { useSelector } from "react-redux";
 
-import MainLayout from "../components/layout/MainLayout";
-
 import { ITaskData } from "./tasks";
-
-import { Steps, message } from "antd";
-
+import MainLayout from "../components/layout/MainLayout";
 import BrunchAndRepoContainer from "../components/cabinet/BrunchAndRepoContainer";
 import Commits from "../components/cabinet/Commits";
 import PullRequests from "../components/cabinet/PullRequests";
 import TaskSelect from "../components/cabinet/TaskSelect";
 import CheckOutData from "../components/cabinet/CheckOutData";
 import CabinetButtons from "../components/cabinet/CabinetButtons";
+
+import { Steps, message } from "antd";
 
 const { Step } = Steps;
 

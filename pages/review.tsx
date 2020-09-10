@@ -1,28 +1,36 @@
-import React, { useState } from "react";
-import { NextPage } from "next";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import uniqid from "uniqid";
+import { connect } from "react-redux";
+import { useRouter } from "next/router";
 
 import MainLayout from "../components/layout/MainLayout";
 
 import { Form, Select, Input, InputNumber, Button, Checkbox } from "antd";
-
 import { UserOutlined } from "@ant-design/icons";
-
-import uniqid from "uniqid";
 
 const { TextArea } = Input;
 const { Option } = Select;
 
 interface IGetInitialProps {
-  data: any;
+  login: string;
 }
 
-const Review: NextPage<IGetInitialProps> = ({ data }: IGetInitialProps) => {
-  const [chooseTask, setChooseTask] = useState(false);
-  const [chooseUser, setChooseUser] = useState(false);
+const Review: React.FC<IGetInitialProps> = ({ login }: IGetInitialProps) => {
+  const [isChooseTask, setIsChooseTask] = useState(false);
+  const [isChooseUser, setIsChooseUser] = useState(false);
   const [isCheck, setIsCheck] = useState(false);
+  const [completedTasks, setCompletedTasks] = useState([]);
   const [users, setUsers] = useState([]);
 
-  const tasks = data.map((i) => i.taskName);
+  useEffect(() => {
+    const result = axios("http://localhost:4000/completedTasks");
+    result.then((data) => setCompletedTasks(data.data));
+  }, []);
+
+  const router = useRouter();
+
+  const tasks = completedTasks.map((i) => i.taskName);
   const uniqueTasks = Array.from(new Set(tasks));
 
   const usersWithThisTasks = (task, arr) =>
@@ -41,19 +49,31 @@ const Review: NextPage<IGetInitialProps> = ({ data }: IGetInitialProps) => {
   ));
 
   const handleChangeTask = (task) => {
-    setChooseTask(true);
+    setIsChooseTask(true);
 
-    const users = usersWithThisTasks(task, data).map((i) => i.user);
+    const users = usersWithThisTasks(task, completedTasks).map((i) => i.user);
     setUsers(users);
   };
 
   const handleChangeStudent = (e) => {
-    setChooseUser(true);
+    setIsChooseUser(true);
   };
 
-  const submitFormHandler = (e) => {
+  const submitFormHandler = async (e) => {
     const { task, student, score, comment } = e;
     isCheck;
+
+    await axios
+      .post("http://localhost:4000/tasksReview", {
+        reviewer: login,
+        student: student,
+        taskName: task,
+        score: score,
+        comment: comment,
+      })
+      .then(() => {
+        router.push("/tasks");
+      });
   };
 
   const checkBoxHandler = () => {
@@ -72,7 +92,7 @@ const Review: NextPage<IGetInitialProps> = ({ data }: IGetInitialProps) => {
           <Select
             placeholder="student"
             onChange={handleChangeStudent}
-            disabled={!chooseTask}
+            disabled={!isChooseTask}
             menuItemSelectedIcon={
               <UserOutlined className="site-form-item-icon" />
             }
@@ -84,7 +104,7 @@ const Review: NextPage<IGetInitialProps> = ({ data }: IGetInitialProps) => {
           <Checkbox
             onChange={checkBoxHandler}
             checked={isCheck}
-            disabled={!chooseUser}
+            disabled={!isChooseUser}
           >
             Make my name visible in feedback
           </Checkbox>
@@ -99,7 +119,7 @@ const Review: NextPage<IGetInitialProps> = ({ data }: IGetInitialProps) => {
             },
           ]}
         >
-          <InputNumber min={1} max={500} disabled={!chooseUser} />
+          <InputNumber min={1} max={500} disabled={!isChooseUser} />
         </Form.Item>
         <Form.Item
           name="comment"
@@ -112,13 +132,13 @@ const Review: NextPage<IGetInitialProps> = ({ data }: IGetInitialProps) => {
           ]}
         >
           <TextArea
-            disabled={!chooseUser}
+            disabled={!isChooseUser}
             autoSize={true}
             style={{ minHeight: "70px" }}
           />
         </Form.Item>
         <Form.Item>
-          <Button type="primary" htmlType="submit" disabled={!chooseUser}>
+          <Button type="primary" htmlType="submit" disabled={!isChooseUser}>
             Submit
           </Button>
         </Form.Item>
@@ -127,17 +147,8 @@ const Review: NextPage<IGetInitialProps> = ({ data }: IGetInitialProps) => {
   );
 };
 
-Review.getInitialProps = async () => {
-  const resTasks = await fetch(`http://localhost:4000/tasks`);
-  const jsonTasks = await resTasks.json();
-
-  const resUsers = await fetch(`http://localhost:4000/users`);
-  const jsonUsers = await resUsers.json();
-
-  const res = await fetch(`http://localhost:4000/completedTasks`);
-  const json = await res.json();
-
-  return { tasks: jsonTasks, users: jsonUsers, data: json };
+const mapStateToProps = (state) => {
+  return { login: state.chooseRole.login };
 };
 
-export default Review;
+export default connect(mapStateToProps)(Review);
