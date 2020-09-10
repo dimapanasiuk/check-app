@@ -40,9 +40,12 @@ const BrunchAndRepoContainer: React.FC<IChooser> = React.memo(
       },
     });
 
+    const reposData: IRepository[] =
+      repos.data && repos.data.repositoryOwner.repositories.nodes;
+
     const branches = useQuery(GET_ALL_BRANCHES_IN_REPO, {
       variables: {
-        repo_name: selectedRepo || "songbird",
+        repo_name: selectedRepo || (reposData && reposData[0].name),
         login,
       },
     });
@@ -52,6 +55,7 @@ const BrunchAndRepoContainer: React.FC<IChooser> = React.memo(
       setFailed();
       return <ErrorComponent />;
     }
+
     if (branches.loading) return <LoadingComponent />;
     if (branches.error) {
       setFailed();
@@ -59,8 +63,6 @@ const BrunchAndRepoContainer: React.FC<IChooser> = React.memo(
     }
 
     const branchesData: IBrunch[] = branches.data.repository.refs.edges;
-    const reposData: IRepository[] =
-      repos.data && repos.data.repositoryOwner.repositories.nodes;
 
     return (
       <>
