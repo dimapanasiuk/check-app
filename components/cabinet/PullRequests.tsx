@@ -8,7 +8,7 @@ import { GET_ALL_PR } from "./graphs/pullRequests";
 
 import { Select } from "antd";
 import { Typography } from "antd";
-import { WarningTwoTone } from "@ant-design/icons";
+import { WarningTwoTone, PullRequestOutlined } from "@ant-design/icons";
 
 import LoadingComponent from "./LoadingComponent";
 import { changePullRequest } from "../../redux/actions/CabinetActions/pullRequestAction";
@@ -34,7 +34,7 @@ const PullRequests: React.FC<IChoosePR> = ({
   selectedPR,
   setFailed,
   onHandlePRUrlChange,
-  onHandlePRSelect
+  onHandlePRSelect,
 }: IChoosePR) => {
   const dispatch = useDispatch();
 
@@ -85,7 +85,7 @@ const PullRequests: React.FC<IChoosePR> = ({
               const value = item.title + pullReqNumber;
               return (
                 <Option key={uuidv4()} value={value}>
-                  {item.title} #{pullReqNumber}
+                  <PullRequestOutlined /> {item.title} #{pullReqNumber}
                 </Option>
               );
             })}

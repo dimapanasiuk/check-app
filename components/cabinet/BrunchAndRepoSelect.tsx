@@ -5,7 +5,7 @@ import { IRepository } from "./interfaces/repositoriesInterface";
 import { IBrunch } from "./interfaces/brunchesInterface";
 
 import { Select } from "antd";
-import { CloudTwoTone, GoldTwoTone } from "@ant-design/icons";
+import { DesktopOutlined, BranchesOutlined } from "@ant-design/icons";
 
 const { Option } = Select;
 
@@ -49,7 +49,7 @@ const BrunchAndRepoSelect: React.FC<ICustomInput> = ({
         >
           {(arr as Array<IRepository>).map((i) => (
             <Option key={uuidv4()} value={i.name}>
-              <CloudTwoTone /> {i.name}
+              <DesktopOutlined /> {i.name}
             </Option>
           ))}
         </Select>
@@ -66,7 +66,7 @@ const BrunchAndRepoSelect: React.FC<ICustomInput> = ({
         >
           {(arr as Array<IBrunch>).map((i) => (
             <Option key={uuidv4()} value={i.node.name}>
-              <GoldTwoTone /> {i.node.name}
+              <BranchesOutlined /> {i.node.name}
             </Option>
           ))}
         </Select>
