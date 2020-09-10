@@ -89,17 +89,6 @@ const MainLayout: React.FC<IMainLayout> = ({
               }
             })()}
             {(() => {
-              if (role === "admin" || role === "student") {
-                return (
-                  <Menu.Item key="5">
-                    <Link href="/dashboard">
-                      <a>dashboard</a>
-                    </Link>
-                  </Menu.Item>
-                );
-              }
-            })()}
-            {(() => {
               if (role === "mentor" || role === "student" || role === "admin") {
                 return (
                   <Menu.Item key="6">

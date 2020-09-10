@@ -1,5 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+
 import { Table } from "antd";
+
+//import { uniqValues } from "../utils/utils";
 
 const columns = [
   {
@@ -8,46 +12,37 @@ const columns = [
     key: "github_id",
   },
   {
-    title: "Song_bird",
-    dataIndex: "song_bird",
-    key: "song_bird",
+    title: "Tasks",
+    dataIndex: "tasks",
+    key: "tasks",
   },
   {
-    title: "Check-app",
-    dataIndex: "check-app",
-    key: "check-app",
-  },
-  {
-    title: "React_task",
-    dataIndex: "react_task",
-    key: "react_task",
+    title: "Score",
+    dataIndex: "score",
+    key: "score",
   },
 ];
 
-const data = [
-  {
-    key: "1",
-    github_id: "katyachok",
-    song_bird: 240,
-    "check-app": 240,
-    react_task: 500,
-  },
-  {
-    key: "2",
-    github_id: "GordeySt",
-    song_bird: 240,
-    "check-app": 500,
-    react_task: 500,
-  },
-  {
-    key: "3",
-    github_id: "sofronovsd",
-    song_bird: 240,
-    "check-app": 45,
-    react_task: 500,
-  },
-];
 const AllScore: React.FC = () => {
-  return <Table columns={columns} dataSource={data} />;
+  const [tasksReview, setTasksReview] = useState([]);
+
+  useEffect(() => {
+    const result = axios("http://localhost:4000/tasksReview");
+    result.then((data) => setTasksReview(data.data));
+  }, []);
+
+  const row = [];
+
+  tasksReview.forEach((i) => {
+    row.push({
+      key: i.id,
+      github_id: i.student,
+      tasks: i.taskName,
+      score: i.score,
+    });
+  });
+
+  return <Table columns={columns} dataSource={row} />;
 };
+
 export default AllScore;
