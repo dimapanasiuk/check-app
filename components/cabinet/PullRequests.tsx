@@ -96,7 +96,7 @@ const PullRequests: React.FC<IChoosePR> = ({
                 style={{
                   marginTop: "20px",
                   background: "rgba(0, 0, 0, .1)",
-                  width: "20%",
+                  width: "80%",
                   paddingLeft: "20px",
                 }}
               >
