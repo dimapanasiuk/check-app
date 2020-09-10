@@ -92,15 +92,22 @@ const PullRequests: React.FC<IChoosePR> = ({
           </Select>
           {selectedPR && (
             <React.Fragment>
-              <div style={{ marginTop: "20px" }}>
+              <h4
+                style={{
+                  marginTop: "20px",
+                  background: "rgba(0, 0, 0, .1)",
+                  width: "20%",
+                  paddingLeft: "20px",
+                }}
+              >
                 <WarningTwoTone twoToneColor="#fcdd76" /> Please check your pull
                 request!
-              </div>
-              <div style={{ marginTop: "15px" }}>
+              </h4>
+              <h4 style={{ marginTop: "15px" }}>
                 <a href={pullReqUrl[pullReqNumber - 1]}>
                   {pullReqUrl[pullReqNumber - 1]}
                 </a>
-              </div>
+              </h4>
             </React.Fragment>
           )}
         </React.Fragment>
