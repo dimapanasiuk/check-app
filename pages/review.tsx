@@ -2,11 +2,19 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import uniqid from "uniqid";
 import { connect } from "react-redux";
-import { useRouter } from "next/router";
 
+import { uniqValues } from "../utils/utils";
 import MainLayout from "../components/layout/MainLayout";
 
-import { Form, Select, Input, InputNumber, Button, Checkbox } from "antd";
+import {
+  Form,
+  Select,
+  message,
+  Input,
+  InputNumber,
+  Button,
+  Checkbox,
+} from "antd";
 import { UserOutlined } from "@ant-design/icons";
 
 const { TextArea } = Input;
@@ -28,10 +36,8 @@ const Review: React.FC<IGetInitialProps> = ({ login }: IGetInitialProps) => {
     result.then((data) => setCompletedTasks(data.data));
   }, []);
 
-  const router = useRouter();
-
   const tasks = completedTasks.map((i) => i.taskName);
-  const uniqueTasks = Array.from(new Set(tasks));
+  const uniqueTasks = uniqValues(tasks);
 
   const usersWithThisTasks = (task, arr) =>
     arr.filter((i) => i.taskName === task);
@@ -72,7 +78,10 @@ const Review: React.FC<IGetInitialProps> = ({ login }: IGetInitialProps) => {
         comment: comment,
       })
       .then(() => {
-        router.push("/tasks");
+        setIsChooseTask(false);
+        setIsChooseUser(false);
+        setIsCheck(false);
+        message.success("Check done");
       });
   };
 

@@ -7,29 +7,32 @@ interface ICheckOutData {
   title: string;
   selectedRepo: string;
   selectedTask: string;
-  selectedBrunch: string;
+  selectedBranch: string;
   selectedPRUrl: string;
+  maxScoreValue: number;
 }
 
 const CheckOutData: React.FC<ICheckOutData> = ({
   title,
-  selectedBrunch,
+  selectedBranch,
   selectedRepo,
   selectedTask,
   selectedPRUrl,
+  maxScoreValue
 }: ICheckOutData) => {
   return (
     <div style={{ textAlign: "center" }}>
       <Title style={{ marginTop: "20px" }} level={2}>
         {title}
       </Title>
-      <h2>Your task: {selectedTask} </h2>
-      <h2>Your repository: {selectedRepo} </h2>
-      <h2>Your brunch: {selectedBrunch} </h2>
+      <h3>Your task: {selectedTask} </h3>
+      <h3>Your repository: {selectedRepo} </h3>
+      <h3>Your branch: {selectedBranch} </h3>
+      <h3>Your max score: {maxScoreValue}</h3>
       {selectedPRUrl && (
-        <h2>
+        <h3>
           Your pull request: <a href={selectedPRUrl}>{selectedPRUrl}</a>
-        </h2>
+        </h3>
       )}
     </div>
   );
