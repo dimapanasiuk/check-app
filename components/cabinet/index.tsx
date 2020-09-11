@@ -7,3 +7,5 @@ export { default as LoadingComponent } from "./LoadingComponent";
 export { default as PullRequests } from "./PullRequests";
 export { default as TaskSelect } from "./TaskSelect";
 export { default as BranchAndRepoSelect } from "./BranchAndRepoSelect"
+export { default as Branches } from "./Branches"
+export { default as Repositories } from "./Repositories"

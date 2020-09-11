@@ -9,6 +9,7 @@ const LoadingComponent: React.FC = () => {
         alignItems: "center",
         justifyContent: "center",
         marginTop: "20px",
+        minHeight: "100px",
       }}
     >
       <Spin />
