@@ -6,13 +6,13 @@ import { useDispatch } from "react-redux";
 
 import { GET_ALL_PR } from "./graphs/pullRequests";
 
-import { Select } from "antd";
-import { Typography } from "antd";
-import { WarningTwoTone } from "@ant-design/icons";
+import { Select, Typography } from "antd";
+import { WarningTwoTone, PullRequestOutlined } from "@ant-design/icons";
 
-import LoadingComponent from "./LoadingComponent";
+import { LoadingComponent, ErrorComponent } from "./index";
+
 import { changePullRequest } from "../../redux/actions/CabinetActions/pullRequestAction";
-import ErrorComponent from "./ErrorComponent";
+import { IPullRequests } from "./interfaces/pullRequestsInterface";
 
 const { Title } = Typography;
 const { Option } = Select;
@@ -34,7 +34,7 @@ const PullRequests: React.FC<IChoosePR> = ({
   selectedPR,
   setFailed,
   onHandlePRUrlChange,
-  onHandlePRSelect
+  onHandlePRSelect,
 }: IChoosePR) => {
   const dispatch = useDispatch();
 
@@ -51,14 +51,16 @@ const PullRequests: React.FC<IChoosePR> = ({
     return <ErrorComponent />;
   }
 
-  const pullRequests = pr.data.repository.pullRequests.nodes;
+  const pullRequests: IPullRequests[] = pr.data.repository.pullRequests.nodes;
   dispatch(changePullRequest(pullRequests));
-  const pullReqUrl =
+
+  const pullReqUrl: string[] =
     selectedPR &&
     pullRequests.map((item) => {
       if (item.title === selectedPR.slice(0, -1)) return item.url;
     });
-  const pullReqNumber = selectedPR && parseInt(selectedPR.slice(-1));
+
+  const pullReqNumber: number = selectedPR && parseInt(selectedPR.slice(-1));
   selectedPR && onHandlePRUrlChange(pullReqUrl[pullReqNumber - 1]);
 
   return (
@@ -85,22 +87,29 @@ const PullRequests: React.FC<IChoosePR> = ({
               const value = item.title + pullReqNumber;
               return (
                 <Option key={uuidv4()} value={value}>
-                  {item.title} #{pullReqNumber}
+                  <PullRequestOutlined /> {item.title} #{pullReqNumber}
                 </Option>
               );
             })}
           </Select>
           {selectedPR && (
             <React.Fragment>
-              <div style={{ marginTop: "20px" }}>
+              <h4
+                style={{
+                  marginTop: "20px",
+                  background: "rgba(0, 0, 0, .1)",
+                  width: "80%",
+                  paddingLeft: "20px",
+                }}
+              >
                 <WarningTwoTone twoToneColor="#fcdd76" /> Please check your pull
                 request!
-              </div>
-              <div style={{ marginTop: "15px" }}>
+              </h4>
+              <h4 style={{ marginTop: "15px" }}>
                 <a href={pullReqUrl[pullReqNumber - 1]}>
                   {pullReqUrl[pullReqNumber - 1]}
                 </a>
-              </div>
+              </h4>
             </React.Fragment>
           )}
         </React.Fragment>
