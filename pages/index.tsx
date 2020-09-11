@@ -204,45 +204,38 @@ const Home: NextPage<IGetInitialProps> = React.memo(
     return (
       <>
         <MainLayout title="home page">
-          <div style={{ display: "flex" }}>
-            {!isFailed && (
-              <Steps
-                direction="vertical"
-                style={{ minHeight: "100vh", width: "25%" }}
-                current={currentPage}
-              >
-                {steps.map((item) => (
-                  <Step key={item.title} title={item.title} />
-                ))}
-              </Steps>
+          {!isFailed && (
+            <Steps current={currentPage}>
+              {steps.map((item) => (
+                <Step key={item.title} title={item.title} />
+              ))}
+            </Steps>
+          )}
+          <div
+            style={{
+              margin: isFailed && "0 auto",
+            }}
+          >
+            {currentPage === 2 && (
+              <CabinetButtons
+                checkIsFailedForPrev={checkIsFailedForPrev}
+                next={next}
+                checkSelects={checkSelects}
+                currentPage={currentPage}
+                steps={steps}
+              />
             )}
-            <div
-              style={{
-                flexDirection: "column",
-                margin: isFailed && "0 auto",
-              }}
-            >
-              {currentPage === 2 && (
-                <CabinetButtons
-                  checkIsFailedForPrev={checkIsFailedForPrev}
-                  next={next}
-                  checkSelects={checkSelects}
-                  currentPage={currentPage}
-                  steps={steps}
-                />
-              )}
-              <div className="steps-content">{steps[currentPage].content}</div>
-              {!isFailed && (
-                <CabinetButtons
-                  addCompletedTaskToDB={addCompletedTaskToDB}
-                  checkIsFailedForPrev={checkIsFailedForPrev}
-                  next={next}
-                  checkSelects={checkSelects}
-                  currentPage={currentPage}
-                  steps={steps}
-                />
-              )}
-            </div>
+            <div className="steps-content">{steps[currentPage].content}</div>
+            {!isFailed && (
+              <CabinetButtons
+                addCompletedTaskToDB={addCompletedTaskToDB}
+                checkIsFailedForPrev={checkIsFailedForPrev}
+                next={next}
+                checkSelects={checkSelects}
+                currentPage={currentPage}
+                steps={steps}
+              />
+            )}
           </div>
         </MainLayout>
       </>

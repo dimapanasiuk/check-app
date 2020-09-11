@@ -17,7 +17,6 @@ const Commits: React.FC<ICheckCommit> = ({
   selectedBranch,
   login,
 }: ICheckCommit) => {
-  console.log(selectedRepo, selectedBranch, login);
   const commits = useQuery(GET_ALL_COMMITS_IN_BRANCH, {
     variables: {
       repo_name: selectedRepo,
@@ -25,7 +24,7 @@ const Commits: React.FC<ICheckCommit> = ({
       login,
     },
   });
-  console.log(commits);
+
   if (commits.loading) return <LoadingComponent />;
   if (commits.error) return <ErrorComponent />;
 
