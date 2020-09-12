@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-export const REPOS = gql`
+export const GET_ALL_REPOS = gql`
   query FindRepos($login: String!) {
     repositoryOwner(login: $login) {
       login
