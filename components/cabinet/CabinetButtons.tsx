@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Button, message } from "antd";
+import { Button }  from "antd";
 
 interface ISteps {
   title: string;
@@ -9,10 +9,9 @@ interface ISteps {
 
 interface ICabinetButtons {
   currentPage: number;
-  checkSelects: (pageID: string) => void;
+  checkSelects: (pageID: number) => void;
   next: () => void;
   checkIsFailedForPrev: () => void;
-  addCompletedTaskToDB?: () => void;
   steps: ISteps[];
 }
 
@@ -22,7 +21,6 @@ const CabinetButtons: React.FC<ICabinetButtons> = ({
   checkSelects,
   next,
   steps,
-  addCompletedTaskToDB,
 }: ICabinetButtons) => {
   return (
     <div>
@@ -31,10 +29,10 @@ const CabinetButtons: React.FC<ICabinetButtons> = ({
           <Button
             type="primary"
             onClick={() => {
-              currentPage === 0 && checkSelects("tasks");
-              currentPage === 1 && checkSelects("repos");
+              currentPage === 0 && checkSelects(currentPage);
+              currentPage === 1 && checkSelects(currentPage);
               currentPage === 2 && next();
-              currentPage === 3 && checkSelects("PR");
+              currentPage === 3 && checkSelects(currentPage);
             }}
           >
             Next
@@ -44,8 +42,7 @@ const CabinetButtons: React.FC<ICabinetButtons> = ({
           <Button
             type="primary"
             onClick={() => {
-              message.success("Processing complete!");
-              addCompletedTaskToDB();
+              checkSelects(currentPage);
             }}
           >
             Done

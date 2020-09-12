@@ -1,5 +1,5 @@
 import React from "react";
-import { Typography } from "antd";
+import { Typography, InputNumber } from "antd";
 
 const { Title } = Typography;
 
@@ -7,30 +7,46 @@ interface ICheckOutData {
   title: string;
   selectedRepo: string;
   selectedTask: string;
-  selectedBrunch: string;
+  selectedBranch: string;
   selectedPRUrl: string;
+  maxScoreValue: number;
+  maxScore: number;
+  onHandleMaxScoreChange: (value: number) => void;
 }
 
 const CheckOutData: React.FC<ICheckOutData> = ({
   title,
-  selectedBrunch,
+  selectedBranch,
   selectedRepo,
   selectedTask,
   selectedPRUrl,
+  maxScoreValue,
+  maxScore,
+  onHandleMaxScoreChange
 }: ICheckOutData) => {
   return (
     <div style={{ textAlign: "center" }}>
       <Title style={{ marginTop: "20px" }} level={2}>
         {title}
       </Title>
-      <h2>Your task: {selectedTask} </h2>
-      <h2>Your repository: {selectedRepo} </h2>
-      <h2>Your brunch: {selectedBrunch} </h2>
+      <h3>Your task: {selectedTask} </h3>
+      <h3>Your repository: {selectedRepo} </h3>
+      <h3>Your branch: {selectedBranch} </h3>
       {selectedPRUrl && (
-        <h2>
+        <h3>
           Your pull request: <a href={selectedPRUrl}>{selectedPRUrl}</a>
-        </h2>
+        </h3>
       )}
+      <div style={{ marginTop: "20px" }}>
+        <h4>What do you think about your score?</h4>
+        {maxScore && <h5>Max score: {maxScore}</h5>}
+        <InputNumber
+          min={1}
+          max={maxScore}
+          value={maxScoreValue}
+          onChange={onHandleMaxScoreChange}
+        />
+      </div>
     </div>
   );
 };

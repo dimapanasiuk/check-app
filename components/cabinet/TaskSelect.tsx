@@ -1,11 +1,10 @@
 import React from "react";
 import { v4 as uuidv4 } from "uuid";
 
-import { Select } from "antd";
-import { Typography } from "antd";
+import { Typography, Select } from "antd";
 import { ITaskData } from "../../pages/tasks";
 
-import { CopyTwoTone } from "@ant-design/icons"
+import { CodeOutlined } from "@ant-design/icons";
 
 const { Title } = Typography;
 const { Option } = Select;
@@ -40,7 +39,7 @@ const TaskSelect: React.FC<ITaskSelect> = ({
       >
         {tasks.map((task) => (
           <Option key={uuidv4()} value={task.taskName}>
-            <CopyTwoTone /> {task.taskName}
+            <CodeOutlined /> {task.taskName}
           </Option>
         ))}
       </Select>

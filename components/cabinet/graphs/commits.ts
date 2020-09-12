@@ -1,9 +1,9 @@
 import { gql } from "@apollo/client";
 
 export const GET_ALL_COMMITS_IN_BRANCH = gql`
-  query FindCommit($repo_name: String!, $login: String!, $brunch: String!) {
+  query FindCommit($repo_name: String!, $login: String!, $branch: String!) {
     repository(name: $repo_name, owner: $login) {
-      ref(qualifiedName: $brunch) {
+      ref(qualifiedName: $branch) {
         target {
           ... on Commit {
             id
