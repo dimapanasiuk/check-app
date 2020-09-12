@@ -1,7 +1,9 @@
 import React from "react";
 import { AppProps } from "next/app";
 import { wrapper } from "../redux/store";
+import NextNprogress from "nextjs-progressbar";
 
+import "../styles/globals.css";
 import "antd/dist/antd.css";
 import {
   ApolloProvider,
@@ -32,6 +34,7 @@ const client = new ApolloClient({
 const MyApp: React.FC<AppProps> = ({ Component, pageProps }: AppProps) => {
   return (
     <ApolloProvider client={client}>
+      <NextNprogress color="#1890ff" />
       <Component {...pageProps} />
     </ApolloProvider>
   );

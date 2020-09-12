@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import uniqid  from "uniqid";
+import uniqid from "uniqid";
 
 import MainLayout from "../components/layout/MainLayout";
 import InitialTask from "../components/createTask/InitilTask";
@@ -20,6 +20,7 @@ const Create = (): JSX.Element => {
   const [taskName, setTaskName] = useState<string>("");
   const [taskDescription, setTaskDescription] = useState<string>("");
   const [mdBodyData, setMdBodyData] = useState<string>("");
+  const [date, setDate] = useState([]);
 
   const addTaskToDB = async () => {
     await axios
@@ -29,6 +30,7 @@ const Create = (): JSX.Element => {
         taskDescription,
         maxScore: inputNumberValue,
         markdown: mdBodyData,
+        date: date,
       })
       .then(() => {
         Router.push("/tasks");
@@ -49,6 +51,10 @@ const Create = (): JSX.Element => {
 
   const getDataFromTaskDescription = (data: string) => {
     setTaskDescription(data);
+  };
+
+  const getDataAboutDate = (data: Array<string>) => {
+    setDate(data);
   };
 
   const openErrorMessage = () => {
@@ -78,7 +84,8 @@ const Create = (): JSX.Element => {
       title: "Initial task",
       content: (
         <InitialTask
-          getDataFoo={getDataFromTaskname}
+          getDataAboutDate={getDataAboutDate}
+          getDataFromInput={getDataFromTaskname}
           getDataFromInputNumber={getDataFromMaxScore}
           getDataFromTextArea={getDataFromTaskDescription}
           taskName={taskName}
@@ -95,6 +102,7 @@ const Create = (): JSX.Element => {
       title: "Check data",
       content: (
         <CheckTask
+          date={date}
           rmBody={mdBodyData}
           taskName={taskName}
           maxScore={inputNumberValue}

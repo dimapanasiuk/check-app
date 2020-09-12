@@ -472,8 +472,6 @@ blockquote {
   margin: 0;
 }
 
-ul,
-ol,
 fieldset {
   padding: 0;
 }
@@ -483,16 +481,11 @@ img {
   border: 0;
 }
 
-li {
-  list-style-type: none;
-  list-style: none;
-}
-
 button,
-input[type='button'],
-input[type='reset'],
-input[type='submit'],
-input[type='radio'] {
+input[type="button"],
+input[type="reset"],
+input[type="submit"],
+input[type="radio"] {
   color: inherit;
   cursor: pointer;
   font: inherit;
