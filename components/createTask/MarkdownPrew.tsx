@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { Row, Col, Input } from "antd";
-import CodeBlock from "./code-block";
+import CodeBlock from "./CodeBlock";
 
 import styles from "../../styles/Markdown.module.scss";
 

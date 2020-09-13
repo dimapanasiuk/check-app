@@ -1,7 +1,12 @@
 import React, { useRef, useEffect } from "react";
 import hljs from "highlight.js";
 
-const CodeBlock = ({ language, value }) => {
+interface ICodeBlock {
+  language: string;
+  value: string;
+}
+
+const CodeBlock: React.FC<ICodeBlock> = ({ language, value }) => {
   const elementRef = useRef();
 
   useEffect(() => {
