@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import rdmd from "@readme/markdown";
-
+import ReactMarkdown from "react-markdown";
 import { Row, Col, Input } from "antd";
+import CodeBlock from "./code-block";
 
 import styles from "../../styles/Markdown.module.scss";
 
@@ -24,7 +24,7 @@ const MarkdownPrew: React.FC<IMarkdownPrew> = ({
 
   return (
     <Row gutter={[8, 16]}>
-      <Col span={12}>
+      <Col className={styles.column} span={12}>
         <TextArea
           style={{ minHeight: "200px" }}
           autoSize={true}
@@ -33,7 +33,7 @@ const MarkdownPrew: React.FC<IMarkdownPrew> = ({
         />
       </Col>
       <Col className={styles.markdown} span={12}>
-        {rdmd(rmBody)}
+        <ReactMarkdown source={rmBody} renderers={{ code: CodeBlock }} />
       </Col>
     </Row>
   );

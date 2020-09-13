@@ -1,7 +1,11 @@
+.column {
+  padding: 0 16px !important;
+}
 .markdown {
   padding: 16px !important;
   font-weight: 400;
   line-height: 2rem;
+  background-color: #fff;
 
   ul {
     margin-bottom: 0.83999rem;
@@ -22,6 +26,12 @@
       padding: 0.66001rem 1rem 1rem;
       border-left: 3px solid #a0aabf;
     }
+  }
+
+  code {
+    color: #c7254e;
+    background-color: #f9f2f4;
+    border-radius: 4px;
   }
 
   pre {
