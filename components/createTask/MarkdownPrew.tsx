@@ -3,13 +3,17 @@ import rdmd from "@readme/markdown";
 
 import { Row, Col, Input } from "antd";
 
+import styles from "../../styles/Markdown.module.scss";
+
 const { TextArea } = Input;
 
 interface IMarkdownPrew {
   getDataFoo: (data: string) => void;
 }
 
-const MarkdownPrew: React.FC<IMarkdownPrew> = ({ getDataFoo }: IMarkdownPrew) => {
+const MarkdownPrew: React.FC<IMarkdownPrew> = ({
+  getDataFoo,
+}: IMarkdownPrew) => {
   const [rmBody, setRmBody] = useState<string>("");
 
   const changeHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -28,7 +32,9 @@ const MarkdownPrew: React.FC<IMarkdownPrew> = ({ getDataFoo }: IMarkdownPrew) =>
           value={rmBody}
         />
       </Col>
-      <Col span={12}>{rdmd(rmBody)}</Col>
+      <Col className={styles.markdown} span={12}>
+        {rdmd(rmBody)}
+      </Col>
     </Row>
   );
 };
