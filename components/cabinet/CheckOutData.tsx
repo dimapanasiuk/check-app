@@ -1,5 +1,5 @@
 import React from "react";
-import { Typography } from "antd";
+import { Typography, InputNumber } from "antd";
 
 const { Title } = Typography;
 
@@ -10,6 +10,8 @@ interface ICheckOutData {
   selectedBranch: string;
   selectedPRUrl: string;
   maxScoreValue: number;
+  maxScore: number;
+  onHandleMaxScoreChange: (value: number) => void;
 }
 
 const CheckOutData: React.FC<ICheckOutData> = ({
@@ -18,7 +20,9 @@ const CheckOutData: React.FC<ICheckOutData> = ({
   selectedRepo,
   selectedTask,
   selectedPRUrl,
-  maxScoreValue
+  maxScoreValue,
+  maxScore,
+  onHandleMaxScoreChange
 }: ICheckOutData) => {
   return (
     <div style={{ textAlign: "center" }}>
@@ -28,12 +32,21 @@ const CheckOutData: React.FC<ICheckOutData> = ({
       <h3>Your task: {selectedTask} </h3>
       <h3>Your repository: {selectedRepo} </h3>
       <h3>Your branch: {selectedBranch} </h3>
-      <h3>Your max score: {maxScoreValue}</h3>
       {selectedPRUrl && (
         <h3>
           Your pull request: <a href={selectedPRUrl}>{selectedPRUrl}</a>
         </h3>
       )}
+      <div style={{ marginTop: "20px" }}>
+        <h4>What do you think about your score?</h4>
+        {maxScore && <h5>Max score: {maxScore}</h5>}
+        <InputNumber
+          min={1}
+          max={maxScore}
+          value={maxScoreValue}
+          onChange={onHandleMaxScoreChange}
+        />
+      </div>
     </div>
   );
 };

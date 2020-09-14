@@ -14,8 +14,8 @@ const ErrorComponent: React.FC = () => {
     >
       <Result
         status="error"
-        title="Oops, something went wrong"
-        subTitle="Please refresh the page and try again"
+        title="Oops, something went wrong."
+        subTitle="Please refresh the page"
       />
     </div>
   );

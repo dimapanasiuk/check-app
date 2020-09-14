@@ -24,9 +24,9 @@ const Commits: React.FC<ICheckCommit> = ({
       login,
     },
   });
-  
   if (commits.loading) return <LoadingComponent />;
-  if (commits.error) return <ErrorComponent />;
+  if (commits.error)
+    return <ErrorComponent />;
 
   const commitsData = commits.data.repository.ref.target.history.edges;
 

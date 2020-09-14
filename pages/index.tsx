@@ -64,8 +64,10 @@ const Home: NextPage<IGetInitialProps> = React.memo(
           repository: selectedRepo,
           branch: selectedBranch,
           pullRequest: selectedPRUrl,
+          maxScore: maxScoreValue,
         })
         .then(() => {
+          message.success("Processing complete!");
           router.push("/tasks");
         });
     };
@@ -100,9 +102,7 @@ const Home: NextPage<IGetInitialProps> = React.memo(
 
     const checkSelects = (pageID: number): void => {
       if (pageID === 0) {
-        !selectedTask || !maxScoreValue
-          ? openErrorMessage("select task and max score")
-          : next();
+        !selectedTask ? openErrorMessage("select task") : next();
       } else if (pageID === 1 && !isFailed) {
         !selectedRepo || !selectedBranch
           ? openErrorMessage("select repository and branch")
@@ -113,6 +113,10 @@ const Home: NextPage<IGetInitialProps> = React.memo(
         else if (pullRequests.length === 0)
           openErrorMessage("come back and select repository with pull request");
         else next();
+      } else if (pageID === 4) {
+        !maxScoreValue
+          ? openErrorMessage("enter your max score")
+          : addCompletedTaskToDB();
       } else if (isFailed) {
         openErrorMessage("refresh the page");
       } else next();
@@ -127,12 +131,9 @@ const Home: NextPage<IGetInitialProps> = React.memo(
         title: "Choose Task",
         content: (
           <TaskSelect
-            maxScore={taskWithMaxScore && taskWithMaxScore.maxScore}
             tasks={tasks}
             selectedTask={selectedTask}
             onHandleTaskChange={onHandleTaskSelect}
-            onHandleMaxScoreChange={onHandleMaxScoreChange}
-            maxScoreValue={maxScoreValue}
             title={"Choose task you want mentors to check"}
           />
         ),
@@ -181,6 +182,8 @@ const Home: NextPage<IGetInitialProps> = React.memo(
         content: (
           <CheckOutData
             title="Check out your data"
+            maxScore={taskWithMaxScore && taskWithMaxScore.maxScore}
+            onHandleMaxScoreChange={onHandleMaxScoreChange}
             maxScoreValue={maxScoreValue}
             selectedRepo={selectedRepo}
             selectedBranch={selectedBranch}
@@ -204,45 +207,37 @@ const Home: NextPage<IGetInitialProps> = React.memo(
     return (
       <>
         <MainLayout title="home page">
-          <div style={{ display: "flex" }}>
-            {!isFailed && (
-              <Steps
-                direction="vertical"
-                style={{ minHeight: "100vh", width: "25%" }}
-                current={currentPage}
-              >
-                {steps.map((item) => (
-                  <Step key={item.title} title={item.title} />
-                ))}
-              </Steps>
+          {!isFailed && (
+            <Steps current={currentPage}>
+              {steps.map((item) => (
+                <Step key={item.title} title={item.title} />
+              ))}
+            </Steps>
+          )}
+          <div
+            style={{
+              margin: isFailed && "0 auto",
+            }}
+          >
+            {currentPage === 2 && (
+              <CabinetButtons
+                checkIsFailedForPrev={checkIsFailedForPrev}
+                next={next}
+                checkSelects={checkSelects}
+                currentPage={currentPage}
+                steps={steps}
+              />
             )}
-            <div
-              style={{
-                flexDirection: "column",
-                margin: isFailed && "0 auto",
-              }}
-            >
-              {currentPage === 2 && (
-                <CabinetButtons
-                  checkIsFailedForPrev={checkIsFailedForPrev}
-                  next={next}
-                  checkSelects={checkSelects}
-                  currentPage={currentPage}
-                  steps={steps}
-                />
-              )}
-              <div className="steps-content">{steps[currentPage].content}</div>
-              {!isFailed && (
-                <CabinetButtons
-                  addCompletedTaskToDB={addCompletedTaskToDB}
-                  checkIsFailedForPrev={checkIsFailedForPrev}
-                  next={next}
-                  checkSelects={checkSelects}
-                  currentPage={currentPage}
-                  steps={steps}
-                />
-              )}
-            </div>
+            <div className="steps-content">{steps[currentPage].content}</div>
+            {!isFailed && (
+              <CabinetButtons
+                checkIsFailedForPrev={checkIsFailedForPrev}
+                next={next}
+                checkSelects={checkSelects}
+                currentPage={currentPage}
+                steps={steps}
+              />
+            )}
           </div>
         </MainLayout>
       </>
