@@ -42,9 +42,6 @@ const BrunchAndRepoSelect: React.FC<ICustomInput> = ({
           style={{ width: 200, marginRight: "20px" }}
           onChange={onHandleRepoChange}
           placeholder={"Select repository"}
-          filterOption={(input, option) =>
-            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-          }
         >
           {(arrayData as Array<IRepository>).map((i) => (
             <Option key={uuidv4()} value={i.name}>
@@ -59,9 +56,6 @@ const BrunchAndRepoSelect: React.FC<ICustomInput> = ({
           style={{ width: 200, marginRight: "20px" }}
           onChange={onHandleBrunchChange}
           placeholder={"Select brunch"}
-          filterOption={(input, option) =>
-            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-          }
         >
           {(arrayData as Array<IBranch>).map((i) => (
             <Option key={uuidv4()} value={i.node.name}>

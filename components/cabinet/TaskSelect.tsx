@@ -33,9 +33,6 @@ const TaskSelect: React.FC<ITaskSelect> = ({
         style={{ width: 200 }}
         onChange={onHandleTaskChange}
         placeholder={"Select task"}
-        filterOption={(input, option) =>
-          option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-        }
       >
         {tasks.map((task) => (
           <Option key={uuidv4()} value={task.taskName}>

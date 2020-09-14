@@ -78,9 +78,6 @@ const PullRequests: React.FC<IChoosePR> = ({
             style={{ width: 200 }}
             onChange={onHandlePRSelect}
             placeholder={"Select pull request"}
-            filterOption={(input, option) =>
-              option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-            }
           >
             {pullRequests.map((item) => {
               const pullReqNumber = item.url.slice(-1);
