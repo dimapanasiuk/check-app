@@ -82,19 +82,19 @@ const Home: NextPage<IGetInitialProps> = React.memo(
     const onHandleTaskSelect = (value: string): void => {
       setSelectedTask(value);
     };
-    const onHandlePRSelect = (value: string): void => {
+    const onHandlePRSelect = React.useCallback((value: string): void => {
       setSelectedPR(value);
-    };
-    const onHandlePRUrlChange = (value: string): void => {
+    }, []);
+    const onHandlePRUrlChange = React.useCallback((value: string): void => {
       setSelectedPRUrl(value);
-    };
+    }, []);
     const onHandleMaxScoreChange = (value: number): void => {
       setMaxScoreValue(value);
     };
 
-    const setFailed = (): void => {
+    const setFailed = React.useCallback((): void => {
       setIsFailed(true);
-    };
+    }, []);
 
     const openErrorMessage = (valueToSelect: string): void => {
       message.error(`Please ${valueToSelect}`);
@@ -148,7 +148,7 @@ const Home: NextPage<IGetInitialProps> = React.memo(
             onHandleRepoSelect={onHandleRepoSelect}
             setFailed={setFailed}
             login={login}
-            title="Choose Repository and branch you worked with"
+            title={!isFailed && "Choose Repository and branch you worked with"}
           />
         ),
       },
@@ -159,7 +159,7 @@ const Home: NextPage<IGetInitialProps> = React.memo(
             selectedBranch={selectedBranch}
             selectedRepo={selectedRepo}
             login={login}
-            title="Check out commits"
+            title={!isFailed && "Check out commits"}
           />
         ),
       },
@@ -173,7 +173,7 @@ const Home: NextPage<IGetInitialProps> = React.memo(
             selectedRepo={selectedRepo}
             login={login}
             setFailed={setFailed}
-            title="Choose your pull request"
+            title={!isFailed && "Choose your pull request"}
           />
         ),
       },
