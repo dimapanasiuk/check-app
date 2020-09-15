@@ -1,24 +1,18 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React from "react";
 
 import { Table } from "antd";
 
-const AllScore: React.FC = () => {
-  const [completedTasks, setСompletedTasks] = useState([]);
-  const [users, setUsers] = useState([]);
-  const [tasks, setTasks] = useState([]);
+interface IAllScore {
+  tasks: Array<any>;
+  completedTasks: Array<any>;
+  users: Array<any>;
+}
 
-  useEffect(() => {
-    const tasksReview = axios("http://localhost:4000/completedTasks");
-    tasksReview.then((data) => setСompletedTasks(data.data));
-
-    const tasks = axios("http://localhost:4000/tasks");
-    tasks.then((data) => setTasks(data.data));
-
-    const users = axios("http://localhost:4000/users");
-    users.then((data) => setUsers(data.data));
-  }, []);
-
+const AllScore: React.FC<IAllScore> = ({
+  tasks,
+  completedTasks,
+  users,
+}: IAllScore) => {
   const uniqValues = (arr, key) => {
     const uniqArr = arr.map((i) => i[key]);
     return Array.from(new Set(uniqArr));
