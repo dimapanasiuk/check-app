@@ -26,7 +26,7 @@ const MarkdownPrew: React.FC<IMarkdownPrew> = ({
     <Row gutter={[8, 16]}>
       <Col className={styles.column} span={12}>
         <TextArea
-          style={{ minHeight: "200px" }}
+          style={{ minHeight: "66vh" }}
           autoSize={true}
           onChange={changeHandler}
           value={rmBody}
