@@ -26,7 +26,11 @@ const Score: NextPage<IScore> = ({ tasks, completedTasks, users }: IScore) => (
         <AllScore tasks={tasks} completedTasks={completedTasks} users={users} />
       </TabPane>
       <TabPane tab="Your score" key="2">
-        <YourScore />{" "}
+        <YourScore
+          tasks={tasks}
+          completedTasks={completedTasks}
+          users={users}
+        />
       </TabPane>
     </Tabs>
   </MainLayout>
