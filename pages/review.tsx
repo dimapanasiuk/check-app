@@ -76,7 +76,6 @@ const Review: React.FC<IGetInitialProps> = ({ login }: IGetInitialProps) => {
 
   const submitFormHandler = async (e) => {
     const { task, student, score, comment } = e;
-    console.log("pullRequest", pr);
     isCheck;
 
     await axios
@@ -89,7 +88,6 @@ const Review: React.FC<IGetInitialProps> = ({ login }: IGetInitialProps) => {
         pullRequest: pr,
       })
       .then(() => {
-        setIsChooseTask(false);
         setIsChooseUser(false);
         setIsCheck(false);
         setPr("");
@@ -122,11 +120,18 @@ const Review: React.FC<IGetInitialProps> = ({ login }: IGetInitialProps) => {
             {usersHtml}
           </Select>
         </Form.Item>
-        <Form.Item>
-          <Link href={pr} target="_blank">
-            {pr}
-          </Link>
-        </Form.Item>
+        {(() => {
+          if (pr) {
+            return (
+              <Form.Item>
+                <Link href={pr} target="_blank">
+                  {pr}
+                </Link>
+              </Form.Item>
+            );
+          }
+        })()}
+
         <Form.Item name="checkbox">
           <Checkbox
             onChange={checkBoxHandler}
