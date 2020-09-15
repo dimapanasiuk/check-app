@@ -34,6 +34,7 @@ const Review: React.FC<IGetInitialProps> = ({ login }: IGetInitialProps) => {
   const [completedTasks, setCompletedTasks] = useState([]);
   const [users, setUsers] = useState([]);
   const [pr, setPr] = useState("");
+  const [maxScore, setMaxScore] = useState(0);
 
   useEffect(() => {
     const result = axios("http://localhost:4000/completedTasks");
@@ -70,10 +71,12 @@ const Review: React.FC<IGetInitialProps> = ({ login }: IGetInitialProps) => {
 
     const PR = completedTasks.filter((i) => i.user === student);
     setPr(PR[0].pullRequest);
+    setMaxScore(PR[0].maxScore);
   };
 
   const submitFormHandler = async (e) => {
     const { task, student, score, comment } = e;
+    console.log("pullRequest", pr);
     isCheck;
 
     await axios
@@ -90,6 +93,7 @@ const Review: React.FC<IGetInitialProps> = ({ login }: IGetInitialProps) => {
         setIsChooseUser(false);
         setIsCheck(false);
         setPr("");
+        setMaxScore(0);
         message.success("Check done");
       });
   };
@@ -142,7 +146,7 @@ const Review: React.FC<IGetInitialProps> = ({ login }: IGetInitialProps) => {
             },
           ]}
         >
-          <InputNumber min={1} max={500} disabled={!isChooseUser} />
+          <InputNumber min={1} max={maxScore} disabled={!isChooseUser} />
         </Form.Item>
         <Form.Item
           name="comment"
