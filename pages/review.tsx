@@ -14,8 +14,11 @@ import {
   InputNumber,
   Button,
   Checkbox,
+  Typography,
 } from "antd";
 import { UserOutlined } from "@ant-design/icons";
+
+const { Link } = Typography;
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -30,6 +33,7 @@ const Review: React.FC<IGetInitialProps> = ({ login }: IGetInitialProps) => {
   const [isCheck, setIsCheck] = useState(false);
   const [completedTasks, setCompletedTasks] = useState([]);
   const [users, setUsers] = useState([]);
+  const [pr, setPr] = useState("");
 
   useEffect(() => {
     const result = axios("http://localhost:4000/completedTasks");
@@ -61,8 +65,11 @@ const Review: React.FC<IGetInitialProps> = ({ login }: IGetInitialProps) => {
     setUsers(users);
   };
 
-  const handleChangeStudent = (e) => {
+  const handleChangeStudent = (student) => {
     setIsChooseUser(true);
+
+    const PR = completedTasks.filter((i) => i.user === student);
+    setPr(PR[0].pullRequest);
   };
 
   const submitFormHandler = async (e) => {
@@ -76,11 +83,13 @@ const Review: React.FC<IGetInitialProps> = ({ login }: IGetInitialProps) => {
         taskName: task,
         score: score,
         comment: comment,
+        pullRequest: pr,
       })
       .then(() => {
         setIsChooseTask(false);
         setIsChooseUser(false);
         setIsCheck(false);
+        setPr("");
         message.success("Check done");
       });
   };
@@ -108,6 +117,11 @@ const Review: React.FC<IGetInitialProps> = ({ login }: IGetInitialProps) => {
           >
             {usersHtml}
           </Select>
+        </Form.Item>
+        <Form.Item>
+          <Link href={pr} target="_blank">
+            {pr}
+          </Link>
         </Form.Item>
         <Form.Item name="checkbox">
           <Checkbox
