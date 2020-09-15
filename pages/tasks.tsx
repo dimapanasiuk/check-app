@@ -22,9 +22,13 @@ export interface ITaskData {
 
 interface IGetInitialProps {
   tasks: Array<ITaskData>;
+  completedTasks: Array<any>;
 }
 
-const Tasks: NextPage<IGetInitialProps> = ({ tasks }: IGetInitialProps) => {
+const Tasks: NextPage<IGetInitialProps> = ({
+  tasks,
+  completedTasks,
+}: IGetInitialProps) => {
   const tasksAmount = tasks.length;
   const defaultPageSize = 10;
   const [currentPaginationPage, setCurrentPaginationPage] = useState(1);
@@ -52,8 +56,8 @@ const Tasks: NextPage<IGetInitialProps> = ({ tasks }: IGetInitialProps) => {
                 }}
               >
                 <Meta title={i.taskName} description={description} />
-                <Deadline start={i.date[0]} end={i.date[1]}/>
-                <Performance  maxScore={i.maxScore}  />
+                <Deadline start={i.date[0]} end={i.date[1]} />
+                <Performance maxScore={i.maxScore} completed={completedTasks} taskName={i.taskName} />
               </Card>
             </a>
           </Link>
@@ -113,7 +117,10 @@ Tasks.getInitialProps = async () => {
   const res = await fetch(`http://localhost:4000/tasks`);
   const json = await res.json();
 
-  return { tasks: json };
+  const resCompletedTasks = await fetch(`http://localhost:4000/completedTasks`);
+  const jsonCompletedTasks = await resCompletedTasks.json();
+
+  return { tasks: json, completedTasks: jsonCompletedTasks };
 };
 
 export default Tasks;

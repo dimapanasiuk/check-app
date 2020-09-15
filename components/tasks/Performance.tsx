@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 
 import { Progress, Typography } from "antd";
 
@@ -6,9 +7,31 @@ const { Text } = Typography;
 
 interface IPerformance {
   maxScore: number;
+  completed: Array<any>;
+  login: string;
+  taskName: string;
 }
 
-const Performance: React.FC<IPerformance> = ({ maxScore }: IPerformance) => {
+const Performance: React.FC<IPerformance> = ({
+  maxScore,
+  completed,
+  login,
+  taskName,
+}: IPerformance) => {
+  const score = (name, arr, taskName) => {
+    if (arr.length > 0 && name !== "") {
+      const data = arr.filter(
+        (i) => i.user === name && i.taskName === taskName
+      );
+      if (data.length > 0) {
+        return data[data.length - 1].yourScore;
+      }
+      return 0;
+    } else {
+      return 0;
+    }
+  };
+
   const STR = "pt";
   return (
     <>
@@ -17,9 +40,11 @@ const Performance: React.FC<IPerformance> = ({ maxScore }: IPerformance) => {
           <Text style={{ paddingRight: "10px" }} strong>
             Your score
           </Text>
-          <Text mark>0 {STR}</Text>
+          <Text mark>
+            {score(login, completed, taskName)} {STR}
+          </Text>
         </div>
-        <div style={{marginBottom: '20px'}}>
+        <div style={{ marginBottom: "20px" }}>
           <Text style={{ paddingRight: "10px" }} strong>
             Max score
           </Text>
@@ -33,4 +58,6 @@ const Performance: React.FC<IPerformance> = ({ maxScore }: IPerformance) => {
   );
 };
 
-export default Performance;
+const mapStateToProps = (state) => ({ login: state.chooseRole.login });
+
+export default connect(mapStateToProps)(Performance);

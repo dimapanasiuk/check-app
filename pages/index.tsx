@@ -64,7 +64,7 @@ const Home: NextPage<IGetInitialProps> = React.memo(
           repository: selectedRepo,
           branch: selectedBranch,
           pullRequest: selectedPRUrl,
-          maxScore: maxScoreValue,
+          yourScore: maxScoreValue,
         })
         .then(() => {
           message.success("Processing complete!");
