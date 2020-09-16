@@ -22,7 +22,7 @@ const CheckOutData: React.FC<ICheckOutData> = ({
   selectedPRUrl,
   maxScoreValue,
   maxScore,
-  onHandleMaxScoreChange
+  onHandleMaxScoreChange,
 }: ICheckOutData) => {
   return (
     <div style={{ textAlign: "center" }}>
@@ -38,7 +38,7 @@ const CheckOutData: React.FC<ICheckOutData> = ({
         </h3>
       )}
       <div style={{ marginTop: "20px" }}>
-        <h4>What do you think about your score?</h4>
+        <h4>please enter your self check score</h4>
         {maxScore && <h5>Max score: {maxScore}</h5>}
         <InputNumber
           min={1}
