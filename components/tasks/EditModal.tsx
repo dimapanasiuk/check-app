@@ -115,7 +115,17 @@ const EditModal: React.FC<IEditModal> = ({
               format="YYYY-MM-DD HH:mm"
             />
           </Form.Item>
-
+          <Form.Item
+            name={"markdown"}
+            initialValue={mdBodyData}
+            label="Enter markdown"
+          >
+            <TextArea
+              style={{ minHeight: "20vh" }}
+              autoSize={true}
+              onChange={getDataFromMarkdown}
+            />
+          </Form.Item>
           <Form.Item
             name={"score"}
             label="Maximum score"
