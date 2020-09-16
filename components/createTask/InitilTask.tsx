@@ -1,10 +1,13 @@
 import React from "react";
-import { Form, Input, InputNumber } from "antd";
+import { DatePicker, Form, Input, InputNumber } from "antd";
+
+const { RangePicker } = DatePicker;
 
 interface IInitialTask {
-  getDataFoo: (data: string) => void;
+  getDataFromInput: (data: string) => void;
   getDataFromInputNumber: (data: number) => void;
   getDataFromTextArea: (data: string) => void;
+  getDataAboutDate: (data: Array<string>) => void;
   taskName: string;
   inputNumberValue: number;
   taskDescription: string;
@@ -13,15 +16,20 @@ interface IInitialTask {
 const { TextArea } = Input;
 
 const InitialTask: React.FC<IInitialTask> = ({
-  getDataFoo,
+  getDataFromInput,
   getDataFromInputNumber,
   getDataFromTextArea,
+  getDataAboutDate,
   taskName,
   inputNumberValue,
   taskDescription,
 }: IInitialTask) => {
+  const onChange = (value, dateString) => {
+    getDataAboutDate(dateString);
+  };
+
   const changeInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    getDataFoo(e.target.value);
+    getDataFromInput(e.target.value);
   };
 
   const changeTextAreaHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -58,6 +66,25 @@ const InitialTask: React.FC<IInitialTask> = ({
           style={{ minHeight: "100px" }}
         />
       </Form.Item>
+
+      <Form.Item
+        name={"date"}
+        label="Enter date for start and deadline task"
+        initialValue={inputNumberValue}
+        rules={[
+          {
+            required: true,
+            message: "Please enter date",
+          },
+        ]}
+      >
+        <RangePicker
+          showTime={{ format: "HH:mm" }}
+          format="YYYY-MM-DD HH:mm"
+          onChange={onChange}
+        />
+      </Form.Item>
+
       <Form.Item
         name={"score"}
         label="Maximum score"

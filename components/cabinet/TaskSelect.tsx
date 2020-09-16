@@ -1,0 +1,47 @@
+import React from "react";
+import { v4 as uuidv4 } from "uuid";
+
+import { Typography, Select } from "antd";
+import { ITaskData } from "../../pages/tasks";
+
+import { CodeOutlined } from "@ant-design/icons";
+
+const { Title } = Typography;
+const { Option } = Select;
+
+interface ITaskSelect {
+  title: string;
+  selectedTask: string;
+  tasks: ITaskData[];
+  onHandleTaskChange: (value: string) => void;
+}
+
+const TaskSelect: React.FC<ITaskSelect> = ({
+  title,
+  selectedTask,
+  tasks,
+  onHandleTaskChange,
+}: ITaskSelect) => {
+  return (
+    <React.Fragment>
+      <Title style={{ marginTop: "20px" }} level={2}>
+        {title}
+      </Title>
+      <Select
+        value={selectedTask}
+        showSearch
+        style={{ width: 200 }}
+        onChange={onHandleTaskChange}
+        placeholder={"Select task"}
+      >
+        {tasks.map((task) => (
+          <Option key={uuidv4()} value={task.taskName}>
+            <CodeOutlined /> {task.taskName}
+          </Option>
+        ))}
+      </Select>
+    </React.Fragment>
+  );
+};
+
+export default TaskSelect;
