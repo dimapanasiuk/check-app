@@ -17,6 +17,7 @@ $gradient: linear-gradient(
 .column {
   padding: 0 16px 0 4px !important;
 }
+
 .markdown {
   padding: 16px !important;
   font-weight: 400;
@@ -99,4 +100,8 @@ $gradient: linear-gradient(
       background-color: $light-gray;
     }
   }
+}
+
+.markdownMargin {
+  margin-bottom: 0.5rem;
 }
