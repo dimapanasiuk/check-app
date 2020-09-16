@@ -35,31 +35,32 @@ const YourScore: React.FC<IYourScore> = ({
     },
   ];
 
-  const generateData = (tasks) => {
-    const arrTasks = tasks.map((i) => i.taskName);
-
-    const arrTasksData = arrTasks.map((item, i) => {
-      const reviewersForCurrentTask = tasksReview.filter(
-        (y) => y.taskName === item
-      );
-
-      const arr = reviewersForCurrentTask.map((x) => {
-        return {
-          key: uuidv4(),
-          Task: "",
-          CheckName: x.reviewer,
-          Score: x.score,
-          Comment: x.comment,
-        };
-      });
-
+  const getTasksReviewCurrentTask = (task, tasksReview) => {
+    const tasks = tasksReview.filter((y) => y.taskName === task);
+    const arr = tasks.map((x) => {
       return {
         key: uuidv4(),
-        Task: item,
+        Task: "",
+        CheckName: x.reviewer,
+        Score: x.score,
+        Comment: x.comment,
+      };
+    });
+
+    return arr;
+  };
+
+  const generateData = (tasks, tasksReview) => {
+    const arrTasks = tasks.map((i) => i.taskName);
+
+    const arrTasksData = arrTasks.map((i) => {
+      return {
+        key: uuidv4(),
+        Task: i,
         CheckName: "—",
         Score: "—",
         Comment: "—",
-        children: arr,
+        children: getTasksReviewCurrentTask(i, tasksReview),
       };
     });
 
@@ -69,7 +70,7 @@ const YourScore: React.FC<IYourScore> = ({
   return (
     <>
       <h1>Your score</h1>
-      <Table columns={columns} dataSource={generateData(tasks)} />
+      <Table columns={columns} dataSource={generateData(tasks, tasksReview)} />
     </>
   );
 };
