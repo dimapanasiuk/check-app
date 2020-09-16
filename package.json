@@ -5,8 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start -p $PORT",
-    "heroku-postbuild": "npm run build",
+    "start": "next start",
     "lint": "eslint . --fix",
     "mock": "json-server -w db.json -p 4000 -d 200",
     "serve": "concurrently \"npm run dev\" \"npm run mock\""
@@ -43,6 +42,5 @@
     "eslint-plugin-react": "^7.20.6",
     "eslint-plugin-react-hooks": "^4.1.0",
     "typescript": "^3.9.7"
-  },
-  "cacheDirectories": [".next/cache"]
+  }
 }
