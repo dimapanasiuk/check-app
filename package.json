@@ -2,6 +2,10 @@
   "name": "check-app",
   "version": "0.1.0",
   "private": true,
+  "cacheDirectories": [
+    "node_modules/",
+    ".next/cache/"
+  ],
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -43,9 +47,5 @@
     "eslint-plugin-react": "^7.20.6",
     "eslint-plugin-react-hooks": "^4.1.0",
     "typescript": "^3.9.7"
-  },
-  "cacheDirectories": [
-    "node_modules/",
-    ".next/cache/"
-  ]
+  }
 }
