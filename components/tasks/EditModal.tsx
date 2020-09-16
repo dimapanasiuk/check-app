@@ -73,17 +73,7 @@ const EditModal: React.FC<IEditModal> = ({
         title="Edit"
       >
         <Form name="basic" layout="vertical">
-          <Form.Item
-            name={"name"}
-            label="Task Name"
-            initialValue={taskName}
-            rules={[
-              {
-                required: true,
-                message: "Please input task name!",
-              },
-            ]}
-          >
+          <Form.Item name={"name"} label="Task Name" initialValue={taskName}>
             <Input onChange={getDataFromTaskName} />
           </Form.Item>
           <Form.Item
@@ -102,12 +92,6 @@ const EditModal: React.FC<IEditModal> = ({
             name={"date"}
             initialValue={[moment(date[0]), moment(date[1])]}
             label="Enter date for start and deadline task"
-            rules={[
-              {
-                required: true,
-                message: "Please enter date",
-              },
-            ]}
           >
             <RangePicker
               onChange={getDataAboutDate}
@@ -121,7 +105,7 @@ const EditModal: React.FC<IEditModal> = ({
             label="Enter markdown"
           >
             <TextArea
-              style={{ minHeight: "20vh" }}
+              style={{ minHeight: "50px" }}
               autoSize={true}
               onChange={getDataFromMarkdown}
             />
@@ -130,12 +114,6 @@ const EditModal: React.FC<IEditModal> = ({
             name={"score"}
             label="Maximum score"
             initialValue={inputNumberValue}
-            rules={[
-              {
-                required: true,
-                message: "Please input score!",
-              },
-            ]}
           >
             <InputNumber onChange={getDataFromMaxScore} min={1} max={500} />
           </Form.Item>
