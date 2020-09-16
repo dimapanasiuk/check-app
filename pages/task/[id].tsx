@@ -8,6 +8,7 @@ import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 const { confirm } = Modal;
 
@@ -18,6 +19,7 @@ interface IGetInitialProps {
 const Task: NextPage<IGetInitialProps> = ({ taskData }: IGetInitialProps) => {
   const router = useRouter();
   const [isVisible, setIsVisible] = useState<boolean>(false);
+  const userRole = useSelector((state) => state.chooseRole.role);
 
   const deleteTask = async () => {
     const nodeId = router.query.id;
@@ -73,16 +75,20 @@ const Task: NextPage<IGetInitialProps> = ({ taskData }: IGetInitialProps) => {
           isVisible={isVisible}
           closeEditModal={closeEditModal}
         />
-        <Button danger onClick={showConfirm}>
-          <DeleteOutlined /> Delete
-        </Button>
-        <Button
-          type="primary"
-          onClick={openEditModal}
-          style={{ marginLeft: "20px" }}
-        >
-          <EditOutlined /> Edit
-        </Button>
+        {(userRole === "mentor" || userRole === "admin") && (
+          <>
+            <Button danger onClick={showConfirm}>
+              <DeleteOutlined /> Delete
+            </Button>
+            <Button
+              type="primary"
+              onClick={openEditModal}
+              style={{ marginLeft: "20px" }}
+            >
+              <EditOutlined /> Edit
+            </Button>
+          </>
+        )}
         <Divider orientation="left">Task name</Divider>
         <div>{taskData.taskName}</div>
         {taskData.taskDescription && (
