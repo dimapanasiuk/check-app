@@ -33,6 +33,16 @@ const Performance: React.FC<IPerformance> = ({
   };
 
   const STR = "pt";
+
+  const yourScore = score(login, completed, taskName);
+
+  const calcPercent = (yourScore, maxScore) => {
+    const percent = (yourScore * 100) / maxScore;
+    return percent.toFixed(1);
+  };
+
+  const yourPercent = calcPercent(yourScore, maxScore);
+
   return (
     <>
       <div style={{ marginTop: "20px" }}>
@@ -41,7 +51,7 @@ const Performance: React.FC<IPerformance> = ({
             Your score
           </Text>
           <Text mark>
-            {score(login, completed, taskName)} {STR}
+            {yourScore} {STR}
           </Text>
         </div>
         <div style={{ marginBottom: "20px" }}>
@@ -52,7 +62,7 @@ const Performance: React.FC<IPerformance> = ({
             {maxScore} {STR}
           </Text>
         </div>
-        <Progress percent={30} />
+        <Progress percent={+yourPercent} />
       </div>
     </>
   );

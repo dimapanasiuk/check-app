@@ -1,7 +1,11 @@
 import React from "react";
-import rdmd from "@readme/markdown";
+import ReactMarkdown from "react-markdown";
+import classNames from "classnames";
 
-import { Typography } from 'antd';
+import CodeBlock from "./CodeBlock";
+import { Typography } from "antd";
+
+import styles from "../../styles/Markdown.module.scss";
 
 const { Title } = Typography;
 
@@ -20,7 +24,6 @@ const CheckTask: React.FC<ICheckTask> = ({
   taskDescription,
   date,
 }: ICheckTask) => {
-
   return (
     <>
       <div style={{ textAlign: "center" }}>
@@ -31,15 +34,17 @@ const CheckTask: React.FC<ICheckTask> = ({
 
         <Title level={2}>Your maximum score: {maxScore} </Title>
         {taskDescription && (
-          <React.Fragment>
+          <>
             <Title level={2}>Task description:</Title>
             <Title style={{ margin: "0 auto", maxWidth: "1000px" }}>
               {taskDescription}
             </Title>
-          </React.Fragment>
+          </>
         )}
       </div>
-      {rdmd(rmBody)}
+      <article className={classNames(styles.markdown, styles.markdownMargin)}>
+        <ReactMarkdown source={rmBody} renderers={{ code: CodeBlock }} />
+      </article>
     </>
   );
 };
