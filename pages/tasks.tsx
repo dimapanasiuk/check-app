@@ -41,9 +41,8 @@ const Tasks: NextPage<IGetInitialProps> = ({
   const allTaskHtml = (tasks) => {
     return tasks.map((i) => {
       const description =
-        i.taskDescription && i.taskDescription.split(" ").splice(0, 5);
-      i.taskDescription.split(" ").length > 5 && description.push("...");
-      description.join(" ");
+        i.taskDescription &&
+        i.taskDescription.split(" ").splice(0, 5).join(" ");
       return (
         <li key={i.id} className={styles.list}>
           <Link href={`task/[id]`} as={`/task/${i.id}`}>
