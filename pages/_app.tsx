@@ -5,6 +5,7 @@ import NextNprogress from "nextjs-progressbar";
 
 import "../styles/globals.css";
 import "antd/dist/antd.css";
+import "highlight.js/styles/github.css";
 import {
   ApolloProvider,
   ApolloClient,

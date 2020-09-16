@@ -9,28 +9,26 @@ import { Tabs } from "antd";
 
 const { TabPane } = Tabs;
 
-function callback(key) {
-  console.log(key);
-}
-
 interface IScore {
   tasks: Array<any>;
   completedTasks: Array<any>;
   users: Array<any>;
+  tasksReview: Array<any>;
 }
 
-const Score: NextPage<IScore> = ({ tasks, completedTasks, users }: IScore) => (
+const Score: NextPage<IScore> = ({
+  tasks,
+  completedTasks,
+  users,
+  tasksReview,
+}: IScore) => (
   <MainLayout title="score page">
-    <Tabs defaultActiveKey="1" onChange={callback}>
+    <Tabs defaultActiveKey="1">
       <TabPane tab="All score" key="1">
         <AllScore tasks={tasks} completedTasks={completedTasks} users={users} />
       </TabPane>
       <TabPane tab="Your score" key="2">
-        <YourScore
-          tasks={tasks}
-          completedTasks={completedTasks}
-          users={users}
-        />
+        <YourScore tasks={tasks} tasksReview={tasksReview} />
       </TabPane>
     </Tabs>
   </MainLayout>
@@ -46,10 +44,14 @@ Score.getInitialProps = async () => {
   const resCompletedTasks = await fetch(`http://localhost:4000/completedTasks`);
   const jsonCompletedTasks = await resCompletedTasks.json();
 
+  const resTasksReview = await fetch(`http://localhost:4000/tasksReview`);
+  const jsonTasksReview = await resTasksReview.json();
+
   return {
     tasks: jsonTasks,
     completedTasks: jsonCompletedTasks,
     users: jsonUsers,
+    tasksReview: jsonTasksReview,
   };
 };
 
