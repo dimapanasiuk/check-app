@@ -38,7 +38,7 @@ const Login: React.FC<ILogin> = ({ changeValue }: ILogin) => {
   const isGetGitHubLogin = (login) => {
     if (login)
       return axios
-        .get(`https://rss-app-db.herokuapp.com/users/${login}`)
+        .get(`https://api.github.com/users/${login}`)
         .then((data) => {
           const img = data.data.avatar_url;
           setCurrentImg(img);
