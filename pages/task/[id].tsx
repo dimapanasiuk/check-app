@@ -18,13 +18,6 @@ interface IGetInitialProps {
 const Task: NextPage<IGetInitialProps> = ({ taskData }: IGetInitialProps) => {
   const router = useRouter();
   const [isVisible, setIsVisible] = useState<boolean>(false);
-  const [newData, setNewData] = useState({
-    taskName: "",
-    taskDescription: "",
-    maxScore: null,
-    markdown: "",
-    date: []
-  });
 
   const deleteTask = async () => {
     const nodeId = router.query.id;
@@ -52,12 +45,10 @@ const Task: NextPage<IGetInitialProps> = ({ taskData }: IGetInitialProps) => {
     });
   };
 
-  const editTask = async () => {
+  const editTask = async (obj: ITaskData) => {
     const nodeId = router.query.id;
     try {
-      await axios.put(`http://localhost:4000/tasks/${nodeId}`, {
-        taskName: "merry christams" || taskData.taskName,
-      });
+      await axios.put(`http://localhost:4000/tasks/${nodeId}`, obj);
 
       router.push("/tasks");
     } catch (error) {
@@ -76,7 +67,12 @@ const Task: NextPage<IGetInitialProps> = ({ taskData }: IGetInitialProps) => {
   return (
     <MaiLayout title={`task ${taskData.taskName}`}>
       <div style={{ fontSize: "16px" }}>
-        <EditModal isVisible={isVisible} closeEditModal={closeEditModal} />
+        <EditModal
+          taskData={taskData}
+          editTask={editTask}
+          isVisible={isVisible}
+          closeEditModal={closeEditModal}
+        />
         <Button danger onClick={showConfirm}>
           <DeleteOutlined /> Delete
         </Button>
@@ -113,6 +109,6 @@ Task.getInitialProps = async (ctx) => {
   const json = await res.json();
 
   return { taskData: json };
-}
+};
 
 export default Task;
