@@ -24,7 +24,7 @@ const Create = (): JSX.Element => {
 
   const addTaskToDB = async () => {
     await axios
-      .post("http://localhost:4000/tasks", {
+      .post("https://rss-app-db.herokuapp.com/tasks", {
         id: uniqid(),
         taskName,
         taskDescription,

@@ -20,7 +20,7 @@ const Task: NextPage<IGetInitialProps> = ({ taskData }: IGetInitialProps) => {
   const deleteTask = async () => {
     const nodeId = router.query.id;
     try {
-      await axios.delete(`http://localhost:4000/tasks/${nodeId}`);
+      await axios.delete(`https://rss-app-db.herokuapp.com/tasks/${nodeId}`);
 
       router.push("/tasks");
     } catch (error) {
@@ -71,7 +71,7 @@ const Task: NextPage<IGetInitialProps> = ({ taskData }: IGetInitialProps) => {
 };
 
 Task.getInitialProps = async (ctx) => {
-  const res = await fetch(`http://localhost:4000/tasks/${ctx.query.id}`);
+  const res = await fetch(`https://rss-app-db.herokuapp.com/tasks/${ctx.query.id}`);
   const json = await res.json();
 
   return { taskData: json };

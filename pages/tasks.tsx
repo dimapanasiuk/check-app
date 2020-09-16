@@ -114,10 +114,10 @@ const Tasks: NextPage<IGetInitialProps> = ({
 };
 
 Tasks.getInitialProps = async () => {
-  const res = await fetch(`http://localhost:4000/tasks`);
+  const res = await fetch(`https://rss-app-db.herokuapp.com/tasks`);
   const json = await res.json();
 
-  const resCompletedTasks = await fetch(`http://localhost:4000/completedTasks`);
+  const resCompletedTasks = await fetch(`https://rss-app-db.herokuapp.com/completedTasks`);
   const jsonCompletedTasks = await resCompletedTasks.json();
 
   return { tasks: json, completedTasks: jsonCompletedTasks };

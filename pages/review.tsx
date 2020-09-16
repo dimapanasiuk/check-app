@@ -37,7 +37,7 @@ const Review: React.FC<IGetInitialProps> = ({ login }: IGetInitialProps) => {
   const [maxScore, setMaxScore] = useState(0);
 
   useEffect(() => {
-    const result = axios("http://localhost:4000/completedTasks");
+    const result = axios("https://rss-app-db.herokuapp.com/completedTasks");
     result.then((data) => setCompletedTasks(data.data));
   }, []);
 
@@ -79,7 +79,7 @@ const Review: React.FC<IGetInitialProps> = ({ login }: IGetInitialProps) => {
     isCheck;
 
     await axios
-      .post("http://localhost:4000/tasksReview", {
+      .post("https://rss-app-db.herokuapp.com/tasksReview", {
         reviewer: login,
         student: student,
         taskName: task,

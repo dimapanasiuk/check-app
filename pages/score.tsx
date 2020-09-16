@@ -35,16 +35,16 @@ const Score: NextPage<IScore> = ({
 );
 
 Score.getInitialProps = async () => {
-  const resUsers = await fetch(`http://localhost:4000/users`);
+  const resUsers = await fetch(`https://rss-app-db.herokuapp.com/users`);
   const jsonUsers = await resUsers.json();
 
-  const resTasks = await fetch(`http://localhost:4000/tasks`);
+  const resTasks = await fetch(`https://rss-app-db.herokuapp.com/tasks`);
   const jsonTasks = await resTasks.json();
 
-  const resCompletedTasks = await fetch(`http://localhost:4000/completedTasks`);
+  const resCompletedTasks = await fetch(`https://rss-app-db.herokuapp.com/completedTasks`);
   const jsonCompletedTasks = await resCompletedTasks.json();
 
-  const resTasksReview = await fetch(`http://localhost:4000/tasksReview`);
+  const resTasksReview = await fetch(`https://rss-app-db.herokuapp.com/tasksReview`);
   const jsonTasksReview = await resTasksReview.json();
 
   return {

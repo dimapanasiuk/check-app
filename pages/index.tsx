@@ -57,7 +57,7 @@ const Home: NextPage<IGetInitialProps> = React.memo(
 
     const addCompletedTaskToDB = async () => {
       await axios
-        .post("http://localhost:4000/completedTasks", {
+        .post("https://rss-app-db.herokuapp.com/completedTasks", {
           user: login,
           role: role,
           taskName: selectedTask,
@@ -245,7 +245,7 @@ const Home: NextPage<IGetInitialProps> = React.memo(
   }
 );
 Home.getInitialProps = async () => {
-  const res = await fetch(`http://localhost:4000/tasks`);
+  const res = await fetch(`https://rss-app-db.herokuapp.com/tasks`);
   const tasks = await res.json();
 
   return { tasks };

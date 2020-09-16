@@ -30,7 +30,7 @@ const Login: React.FC<ILogin> = ({ changeValue }: ILogin) => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:4000/users")
+      .get("https://rss-app-db.herokuapp.com/users")
       .then((res) => setUsersDB(res.data));
   }, []);
 
@@ -38,7 +38,7 @@ const Login: React.FC<ILogin> = ({ changeValue }: ILogin) => {
   const isGetGitHubLogin = (login) => {
     if (login)
       return axios
-        .get(`https://api.github.com/users/${login}`)
+        .get(`https://rss-app-db.herokuapp.com/users/${login}`)
         .then((data) => {
           const img = data.data.avatar_url;
           setCurrentImg(img);
@@ -58,7 +58,7 @@ const Login: React.FC<ILogin> = ({ changeValue }: ILogin) => {
 
   const postToDB = (login, role, img) => {
     if (!isCheckUserInDB(login, usersDB)) {
-      axios.post("http://localhost:4000/users", {
+      axios.post("https://rss-app-db.herokuapp.com/users", {
         login: login,
         role: role,
         img: img,
@@ -146,7 +146,7 @@ const Login: React.FC<ILogin> = ({ changeValue }: ILogin) => {
 };
 
 export const getStaticProps = async () => {
-  const res = await fetch("http://localhost:4000/users");
+  const res = await fetch("https://rss-app-db.herokuapp.com/users");
   const usersDB = await res.json();
 
   return {
