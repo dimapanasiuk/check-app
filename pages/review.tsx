@@ -107,7 +107,7 @@ const Review: React.FC<IGetInitialProps> = ({ login }: IGetInitialProps) => {
   };
 
   return (
-    <MainLayout title="review page">
+    <MainLayout title="review">
       <Form
         form={form}
         name="control-hooks"

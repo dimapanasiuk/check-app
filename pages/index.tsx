@@ -206,7 +206,7 @@ const Home: NextPage<IGetInitialProps> = React.memo(
 
     return (
       <>
-        <MainLayout title="home page">
+        <MainLayout title="cabinet">
           {!isFailed && (
             <Steps current={currentPage}>
               {steps.map((item) => (
