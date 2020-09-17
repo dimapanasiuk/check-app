@@ -5,7 +5,7 @@ import { NextPage } from "next";
 import MainLayout from "../components/layout/MainLayout";
 import Performance from "../components/tasks/Performance";
 import Deadline from "../components/tasks/Deadline";
-import styles from "../styles/tasks.module.scss";
+// import styles from "../styles/tasks.module.scss";
 
 import { Button, Pagination, Typography, Card } from "antd";
 
@@ -45,7 +45,7 @@ const Tasks: NextPage<IGetInitialProps> = ({
         i.taskDescription.split(" ").splice(0, 5).join(" ");
       return (
         <li key={i.id}
-         className={styles.list}
+        //  className={styles.list}
          >
           <Link href={`task/[id]`} as={`/task/${i.id}`}>
             <a>
@@ -80,7 +80,7 @@ const Tasks: NextPage<IGetInitialProps> = ({
             <>
               <Title level={2}>Your task</Title>
               <ul 
-              className={styles.layout}
+              // className={styles.layout}
               >
                 {(() => {
                   let start = currentPaginationPage - 1;
@@ -96,7 +96,7 @@ const Tasks: NextPage<IGetInitialProps> = ({
               </ul>
 
               <Pagination
-                className={styles.pagination}
+                // className={styles.pagination}
                 defaultCurrent={currentPaginationPage}
                 total={tasksAmount}
                 defaultPageSize={defaultPageSize}
