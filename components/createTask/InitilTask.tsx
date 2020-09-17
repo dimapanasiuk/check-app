@@ -1,6 +1,8 @@
 import React from "react";
 import { DatePicker, Form, Input, InputNumber } from "antd";
 
+import moment from "moment";
+
 const { RangePicker } = DatePicker;
 
 interface IInitialTask {
@@ -24,7 +26,7 @@ const InitialTask: React.FC<IInitialTask> = ({
   inputNumberValue,
   taskDescription,
 }: IInitialTask) => {
-  const onChange = (value, dateString) => {
+  const changeDeadlineHandler = (_, dateString) => {
     getDataAboutDate(dateString);
   };
 
@@ -81,7 +83,7 @@ const InitialTask: React.FC<IInitialTask> = ({
         <RangePicker
           showTime={{ format: "HH:mm" }}
           format="YYYY-MM-DD HH:mm"
-          onChange={onChange}
+          onChange={changeDeadlineHandler}
         />
       </Form.Item>
 

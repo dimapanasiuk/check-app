@@ -18,6 +18,7 @@ export interface ITaskData {
   taskDescription: string;
   maxScore: number;
   markdown: string;
+  date: Array<string>;
 }
 
 interface IGetInitialProps {
@@ -40,9 +41,8 @@ const Tasks: NextPage<IGetInitialProps> = ({
   const allTaskHtml = (tasks) => {
     return tasks.map((i) => {
       const description =
-        i.taskDescription && i.taskDescription.split(" ").splice(0, 5);
-      i.taskDescription.split(" ").length > 5 && description.push("...");
-      description.join(" ");
+        i.taskDescription &&
+        i.taskDescription.split(" ").splice(0, 5).join(" ");
       return (
         <li key={i.id} className={styles.list}>
           <Link href={`task/[id]`} as={`/task/${i.id}`}>
@@ -57,7 +57,11 @@ const Tasks: NextPage<IGetInitialProps> = ({
               >
                 <Meta title={i.taskName} description={description} />
                 <Deadline start={i.date[0]} end={i.date[1]} />
-                <Performance maxScore={i.maxScore} completed={completedTasks} taskName={i.taskName} />
+                <Performance
+                  maxScore={i.maxScore}
+                  completed={completedTasks}
+                  taskName={i.taskName}
+                />
               </Card>
             </a>
           </Link>
