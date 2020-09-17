@@ -39,7 +39,10 @@ const Review: React.FC<IGetInitialProps> = ({ login }: IGetInitialProps) => {
 
   useEffect(() => {
     const result = axios("https://rss-app-db.herokuapp.com/completedTasks");
-    result.then((data) => setCompletedTasks(data.data));
+    result.then((data) => {
+      const completedTasks = data.data.filter((i) => i.user !== login);
+      setCompletedTasks(completedTasks);
+    });
   }, []);
 
   const tasks = completedTasks.map((i) => i.taskName);
