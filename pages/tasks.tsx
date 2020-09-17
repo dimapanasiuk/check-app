@@ -44,9 +44,7 @@ const Tasks: NextPage<IGetInitialProps> = ({
         i.taskDescription &&
         i.taskDescription.split(" ").splice(0, 5).join(" ");
       return (
-        <li key={i.id}
-        //  className={styles.list}
-         >
+        <li key={i.id} style={{ listStyle: "none" }}>
           <Link href={`task/[id]`} as={`/task/${i.id}`}>
             <a>
               <Card
@@ -79,8 +77,8 @@ const Tasks: NextPage<IGetInitialProps> = ({
           return (
             <>
               <Title level={2}>Your task</Title>
-              <ul 
-              // className={styles.layout}
+              <ul
+                style={{ display: "flex", flexWrap: "wrap", minHeight: "65vh" }}
               >
                 {(() => {
                   let start = currentPaginationPage - 1;
@@ -96,7 +94,7 @@ const Tasks: NextPage<IGetInitialProps> = ({
               </ul>
 
               <Pagination
-                // className={styles.pagination}
+                style={{ textAlign: "center" }}
                 defaultCurrent={currentPaginationPage}
                 total={tasksAmount}
                 defaultPageSize={defaultPageSize}
@@ -125,7 +123,9 @@ Tasks.getInitialProps = async () => {
   const res = await fetch(`https://rss-app-db.herokuapp.com/tasks`);
   const json = await res.json();
 
-  const resCompletedTasks = await fetch(`https://rss-app-db.herokuapp.com/completedTasks`);
+  const resCompletedTasks = await fetch(
+    `https://rss-app-db.herokuapp.com/completedTasks`
+  );
   const jsonCompletedTasks = await resCompletedTasks.json();
 
   return { tasks: json, completedTasks: jsonCompletedTasks };
