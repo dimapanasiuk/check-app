@@ -38,7 +38,10 @@ const Review: React.FC<IGetInitialProps> = ({ login }: IGetInitialProps) => {
 
   useEffect(() => {
     const result = axios("http://localhost:4000/completedTasks");
-    result.then((data) => setCompletedTasks(data.data));
+    result.then((data) => {
+      const completedTasks = data.data.filter((i) => i.user !== login);
+      setCompletedTasks(completedTasks);
+    });
   }, []);
 
   const tasks = completedTasks.map((i) => i.taskName);
@@ -104,7 +107,11 @@ const Review: React.FC<IGetInitialProps> = ({ login }: IGetInitialProps) => {
     <MainLayout title="review page">
       <Form name="basic" layout="vertical" onFinish={submitFormHandler}>
         <Form.Item label="Task" name="task">
-          <Select placeholder="please check task" onChange={handleChangeTask}>
+          <Select
+            placeholder="please check task"
+            onChange={handleChangeTask}
+            disabled={completedTasks.length ? false : true}
+          >
             {tasksNames}
           </Select>
         </Form.Item>
