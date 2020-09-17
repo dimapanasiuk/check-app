@@ -40,11 +40,7 @@ const CheckOutData: React.FC<ICheckOutData> = ({
       <div style={{ marginTop: "20px" }}>
         <h4>please enter your self check score</h4>
         {maxScore && <h5>Max score: {maxScore}</h5>}
-        <InputNumber
-          min={1}
-          value={maxScoreValue}
-          onChange={onHandleMaxScoreChange}
-        />
+        <InputNumber value={maxScoreValue} onChange={onHandleMaxScoreChange} />
       </div>
     </div>
   );

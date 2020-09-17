@@ -115,8 +115,10 @@ const Home: NextPage<IGetInitialProps> = React.memo(
         else next();
       } else if (pageID === 4) {
         if (!maxScoreValue) openErrorMessage("enter your max score");
-        else if (maxScoreValue > taskWithMaxScore.maxScore)
-          openErrorMessage(`enter max score under ${taskWithMaxScore.maxScore}`);
+        else if (maxScoreValue > taskWithMaxScore.maxScore || maxScoreValue < 1)
+          openErrorMessage(
+            `enter max score in the range 1-${taskWithMaxScore.maxScore}`
+          );
         else addCompletedTaskToDB();
       } else if (isFailed) {
         openErrorMessage("refresh the page");
