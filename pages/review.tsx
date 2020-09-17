@@ -88,6 +88,7 @@ const Review: React.FC<IGetInitialProps> = ({ login }: IGetInitialProps) => {
         reviewer: login,
         student: student,
         taskName: task,
+        visible: isCheck,
         score: score,
         comment: comment,
         pullRequest: pr,

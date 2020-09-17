@@ -47,7 +47,7 @@ const YourScore: React.FC<IYourScore> = ({
       return {
         key: uuidv4(),
         Task: "",
-        CheckName: x.reviewer,
+        CheckName: x.visible ? x.reviewer : "—",
         Score: x.score,
         Comment: x.comment,
       };
