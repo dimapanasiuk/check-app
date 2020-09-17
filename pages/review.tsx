@@ -16,6 +16,7 @@ import {
   Checkbox,
   Typography,
 } from "antd";
+
 import { UserOutlined } from "@ant-design/icons";
 
 const { Link } = Typography;
@@ -74,15 +75,17 @@ const Review: React.FC<IGetInitialProps> = ({ login }: IGetInitialProps) => {
     setMaxScore(PR[0].maxScore);
   };
 
+  const [form] = Form.useForm();
+
   const submitFormHandler = async (e) => {
     const { task, student, score, comment } = e;
-    isCheck;
 
     await axios
       .post("https://rss-app-db.herokuapp.com/tasksReview", {
         reviewer: login,
         student: student,
         taskName: task,
+        visible: isCheck,
         score: score,
         comment: comment,
         pullRequest: pr,
@@ -90,9 +93,9 @@ const Review: React.FC<IGetInitialProps> = ({ login }: IGetInitialProps) => {
       .then(() => {
         setIsChooseUser(false);
         setIsCheck(false);
-        setPr("");
-        setMaxScore(0);
+        setIsChooseTask(false);
         message.success("Check done");
+        form.resetFields();
       });
   };
 
@@ -102,9 +105,18 @@ const Review: React.FC<IGetInitialProps> = ({ login }: IGetInitialProps) => {
 
   return (
     <MainLayout title="review page">
-      <Form name="basic" layout="vertical" onFinish={submitFormHandler}>
+      <Form
+        form={form}
+        name="control-hooks"
+        layout="vertical"
+        onFinish={submitFormHandler}
+      >
         <Form.Item label="Task" name="task">
-          <Select placeholder="please check task" onChange={handleChangeTask}>
+          <Select
+            placeholder="please check task"
+            onChange={handleChangeTask}
+            disabled={completedTasks.length ? false : true}
+          >
             {tasksNames}
           </Select>
         </Form.Item>
@@ -131,7 +143,6 @@ const Review: React.FC<IGetInitialProps> = ({ login }: IGetInitialProps) => {
             );
           }
         })()}
-
         <Form.Item name="checkbox">
           <Checkbox
             onChange={checkBoxHandler}
@@ -170,7 +181,7 @@ const Review: React.FC<IGetInitialProps> = ({ login }: IGetInitialProps) => {
           />
         </Form.Item>
         <Form.Item>
-          <Button type="primary" htmlType="submit" disabled={!isChooseUser}>
+          <Button htmlType="submit" type="primary" disabled={!isChooseUser}>
             Submit
           </Button>
         </Form.Item>
