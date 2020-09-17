@@ -42,7 +42,6 @@ const CheckOutData: React.FC<ICheckOutData> = ({
         {maxScore && <h5>Max score: {maxScore}</h5>}
         <InputNumber
           min={1}
-          max={maxScore}
           value={maxScoreValue}
           onChange={onHandleMaxScoreChange}
         />
