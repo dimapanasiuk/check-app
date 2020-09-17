@@ -112,7 +112,7 @@ const MainLayout: React.FC<IMainLayout> = ({
           </div>
         </Header>
         <Content style={{ padding: "0 50px" }}>
-          <div className="site-layout-content">{children}</div>
+          <div className={styles.siteLayoutContent}>{children}</div>
         </Content>
         <Footer style={{ textAlign: "center" }}>
           Ant Design ©2018 Created by Ant UED

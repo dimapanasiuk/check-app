@@ -20,7 +20,7 @@ const Create = (): JSX.Element => {
   const [taskName, setTaskName] = useState<string>("");
   const [taskDescription, setTaskDescription] = useState<string>("");
   const [mdBodyData, setMdBodyData] = useState<string>("");
-  const [date, setDate] = useState([]);
+  const [date, setDate] = useState<Array<string> | null>(null);
 
   const addTaskToDB = async () => {
     await axios
@@ -58,7 +58,7 @@ const Create = (): JSX.Element => {
   };
 
   const openErrorMessage = () => {
-    message.error("Please enter task name and maximum score!");
+    message.error("Please enter data in required inputs!");
   };
 
   const openConfirmWindow = () => {
@@ -72,7 +72,7 @@ const Create = (): JSX.Element => {
   };
 
   const checkInputValues = () => {
-    !taskName || !inputNumberValue ? openErrorMessage() : next();
+    !taskName || !inputNumberValue || !date ? openErrorMessage() : next();
   };
 
   const checkMarkdownTextarea = () => {

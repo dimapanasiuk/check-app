@@ -11,7 +11,7 @@ import styles from "../styles/login.module.scss";
 import { Form, Input, Button, Checkbox, Modal } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 
-const users = ["student", "mentor", "admin", "super_user"];
+const users = ["student", "mentor", "admin"];
 
 interface IChangeValue {
   role: string;

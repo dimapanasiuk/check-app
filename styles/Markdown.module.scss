@@ -25,6 +25,8 @@ $gradient: linear-gradient(
   background-color: #fff;
   border: 1px solid #d9d9d9;
   border-radius: 2px;
+  word-break: break-word;
+  overflow: hidden;
 
   ul {
     margin-bottom: 0.8rem;
@@ -103,5 +105,10 @@ $gradient: linear-gradient(
 }
 
 .markdownMargin {
+  margin-top: 1rem;
   margin-bottom: 0.5rem;
+}
+
+.title {
+  margin-bottom: 0 !important;
 }
