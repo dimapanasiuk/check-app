@@ -17,6 +17,11 @@ import {
 
 const httpLink = new HttpLink({ uri: "https://api.github.com/graphql" });
 
+console.log(
+  "process.env.NEXT_PUBLIC_ANALYTICS_ID",
+  process.env.NEXT_PUBLIC_ANALYTICS_ID
+);
+
 const authMiddleware = new ApolloLink((operation, forward) => {
   operation.setContext({
     headers: {
