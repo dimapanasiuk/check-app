@@ -50,7 +50,7 @@ const Task: NextPage<IGetInitialProps> = ({ taskData }: IGetInitialProps) => {
   const editTask = async (obj: ITaskData) => {
     const nodeId = router.query.id;
     try {
-      await axios.put(`http://localhost:4000/tasks/${nodeId}`, obj);
+      await axios.put(`https://rss-app-db.herokuapp.com/tasks/${nodeId}`, obj);
 
       router.push("/tasks");
     } catch (error) {
