@@ -3,11 +3,11 @@ import ReactMarkdown from "react-markdown";
 import classNames from "classnames";
 
 import CodeBlock from "./CodeBlock";
-import { Typography } from "antd";
+import { Typography, Space } from "antd";
 
 import styles from "../../styles/Markdown.module.scss";
 
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
 interface ICheckTask {
   rmBody: string;
@@ -26,22 +26,32 @@ const CheckTask: React.FC<ICheckTask> = ({
 }: ICheckTask) => {
   return (
     <>
-      <div style={{ textAlign: "center" }}>
-        <Title level={2}>Check Task</Title>
-        <Title level={2}>Your task name: {taskName}</Title>
-        <Title level={2}>Date start: {date[0]}</Title>
-        <Title level={2}>Deadline: {date[1]}</Title>
+      <Space direction="vertical">
+        <Title level={1}>Check Task</Title>
+        <Title className={styles.title} level={4}>
+          Your task name: <Text>{taskName}</Text>
+        </Title>
+        <Title className={styles.title} level={4}>
+          Date start: <Text>{date[0]}</Text>
+        </Title>
+        <Title className={styles.title} level={4}>
+          Deadline: <Text>{date[1]}</Text>
+        </Title>
 
-        <Title level={2}>Your maximum score: {maxScore} </Title>
+        <Title className={styles.title} level={4}>
+          Your maximum score: <Text>{maxScore}</Text>
+        </Title>
         {taskDescription && (
           <>
-            <Title level={2}>Task description:</Title>
-            <Title style={{ margin: "0 auto", maxWidth: "1000px" }}>
-              {taskDescription}
+            <Title className={styles.title} level={4}>
+              Task description:
             </Title>
+            <Text style={{ margin: "0 auto", maxWidth: "1000px" }}>
+              {taskDescription}
+            </Text>
           </>
         )}
-      </div>
+      </Space>
       <article className={classNames(styles.markdown, styles.markdownMargin)}>
         <ReactMarkdown source={rmBody} renderers={{ code: CodeBlock }} />
       </article>
