@@ -55,7 +55,11 @@ const Tasks: NextPage<IGetInitialProps> = ({
                   margin: "0 20px 20px 0",
                 }}
               >
-                <Meta title={i.taskName} description={description} />
+                <Meta
+                  title={i.taskName}
+                  description={`${description.substr(0, 100)} ...`}
+                />
+                <br />
                 <Deadline start={i.date[0]} end={i.date[1]} />
                 <Performance
                   maxScore={i.maxScore}
