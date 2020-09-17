@@ -9,7 +9,7 @@ import CheckTask from "../components/createTask/CheckTask";
 
 import { Steps, Button, message, Modal } from "antd";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 
 const { Step } = Steps;
 const { confirm } = Modal;
@@ -112,6 +112,9 @@ const Create = (): JSX.Element => {
     },
   ];
 
+  const router = useRouter();
+  const pathName = router.pathname;
+
   const next = () => {
     setCurrentPage(currentPage + 1);
   };
@@ -122,7 +125,7 @@ const Create = (): JSX.Element => {
   };
 
   return (
-    <MainLayout title="create task">
+    <MainLayout title="create task" path={pathName} >
       <Steps current={currentPage} style={{ marginBottom: "20px" }}>
         {steps.map((item) => (
           <Step key={item.title} title={item.title} />

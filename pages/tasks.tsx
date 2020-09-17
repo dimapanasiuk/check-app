@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { NextPage } from "next";
+import { useRouter } from 'next/router';
 
 import MainLayout from "../components/layout/MainLayout";
 import Performance from "../components/tasks/Performance";
@@ -74,8 +75,11 @@ const Tasks: NextPage<IGetInitialProps> = ({
     });
   };
 
+  const router = useRouter();
+  const pathName = router.pathname;
+
   return (
-    <MainLayout title="tasks">
+    <MainLayout title="tasks" path={pathName} >
       {(() => {
         if (tasks.length !== 0) {
           return (

@@ -204,9 +204,11 @@ const Home: NextPage<IGetInitialProps> = React.memo(
       setCurrentPage(current);
     };
 
+    const pathName = router.pathname;
+    
     return (
       <>
-        <MainLayout title="cabinet">
+        <MainLayout title="cabinet" path={pathName} >
           {!isFailed && (
             <Steps current={currentPage}>
               {steps.map((item) => (

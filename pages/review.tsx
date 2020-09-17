@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import uniqid from "uniqid";
 import { connect } from "react-redux";
+import { useRouter } from "next/router";
 
 import { uniqValues } from "../utils/utils";
 import MainLayout from "../components/layout/MainLayout";
@@ -36,6 +37,9 @@ const Review: React.FC<IGetInitialProps> = ({ login }: IGetInitialProps) => {
   const [users, setUsers] = useState([]);
   const [pr, setPr] = useState("");
   const [maxScore, setMaxScore] = useState(0);
+
+  const router = useRouter();
+  const pathName = router.pathname;
 
   useEffect(() => {
     const result = axios("http://localhost:4000/completedTasks");
@@ -107,7 +111,7 @@ const Review: React.FC<IGetInitialProps> = ({ login }: IGetInitialProps) => {
   };
 
   return (
-    <MainLayout title="review">
+    <MainLayout title="review" path={pathName} >
       <Form
         form={form}
         name="control-hooks"
