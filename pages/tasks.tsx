@@ -7,7 +7,7 @@ import Performance from "../components/tasks/Performance";
 import Deadline from "../components/tasks/Deadline";
 // import styles from "../styles/tasks.module.scss";
 
-import { Button, Pagination, Typography, Card } from "antd";
+import { Result, Pagination, Typography, Card } from "antd";
 
 const { Meta } = Card;
 const { Title } = Typography;
@@ -107,16 +107,7 @@ const Tasks: NextPage<IGetInitialProps> = ({
             </>
           );
         } else {
-          return (
-            <>
-              <Title level={2}>{"You don't have tasks"}</Title>
-              <Button type="primary">
-                <Link href="/">
-                  <a>Go to home</a>
-                </Link>
-              </Button>
-            </>
-          );
+          return <Result title="you have no tasks yet" />;
         }
       })()}
     </MainLayout>
