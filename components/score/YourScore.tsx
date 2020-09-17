@@ -1,13 +1,16 @@
 import React from "react";
 import { Table } from "antd";
 import { v4 as uuidv4 } from "uuid";
+import { connect } from "react-redux";
 
 interface IYourScore {
+  login: string;
   tasks: Array<any>;
   tasksReview: Array<any>;
 }
 
 const YourScore: React.FC<IYourScore> = ({
+  login,
   tasks,
   tasksReview,
 }: IYourScore) => {
@@ -35,8 +38,11 @@ const YourScore: React.FC<IYourScore> = ({
     },
   ];
 
-  const getTasksReviewCurrentTask = (task, tasksReview) => {
-    const tasks = tasksReview.filter((y) => y.taskName === task);
+  const getTasksReviewCurrentTask = (task, tasksReview, login) => {
+    const tasks = tasksReview.filter(
+      (y) => y.taskName === task && y.reviewer !== login
+    );
+
     const arr = tasks.map((x) => {
       return {
         key: uuidv4(),
@@ -50,7 +56,7 @@ const YourScore: React.FC<IYourScore> = ({
     return arr;
   };
 
-  const generateData = (tasks, tasksReview) => {
+  const generateData = (tasks, tasksReview, login) => {
     const arrTasks = tasks.map((i) => i.taskName);
 
     const arrTasksData = arrTasks.map((i) => {
@@ -60,7 +66,7 @@ const YourScore: React.FC<IYourScore> = ({
         CheckName: "—",
         Score: "—",
         Comment: "—",
-        children: getTasksReviewCurrentTask(i, tasksReview),
+        children: getTasksReviewCurrentTask(i, tasksReview, login),
       };
     });
 
@@ -70,9 +76,14 @@ const YourScore: React.FC<IYourScore> = ({
   return (
     <>
       <h1>Your score</h1>
-      <Table columns={columns} dataSource={generateData(tasks, tasksReview)} />
+      <Table
+        columns={columns}
+        dataSource={generateData(tasks, tasksReview, login)}
+      />
     </>
   );
 };
 
-export default YourScore;
+const mapStateToProps = (state) => ({ login: state.chooseRole.login });
+
+export default connect(mapStateToProps)(YourScore);
