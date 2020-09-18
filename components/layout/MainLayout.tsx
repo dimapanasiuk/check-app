@@ -41,7 +41,6 @@ const MainLayout: React.FC<IMainLayout> = ({
           <Menu
             theme="dark"
             mode="horizontal"
-            // defaultSelectedKeys={["1","2","3"]}
             selectedKeys={title}
             className={styles.links}
           >
