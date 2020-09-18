@@ -9,6 +9,9 @@ import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import ReactMarkdown from "react-markdown";
+import CodeBlock from "../../components/createTask/CodeBlock";
+import styles from "../../styles/Markdown.module.scss";
 
 const { confirm } = Modal;
 
@@ -102,7 +105,11 @@ const Task: NextPage<IGetInitialProps> = ({ taskData }: IGetInitialProps) => {
         {taskData.markdown && (
           <React.Fragment>
             <Divider orientation="left">Markdown</Divider>
-            <div>{taskData.markdown}</div>
+            <ReactMarkdown
+              className={styles.markdown}
+              source={taskData.markdown}
+              renderers={{ code: CodeBlock }}
+            />
           </React.Fragment>
         )}
       </div>

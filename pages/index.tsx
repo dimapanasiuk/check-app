@@ -114,9 +114,12 @@ const Home: NextPage<IGetInitialProps> = React.memo(
           openErrorMessage("come back and select repository with pull request");
         else next();
       } else if (pageID === 4) {
-        !maxScoreValue
-          ? openErrorMessage("enter your max score")
-          : addCompletedTaskToDB();
+        if (!maxScoreValue) openErrorMessage("enter your max score");
+        else if (maxScoreValue > taskWithMaxScore.maxScore || maxScoreValue < 1)
+          openErrorMessage(
+            `enter max score in the range 1-${taskWithMaxScore.maxScore}`
+          );
+        else addCompletedTaskToDB();
       } else if (isFailed) {
         openErrorMessage("refresh the page");
       } else next();
