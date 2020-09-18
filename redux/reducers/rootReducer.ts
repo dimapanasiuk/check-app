@@ -1,4 +1,4 @@
-import roleReducer from "./roleReducer";
+import roleReducer from "./LoginReducers/roleReducer";
 import pullReqReducer from "./CabinetReducers/pullReqReducer";
 import { combineReducers } from "redux";
 

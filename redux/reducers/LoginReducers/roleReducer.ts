@@ -1,6 +1,6 @@
 import {
     CHANGE_ROLE,
-} from "../actions/roleAction";
+} from "../../actions/LoginActions/roleAction";
 
 const initialState = { role: '', login: '' };
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
-import { changeStore } from "../redux/actions/roleAction";
+import { changeStore } from "../redux/actions/LoginActions/roleAction";
 
 import Welcome from "../components/login/Welcome";
 import MainLayout from "../components/layout/MainLayout";
