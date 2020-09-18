@@ -1,18 +1,23 @@
-import {
-    CHANGE_ROLE,
-} from "../../actions/LoginActions/roleAction";
+import { CHANGE_ROLE } from "../../actions/LoginActions/roleAction";
+import { ActionLoginType } from "../../actions/LoginActions/types";
 
-const initialState = { role: '', login: '' };
+const initialState = { role: "", login: "" };
 
-export type TState = typeof initialState;
+export type TState = {
+  role: string;
+  login: string;
+};
 
-const counterReducer = (state: TState = initialState, action: any) => {
-    switch (action.type) {
-        case CHANGE_ROLE:
-            return { role: action.role, login: action.login };
-        default:
-            return { ...state };
-    }
+const counterReducer = (
+  state: TState = initialState,
+  action: ActionLoginType
+): TState => {
+  switch (action.type) {
+    case CHANGE_ROLE:
+      return { role: action.role, login: action.login };
+    default:
+      return { ...state };
+  }
 };
 
 export default counterReducer;
