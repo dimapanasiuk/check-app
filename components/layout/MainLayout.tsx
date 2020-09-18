@@ -1,7 +1,10 @@
 import React from "react";
 import Link from "next/link";
 import Head from "next/head";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
+
+import { changeStore } from "../../redux/actions/LoginActions/roleAction";
+import { changeAuthStatus } from "../../redux/actions/LoginActions/authAction";
 
 import styles from "../../styles/MainLayout.module.scss";
 
@@ -15,8 +18,7 @@ interface IMainLayout {
   title: string[];
   children: React.ReactNode;
   role: string;
-  isAuth?: boolean;
-  onLogOutButtonClick: () => void;
+  isAuth: boolean;
 }
 
 const MainLayout: React.FC<IMainLayout> = ({
@@ -24,12 +26,18 @@ const MainLayout: React.FC<IMainLayout> = ({
   title,
   role,
   isAuth,
-  onLogOutButtonClick,
 }: IMainLayout) => {
+  const dispatch = useDispatch();
+
+  const onLogOutButtonClick = () => {
+    dispatch(changeStore({ role: "", login: "" }));
+    dispatch(changeAuthStatus(false));
+  };
+
   return (
     <>
       <Head>
-        <title> {title}</title>
+        <title>{title}</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
       <Layout style={{ minHeight: "100vh" }}>
@@ -140,7 +148,7 @@ const MainLayout: React.FC<IMainLayout> = ({
 };
 
 const mapStateToProps = (state) => {
-  return { role: state.chooseRole.role };
+  return { role: state.chooseRole.role, isAuth: state.changeAuthStatus.isAuth };
 };
 
 export default connect(mapStateToProps)(MainLayout);
