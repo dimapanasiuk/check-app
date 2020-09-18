@@ -22,7 +22,7 @@ const Score: NextPage<IScore> = ({
   users,
   tasksReview,
 }: IScore) => (
-  <MainLayout title="score page">
+  <MainLayout title="score">
     <Tabs defaultActiveKey="1">
       <TabPane tab="All score" key="1">
         <AllScore tasks={tasks} completedTasks={completedTasks} users={users} />

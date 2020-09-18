@@ -7,7 +7,7 @@ import Performance from "../components/tasks/Performance";
 import Deadline from "../components/tasks/Deadline";
 import styles from "../styles/tasks.module.scss";
 
-import { Button, Pagination, Typography, Card } from "antd";
+import { Result, Pagination, Typography, Card } from "antd";
 
 const { Meta } = Card;
 const { Title } = Typography;
@@ -18,6 +18,7 @@ export interface ITaskData {
   taskDescription: string;
   maxScore: number;
   markdown: string;
+  date: Array<string>;
 }
 
 interface IGetInitialProps {
@@ -40,9 +41,8 @@ const Tasks: NextPage<IGetInitialProps> = ({
   const allTaskHtml = (tasks) => {
     return tasks.map((i) => {
       const description =
-        i.taskDescription && i.taskDescription.split(" ").splice(0, 5);
-      i.taskDescription.split(" ").length > 5 && description.push("...");
-      description.join(" ");
+        i.taskDescription &&
+        i.taskDescription.split(" ").splice(0, 5).join(" ");
       return (
         <li key={i.id} className={styles.list}>
           <Link href={`task/[id]`} as={`/task/${i.id}`}>
@@ -55,9 +55,17 @@ const Tasks: NextPage<IGetInitialProps> = ({
                   margin: "0 20px 20px 0",
                 }}
               >
-                <Meta title={i.taskName} description={description} />
+                <Meta
+                  title={i.taskName}
+                  description={`${description.substr(0, 100)} ...`}
+                />
+                <br />
                 <Deadline start={i.date[0]} end={i.date[1]} />
-                <Performance maxScore={i.maxScore} completed={completedTasks} taskName={i.taskName} />
+                <Performance
+                  maxScore={i.maxScore}
+                  completed={completedTasks}
+                  taskName={i.taskName}
+                />
               </Card>
             </a>
           </Link>
@@ -97,16 +105,7 @@ const Tasks: NextPage<IGetInitialProps> = ({
             </>
           );
         } else {
-          return (
-            <>
-              <Title level={2}>{"You don't have tasks"}</Title>
-              <Button type="primary">
-                <Link href="/">
-                  <a>Go to home</a>
-                </Link>
-              </Button>
-            </>
-          );
+          return <Result title="you have no tasks yet" />;
         }
       })()}
     </MainLayout>
