@@ -15,12 +15,16 @@ interface IMainLayout {
   title: string[];
   children: React.ReactNode;
   role: string;
+  isAuth?: boolean;
+  onLogOutButtonClick: () => void;
 }
 
 const MainLayout: React.FC<IMainLayout> = ({
   children,
   title,
   role,
+  isAuth,
+  onLogOutButtonClick,
 }: IMainLayout) => {
   return (
     <>
@@ -103,11 +107,24 @@ const MainLayout: React.FC<IMainLayout> = ({
 
           <div className={styles.oauth}>
             <Link href="/login">
-              <a>
-                <Button type="primary" icon={<LoginOutlined />} size="large">
-                  Login
-                </Button>
-              </a>
+              {!isAuth ? (
+                <a>
+                  <Button type="primary" icon={<LoginOutlined />} size="large">
+                    Log in
+                  </Button>
+                </a>
+              ) : (
+                <a>
+                  <Button
+                    onClick={onLogOutButtonClick}
+                    type="primary"
+                    icon={<LoginOutlined />}
+                    size="large"
+                  >
+                    Log out
+                  </Button>
+                </a>
+              )}
             </Link>
           </div>
         </Header>

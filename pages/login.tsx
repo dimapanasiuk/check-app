@@ -27,6 +27,7 @@ const Login: React.FC<ILogin> = ({ changeValue }: ILogin) => {
   const [currentUserName, setCurrentUserName] = useState("");
   const [currentImg, setCurrentImg] = useState("");
   const [usersDB, setUsersDB] = useState([]);
+  const [isAuth, setIsAuth] = useState<boolean>(false);
 
   useEffect(() => {
     axios
@@ -43,6 +44,7 @@ const Login: React.FC<ILogin> = ({ changeValue }: ILogin) => {
           const img = data.data.avatar_url;
           setCurrentImg(img);
           postToDB(login, checkedItem, img);
+          setIsAuth(true);
           return true;
         })
         .catch((err) => {
@@ -96,10 +98,19 @@ const Login: React.FC<ILogin> = ({ changeValue }: ILogin) => {
     });
   };
 
+  const onLogOutButtonClick = () => {
+    changeValue({ role: "", login: "" });
+    setIsAuth(false);
+  };
+
   return (
-    <MainLayout title="login page">
+    <MainLayout
+      isAuth={isAuth}
+      onLogOutButtonClick={onLogOutButtonClick}
+      title="login page"
+    >
       <div className={styles.container}>
-        <Welcome imgSrc={currentImg} />
+        <Welcome imgSrc={currentImg} isAuth={isAuth} />
         <Form name="basic" onFinish={submitFormHandler}>
           <Form.Item
             label="Login"
