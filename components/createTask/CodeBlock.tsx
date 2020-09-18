@@ -6,7 +6,7 @@ interface ICodeBlock {
   value: string;
 }
 
-const CodeBlock: React.FC<ICodeBlock> = ({ language, value }) => {
+const CodeBlock: React.FC<ICodeBlock> = ({ language, value }: ICodeBlock) => {
   const elementRef = useRef();
 
   useEffect(() => {
