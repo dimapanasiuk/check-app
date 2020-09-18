@@ -12,7 +12,7 @@ const { Header, Content, Footer } = Layout;
 const { Title } = Typography;
 
 interface IMainLayout {
-  title: string;
+  title: string[];
   children: React.ReactNode;
   role: string;
 }
@@ -42,12 +42,13 @@ const MainLayout: React.FC<IMainLayout> = ({
             theme="dark"
             mode="horizontal"
             // defaultSelectedKeys={["1","2","3"]}
+            selectedKeys={title}
             className={styles.links}
           >
             {(() => {
               if (role === "admin" || role === "student") {
                 return (
-                  <Menu.Item key="1">
+                  <Menu.Item key="cabinet">
                     <Link href="/">
                       <a>cabinet</a>
                     </Link>
@@ -58,7 +59,7 @@ const MainLayout: React.FC<IMainLayout> = ({
             {(() => {
               if (role === "mentor" || role === "admin") {
                 return (
-                  <Menu.Item key="2">
+                  <Menu.Item key="create task">
                     <Link href="/create">
                       <a>create task</a>
                     </Link>
@@ -69,7 +70,7 @@ const MainLayout: React.FC<IMainLayout> = ({
             {(() => {
               if (role === "admin" || role === "mentor" || role === "student") {
                 return (
-                  <Menu.Item key="3">
+                  <Menu.Item key="tasks">
                     <Link href="/tasks">
                       <a>tasks</a>
                     </Link>
@@ -80,7 +81,7 @@ const MainLayout: React.FC<IMainLayout> = ({
             {(() => {
               if (role === "admin" || role === "mentor" || role === "student") {
                 return (
-                  <Menu.Item key="4">
+                  <Menu.Item key="review">
                     <Link href="/review">
                       <a>review</a>
                     </Link>
@@ -91,7 +92,7 @@ const MainLayout: React.FC<IMainLayout> = ({
             {(() => {
               if (role === "mentor" || role === "student" || role === "admin") {
                 return (
-                  <Menu.Item key="6">
+                  <Menu.Item key="score">
                     <Link href="/score">
                       <a>score</a>
                     </Link>
