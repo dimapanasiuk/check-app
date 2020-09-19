@@ -1,7 +1,10 @@
 import React from "react";
 import Link from "next/link";
 import Head from "next/head";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
+
+import { changeStore } from "../../redux/actions/LoginActions/roleAction";
+import { changeAuthStatus } from "../../redux/actions/LoginActions/authAction";
 
 import styles from "../../styles/MainLayout.module.scss";
 
@@ -15,17 +18,26 @@ interface IMainLayout {
   title: string[];
   children: React.ReactNode;
   role: string;
+  isAuth: boolean;
 }
 
 const MainLayout: React.FC<IMainLayout> = ({
   children,
   title,
   role,
+  isAuth,
 }: IMainLayout) => {
+  const dispatch = useDispatch();
+
+  const onLogOutButtonClick = () => {
+    dispatch(changeStore({ role: "", login: "" }));
+    dispatch(changeAuthStatus(false));
+  };
+
   return (
     <>
       <Head>
-        <title> {title}</title>
+        <title>{title}</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
       <Layout style={{ minHeight: "100vh" }}>
@@ -103,11 +115,24 @@ const MainLayout: React.FC<IMainLayout> = ({
 
           <div className={styles.oauth}>
             <Link href="/login">
-              <a>
-                <Button type="primary" icon={<LoginOutlined />} size="large">
-                  Login
-                </Button>
-              </a>
+              {!isAuth ? (
+                <a>
+                  <Button type="primary" icon={<LoginOutlined />} size="large">
+                    Log in
+                  </Button>
+                </a>
+              ) : (
+                <a>
+                  <Button
+                    onClick={onLogOutButtonClick}
+                    type="primary"
+                    icon={<LoginOutlined />}
+                    size="large"
+                  >
+                    Log out
+                  </Button>
+                </a>
+              )}
             </Link>
           </div>
         </Header>
@@ -123,7 +148,7 @@ const MainLayout: React.FC<IMainLayout> = ({
 };
 
 const mapStateToProps = (state) => {
-  return { role: state.chooseRole.role };
+  return { role: state.chooseRole.role, isAuth: state.changeAuthStatus.isAuth };
 };
 
 export default connect(mapStateToProps)(MainLayout);
