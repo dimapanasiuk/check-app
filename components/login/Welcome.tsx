@@ -11,10 +11,11 @@ const { Title } = Typography;
 interface IWelcome {
   imgSrc: string;
   login: string;
+  isAuth: boolean;
 }
 
-const Welcome: React.FC<IWelcome> = ({ imgSrc, login }: IWelcome) => {
-  if (imgSrc) {
+const Welcome: React.FC<IWelcome> = ({ imgSrc, login, isAuth }: IWelcome) => {
+  if (imgSrc && isAuth) {
     return (
       <div className={styles.text}>
         <Title level={2}> Hello {login}</Title>

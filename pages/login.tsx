@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
-import { changeStore } from "../redux/actions/roleAction";
+import { changeStore } from "../redux/actions/LoginActions/roleAction";
+import { changeAuthStatus } from "../redux/actions/LoginActions/authAction";
 
 import Welcome from "../components/login/Welcome";
 import MainLayout from "../components/layout/MainLayout";
@@ -20,9 +21,15 @@ interface IChangeValue {
 
 interface ILogin {
   changeValue: (data: IChangeValue) => void;
+  changeAuthStatus: (payload: boolean) => void;
+  isAuth: boolean;
 }
 
-const Login: React.FC<ILogin> = ({ changeValue }: ILogin) => {
+const Login: React.FC<ILogin> = ({
+  changeValue,
+  changeAuthStatus,
+  isAuth,
+}: ILogin) => {
   const [checkedItem, setCheckedItem] = useState(users[0]);
   const [currentUserName, setCurrentUserName] = useState("");
   const [currentImg, setCurrentImg] = useState("");
@@ -43,6 +50,7 @@ const Login: React.FC<ILogin> = ({ changeValue }: ILogin) => {
           const img = data.data.avatar_url;
           setCurrentImg(img);
           postToDB(login, checkedItem, img);
+          changeAuthStatus(true);
           return true;
         })
         .catch((err) => {
@@ -99,7 +107,7 @@ const Login: React.FC<ILogin> = ({ changeValue }: ILogin) => {
   return (
     <MainLayout title="login page">
       <div className={styles.container}>
-        <Welcome imgSrc={currentImg} />
+        <Welcome imgSrc={currentImg} isAuth={isAuth} />
         <Form name="basic" onFinish={submitFormHandler}>
           <Form.Item
             label="Login"
@@ -156,10 +164,14 @@ export const getStaticProps = async () => {
   };
 };
 
-const mapStateToProps = (state) => ({ chooseRole: state.chooseRole });
+const mapStateToProps = (state) => ({
+  chooseRole: state.chooseRole,
+  isAuth: state.changeAuthStatus.isAuth,
+});
 
 const mapDispatchToProps = {
   changeValue: changeStore,
+  changeAuthStatus,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
